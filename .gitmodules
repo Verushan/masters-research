@@ -1,3 +1,4 @@
 [submodule "zsc-eval"]
 	path = zsc-eval
 	url = https://github.com/Verushan/zsc-eval
+    branch = research-branch
