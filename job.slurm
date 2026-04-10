@@ -18,10 +18,7 @@ POPULATION_SIZE=3
 source ~/anaconda3/etc/profile.d/conda.sh
 conda activate zsceval # Activate conda environment
 
-# Set project path for python modules
-export PYTHONPATH=/home-mscluster/vnaidoo/Coding/zsceval/ZSC-Eval/
-
-cd /home-mscluster/vnaidoo/Coding/zsceval/ZSC-Eval/zsceval/scripts/overcooked
+cd $PYTHONPATH/zsceval/scripts/overcooked
 
 bash shell/train_sp.sh $LAYOUT
 
