@@ -7,8 +7,8 @@
 #SBATCH -c 16                   # Number of CPU cores per task
 #SBATCH -t 72:00:00            # Max runtime (hh:mm:ss)
 
-if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+if [ -f ../.env ]; then
+    export $(grep -v '^#' ../.env | xargs)
     echo "Environment variables loaded from wandb.env"
 fi
 
@@ -22,10 +22,12 @@ conda activate zsceval
 
 
 LAYOUT="random0"
-POPULATION_SIZE=3
+POPULATION_SIZE=12
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
+bash shell/store_config.sh $LAYOUT
+bash shell/mv_policy_config.sh
 bash shell/train_sp.sh $LAYOUT
 
 cd ..

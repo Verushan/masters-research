@@ -7,8 +7,8 @@
 #SBATCH -c 16                   # Number of CPU cores per task
 #SBATCH -t 72:00:00            # Max runtime (hh:mm:ss)
 
-if [ -f .env ]; then
-    export $(grep -v '^#' .env | xargs)
+if [ -f ../.env ]; then
+    export $(grep -v '^#' ../.env | xargs)
     echo "Environment variables loaded from wandb.env"
 fi
 
