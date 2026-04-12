@@ -12,11 +12,17 @@ if [ -f .env ]; then
     echo "Environment variables loaded from wandb.env"
 fi
 
+if [ "$SHOULD_SOURCE_CONDA" = "true" ]; then
+    source ~/anaconda3/etc/profile.d/conda.sh
+else
+    echo "Skipping Conda source."
+fi
+
+conda activate zsceval
+
+
 LAYOUT="random0"
 POPULATION_SIZE=3
-
-source ~/anaconda3/etc/profile.d/conda.sh
-conda activate zsceval # Activate conda environment
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
