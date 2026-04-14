@@ -20,7 +20,6 @@ fi
 
 conda activate zsceval
 
-
 LAYOUT="random0"
 POPULATION_SIZE=12
 
