@@ -4,7 +4,7 @@
 #SBATCH -o /home-mscluster/vnaidoo/Coding/zsceval/output.log
 #SBATCH -e /home-mscluster/vnaidoo/Coding/zsceval/output.err
 #SBATCH -n 1                   # Number of tasks (processes)
-#SBATCH -c 16                   # Number of CPU cores per task
+#SBATCH -c 32                   # Number of CPU cores per task
 #SBATCH -t 72:00:00            # Max runtime (hh:mm:ss)
 
 if [ -f ../.env ]; then
