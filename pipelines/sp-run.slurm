@@ -1,10 +1,11 @@
 #!/bin/bash -l
-#SBATCH -p bigbatch
 #SBATCH -J ZSCEval
 #SBATCH -o /home-mscluster/vnaidoo/Coding/zsceval/output.log
 #SBATCH -e /home-mscluster/vnaidoo/Coding/zsceval/output.err
+#SBATCH --partition=biggpu
+#SBATCH --mem=64G              # Request 64GB to safely handle the population
 #SBATCH -n 1                   # Number of tasks (processes)
-#SBATCH -c 32                   # Number of CPU cores per task
+#SBATCH -c 32                  # Number of CPU cores per task
 #SBATCH -t 72:00:00            # Max runtime (hh:mm:ss)
 
 if [ -f ../.env ]; then
