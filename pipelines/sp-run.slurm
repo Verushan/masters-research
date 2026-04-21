@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -J ZSCEval
-#SBATCH -o /home-mscluster/vnaidoo/Coding/zsceval/output.log
-#SBATCH -e /home-mscluster/vnaidoo/Coding/zsceval/output.err
+#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/output.log
+#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/output.err
 #SBATCH --partition=biggpu
 #SBATCH -n 1                   # Number of tasks (processes)
 #SBATCH -c 32                  # Number of CPU cores per task
