@@ -3,7 +3,6 @@
 #SBATCH -o /home-mscluster/vnaidoo/Coding/zsceval/output.log
 #SBATCH -e /home-mscluster/vnaidoo/Coding/zsceval/output.err
 #SBATCH --partition=biggpu
-#SBATCH --mem=64G              # Request 64GB to safely handle the population
 #SBATCH -n 1                   # Number of tasks (processes)
 #SBATCH -c 32                  # Number of CPU cores per task
 #SBATCH -t 72:00:00            # Max runtime (hh:mm:ss)
@@ -26,9 +25,9 @@ POPULATION_SIZE=12
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
-bash shell/store_config.sh $LAYOUT
-bash shell/mv_policy_config.sh
-bash shell/train_sp.sh $LAYOUT
+# bash shell/store_config.sh $LAYOUT
+# bash shell/mv_policy_config.sh
+# bash shell/train_sp.sh $LAYOUT
 
 cd ..
 python extract_models/extract_sp_models.py $LAYOUT overcooked
