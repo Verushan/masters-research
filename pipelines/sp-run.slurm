@@ -21,7 +21,7 @@ fi
 conda activate zsceval
 
 LAYOUT="random0"
-POPULATION_SIZE=12
+POPULATION_SIZE=5
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
@@ -30,9 +30,9 @@ cd $PYTHONPATH/zsceval/scripts/overcooked
 # bash shell/train_sp.sh $LAYOUT
 
 cd ..
-python extract_models/extract_sp_models.py $LAYOUT overcooked
+# python extract_models/extract_sp_models.py $LAYOUT overcooked
 
-# Stage 2
+# # Stage 2
 python prep/gen_S2_yml.py $LAYOUT fcp
 
 cd overcooked
