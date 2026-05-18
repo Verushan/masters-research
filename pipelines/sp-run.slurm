@@ -5,7 +5,7 @@
 #SBATCH --partition=bigbatch
 #SBATCH -n 1                   # Number of tasks (processes)
 #SBATCH -c 16                  # Number of CPU cores per task
-#SBATCH -t 336:00:00            # Max runtime (hh:mm:ss)
+#SBATCH -t 36:00:00            # Max runtime (hh:mm:ss)
 
 if [ -f ../.env ]; then
     export $(grep -v '^#' ../.env | xargs)
@@ -25,12 +25,12 @@ POPULATION_SIZE=5
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
-# bash shell/store_config.sh $LAYOUT
-# bash shell/mv_policy_config.sh
-# bash shell/train_sp.sh $LAYOUT
+bash shell/store_config.sh $LAYOUT
+bash shell/mv_policy_config.sh
+bash shell/train_sp.sh $LAYOUT
 
 cd ..
-# python extract_models/extract_sp_models.py $LAYOUT overcooked
+python extract_models/extract_sp_models.py $LAYOUT overcooked
 
 # # Stage 2
 python prep/gen_S2_yml.py $LAYOUT fcp
