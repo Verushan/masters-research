@@ -21,12 +21,12 @@ fi
 conda activate zsceval
 
 LAYOUT="random0"
-POPULATION_SIZE=5
+POPULATION_SIZE=12
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
 bash shell/store_config.sh $LAYOUT
-bash shell/mv_policy_config.sh
+bash shell/mv_policy_config.sh $LAYOUT
 bash shell/train_sp.sh $LAYOUT
 
 cd ..
