@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -J ZSCEval
-#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/output.log
-#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/output.err
+#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/sp-run.log
+#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/sp-run.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1                   # Number of tasks (processes)
 #SBATCH -c 16                  # Number of CPU cores per task
@@ -25,8 +25,8 @@ POPULATION_SIZE=12
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
-bash shell/store_config.sh $LAYOUT
-bash shell/mv_policy_config.sh $LAYOUT
+# bash shell/store_config.sh $LAYOUT
+# bash shell/mv_policy_config.sh $LAYOUT
 bash shell/train_sp.sh $LAYOUT
 
 cd ..
