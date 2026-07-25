@@ -21,7 +21,7 @@ fi
 conda activate zsceval
 
 LAYOUT="random0"
-POPULATION_SIZE=12
+POPULATION_SIZE=16
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
