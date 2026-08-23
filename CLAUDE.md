@@ -35,6 +35,9 @@ cd pipelines && sbatch sp-run.slurm
 # ...or run the same pipeline locally
 cd pipelines && bash sp-run.slurm
 
+# MORL agent: stage-1 self-play on the objective-vector reward
+cd pipelines && sbatch morl-run.slurm
+
 # Render/eval two named policies against each other
 cd pipelines && bash eval-run.slurm
 
@@ -52,6 +55,44 @@ python prep/gen_S2_yml.py random0 fcp              # build s2 population ymls
 cd overcooked && bash shell/train_fcp_stage_2.sh random0 16
 cd .. && python extract_models/extract_S2_models.py --layout random0 --env overcooked --algorithm fcp
 ```
+
+## MORL agent
+
+`zsceval/envs/morl/` turns Overcooked's scalar reward into a reward **vector** — `task_completion`,
+`ingredient_prep`, `plating`, `coordination` (`objectives.py`, registry + presets `default` /
+`task_only`) — derived entirely from the `SHAPED_INFOS` counters `resolve_interacts` already
+produces, so the MDP hot path is untouched.
+
+The `morl` agent is the `sp` agent with `w · r_vec` as its PPO reward instead of
+`sparse + reward_shaping_factor * shaped`. Same train script (`train/train_sp.py`), same runner,
+same hyper-parameters — only the reward differs, so `sp` and `morl` runs are directly comparable.
+The sparse reward still reaches it through `task_completion`; the other three objectives are dense,
+which is why no hand-crafted shaping is applied.
+
+```bash
+cd $PYTHONPATH/zsceval/scripts/overcooked
+python morl/rollout_objectives.py --layout random1      # objective vector vs. the env's own accounting
+python morl/check_morl_reward.py                        # the RL reward really is w . r_vec
+bash shell/train_morl.sh random0                        # stage 1, experiment_name "morl"
+cd .. && python extract_models/extract_sp_models.py random0 overcooked morl ep_morl_r
+```
+
+Flags (all in `zsceval/overcooked_config.py`): `--morl_objectives` alone only *tracks* the vector,
+so any existing sp/fcp/mep run can log per-objective breakdowns without its reward changing;
+`--use_morl` additionally makes it the reward. `--morl_weights` (default uniform `1/K`),
+`--morl_reward_scale`, and `--morl_adaptive_weights` + `--morl_eta_min/max`, `--morl_weight_floor`,
+`--morl_weight_update_interval` for the mirror-descent preference update
+(`envs/morl/preferences.py`, proposal §4.2.3). Adaptive weights are off by default: they make the
+reward non-stationary while `w` is not yet part of the observation. The update is multiplicative
+and fires every env step, so per-episode movement scales with `eta * episode_length` — the `eta`
+defaults assume the 400-step horizon, and the floor stops an objective being switched off entirely.
+
+**Old layouts only.** Only `zsceval/envs/overcooked/` carries the objective layer;
+`train_sp.py` asserts on `--use_morl` with `--overcooked_version new`.
+
+`extract_sp_models.py` takes two optional positional args — `{layout} {env} [exp] [metric]` — so
+MORL checkpoints are ranked by `ep_morl_r` rather than `ep_sparse_r`. Both runs also log
+`ep_obj_{name}` / `eval_ep_obj_{name}` per objective and per agent.
 
 There is no test suite and no lint target. The submodule has a `.pre-commit-config.yaml` (black at line-length 120, isort, autoflake) but the fork's files have been reformatted at black's default 88 columns — running pre-commit would rewrite large parts of the diff, so don't run it opportunistically.
 

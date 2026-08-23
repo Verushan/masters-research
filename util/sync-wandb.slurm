@@ -19,7 +19,7 @@ else
     echo "Skipping Conda source."
 fi
 
-SEARCH_DIR="$HOME/ZSC"
+SEARCH_DIR="."
 
 echo "Searching for log files in $SEARCH_DIR..."
 
