@@ -24,6 +24,14 @@
 # `--morl_objectives default` makes every cell report the objective breakdown as
 # well as the return, which is what keeps the comparison legible on layouts where
 # cross-play sparse return collapses to zero for every method.
+#
+# Usage: bash morl-benchmark-eval.slurm [layout] [arm_seeds] [s2_arms]
+#
+# The third argument adds the stage-2 agents trained by morl-s2.slurm to the
+# pool (`fcp-S2-{arm}`), so the stage-1 arms and the FCP agents built from them
+# are scored in one matrix against the same held-out partners. Results then go
+# to *_s2_* files rather than overwriting the stage-1-only run the current
+# report is built from.
 
 if [ -f ../.env ]; then
     export $(grep -v '^#' ../.env | xargs)
@@ -40,6 +48,9 @@ conda activate zsceval
 
 LAYOUT=${1:-random0}
 ARM_SEEDS=${2:-"1 2 3"}
+S2_ARMS=${3:-""}
+# Experiment-name suffix the stage-2 runs used, e.g. "-pilot". Must match.
+S2_SUFFIX=${4:-""}
 THREADS=12
 # Envs per worker process, not a minibatch size: dummy_batch_size == THREADS
 # would put every env in one process and serialise the whole matrix.
@@ -49,7 +60,20 @@ RESULTS=$PYTHONPATH/../experiments/results
 
 cd $PYTHONPATH/zsceval/scripts
 
-YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $ARM_SEEDS --skip_missing | tail -1)
+if [ -n "$S2_ARMS" ]; then
+    S2_FLAG="--s2_arms $S2_ARMS"
+    # Appended only when set: an empty --s2_suffix would swallow the next flag.
+    # The `=` form is required, not cosmetic -- suffixes conventionally start with
+    # a dash ("-pilot"), and argparse reads a space-separated "-pilot" as a flag
+    # rather than as this option's value.
+    [ -n "$S2_SUFFIX" ] && S2_FLAG="$S2_FLAG --s2_suffix=$S2_SUFFIX"
+    TAG="_s2"
+else
+    S2_FLAG=""
+    TAG=""
+fi
+
+YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $ARM_SEEDS $S2_FLAG --skip_missing | tail -1)
 echo "population yml: $YML"
 
 # Every policy in the pool plays every other, in both seats.
@@ -67,24 +91,24 @@ common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
         --ego_policy_names $AGENTS --partner_policy_names $AGENTS)
 
 python eval/cross_play.py "${common[@]}" \
-    --experiment_name xp_${LAYOUT}_det \
+    --experiment_name xp_${LAYOUT}${TAG}_det \
     --eval_episodes 1 \
-    --eval_result_path $RESULTS/cross_play_${LAYOUT}_deterministic.json || exit 1
+    --eval_result_path $RESULTS/cross_play_${LAYOUT}${TAG}_deterministic.json || exit 1
 
 python eval/cross_play.py "${common[@]}" \
-    --experiment_name xp_${LAYOUT}_sto \
+    --experiment_name xp_${LAYOUT}${TAG}_sto \
     --eval_stochastic --eval_episodes $EPISODES_STOCHASTIC \
-    --eval_result_path $RESULTS/cross_play_${LAYOUT}_stochastic.json || exit 1
+    --eval_result_path $RESULTS/cross_play_${LAYOUT}${TAG}_stochastic.json || exit 1
 
 cd $PYTHONPATH/..
 python experiments/fetch_training_curves.py --layout $LAYOUT \
     --out experiments/results/training_curves_${LAYOUT}.json
 python experiments/analyze_crossplay.py \
-    --records experiments/results/cross_play_${LAYOUT}_deterministic.json \
-              experiments/results/cross_play_${LAYOUT}_stochastic.json \
-    --out experiments/results/metrics_${LAYOUT}.json
+    --records experiments/results/cross_play_${LAYOUT}${TAG}_deterministic.json \
+              experiments/results/cross_play_${LAYOUT}${TAG}_stochastic.json \
+    --out experiments/results/metrics_${LAYOUT}${TAG}.json
 
 # The per-episode dumps are the expensive artifact -- ~45 min of rollouts -- and
 # compress about 35x, so they are kept gzipped. analyze_crossplay.py reads either.
-gzip -9 -f experiments/results/cross_play_${LAYOUT}_deterministic.json \
-           experiments/results/cross_play_${LAYOUT}_stochastic.json
+gzip -9 -f experiments/results/cross_play_${LAYOUT}${TAG}_deterministic.json \
+           experiments/results/cross_play_${LAYOUT}${TAG}_stochastic.json

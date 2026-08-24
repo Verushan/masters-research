@@ -1,0 +1,734 @@
+<title>MORL's Zero-Shot Deficit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --ground: #F5F7F9;
+  --surface: #FFFFFF;
+  --surface-2: #EDF1F5;
+  --ink: #131820;
+  --ink-2: #55606E;
+  --ink-3: #7C8795;
+  --rule: #DCE2E9;
+  --rule-strong: #C2CBD6;
+  --s1: #2563A8;
+  --s2: #B5522A;
+  --s3: #0E8168;
+  --s4: #7B4FA8;
+  --accent: #2563A8;
+  --shadow: 0 1px 2px rgba(19,24,32,.05), 0 8px 24px -16px rgba(19,24,32,.28);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0F1216;
+    --surface: #171B21;
+    --surface-2: #1D222A;
+    --ink: #E7EBF1;
+    --ink-2: #99A5B4;
+    --ink-3: #77828F;
+    --rule: #252B34;
+    --rule-strong: #333B46;
+    --s1: #4A8FD6;
+    --s2: #D4763F;
+    --s3: #12A184;
+    --s4: #9A6FD4;
+    --accent: #4A8FD6;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0F1216;
+  --surface: #171B21;
+  --surface-2: #1D222A;
+  --ink: #E7EBF1;
+  --ink-2: #99A5B4;
+  --ink-3: #77828F;
+  --rule: #252B34;
+  --rule-strong: #333B46;
+  --s1: #4A8FD6;
+  --s2: #D4763F;
+  --s3: #12A184;
+  --s4: #9A6FD4;
+  --accent: #4A8FD6;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16.5px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0 20px 96px;
+}
+
+.wrap { max-width: 860px; margin: 0 auto; }
+.col { max-width: 64ch; }
+
+/* ---- masthead ---- */
+.masthead { padding: 72px 0 0; }
+.eyebrow {
+  font-family: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 20px;
+}
+h1 {
+  font-family: Newsreader, ui-serif, Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: clamp(38px, 6.4vw, 58px);
+  line-height: 1.06;
+  letter-spacing: -.018em;
+  text-wrap: balance;
+  margin: 0 0 22px;
+}
+.standfirst {
+  font-family: Newsreader, ui-serif, Georgia, serif;
+  font-size: clamp(19px, 2.4vw, 22px);
+  line-height: 1.5;
+  color: var(--ink-2);
+  max-width: 56ch;
+  margin: 0 0 40px;
+}
+
+/* run metadata strip */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 12px;
+}
+.meta div {
+  flex: 1 1 128px;
+  padding: 14px 20px 14px 0;
+  border-right: 1px solid var(--rule);
+}
+.meta div:last-child { border-right: none; }
+.meta dt {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 4px;
+}
+.meta dd {
+  margin: 0;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.provisional {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--s2);
+  margin-bottom: 56px;
+}
+.provisional::before {
+  content: "";
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--s2);
+  flex: none;
+}
+
+/* ---- sections: the counter-column rule ---- */
+section { margin-bottom: 60px; }
+h2 {
+  font-family: Newsreader, ui-serif, Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(25px, 3.4vw, 31px);
+  line-height: 1.2;
+  letter-spacing: -.012em;
+  text-wrap: balance;
+  margin: 0 0 20px;
+  padding-left: 18px;
+  border-left: 2px solid var(--accent);
+}
+h3 {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: .005em;
+  margin: 34px 0 12px;
+}
+p { margin: 0 0 18px; }
+.col p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; }
+em { font-style: italic; }
+
+code, .mono {
+  font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  font-size: .875em;
+}
+code {
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: .08em .34em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* ---- callout ---- */
+.callout {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-left: 2px solid var(--accent);
+  border-radius: 2px;
+  padding: 22px 26px;
+  margin: 28px 0;
+  box-shadow: var(--shadow);
+}
+.callout.warn { border-left-color: var(--s2); }
+.callout p { margin: 0 0 12px; }
+.callout p:last-child { margin: 0; }
+.callout .label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* ---- figure / chart ---- */
+figure { margin: 34px 0; }
+.chart-frame {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 26px 20px 18px;
+  overflow-x: auto;
+  box-shadow: var(--shadow);
+}
+.chart-frame svg { display: block; min-width: 660px; width: 100%; height: auto; }
+figcaption {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin-top: 14px;
+  max-width: 62ch;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+}
+.legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11.5px;
+  color: var(--ink-2);
+}
+.swatch { width: 11px; height: 11px; border-radius: 2px; flex: none; }
+.swatch.hollow { background: none; border: 1.5px dashed var(--ink-3); border-radius: 50%; }
+
+/* ---- tables ---- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--surface);
+  margin: 26px 0;
+  box-shadow: var(--shadow);
+}
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+caption {
+  text-align: left;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding: 16px 20px 10px;
+}
+th, td {
+  padding: 10px 16px;
+  text-align: right;
+  border-bottom: 1px solid var(--rule);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+th:first-child, td:first-child { text-align: left; white-space: normal; }
+thead th {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 500;
+  border-bottom: 1px solid var(--rule-strong);
+  vertical-align: bottom;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody td:first-child { font-weight: 500; }
+.dim { color: var(--ink-3); }
+.note {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-3);
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--rule);
+  max-width: 76ch;
+}
+.tag {
+  display: inline-block;
+  width: 9px; height: 9px;
+  border-radius: 2px;
+  margin-right: 9px;
+  vertical-align: baseline;
+  flex: none;
+}
+
+/* ---- ordered findings ---- */
+ol.findings { counter-reset: f; list-style: none; padding: 0; margin: 24px 0 0; }
+ol.findings li {
+  counter-increment: f;
+  position: relative;
+  padding-left: 44px;
+  margin-bottom: 24px;
+}
+ol.findings li::before {
+  content: counter(f, decimal-leading-zero);
+  position: absolute;
+  left: 0; top: 1px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: .04em;
+}
+ul.plain { padding-left: 20px; margin: 20px 0 0; }
+ul.plain li { margin-bottom: 14px; }
+
+pre {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 22px 0;
+  color: var(--ink);
+}
+pre code { background: none; border: none; padding: 0; white-space: pre; }
+.cmt { color: var(--ink-3); }
+
+/* chart interaction */
+.slope-dot { transition: r .12s ease; cursor: default; }
+.slope-group:hover .slope-dot { r: 7.5; }
+.slope-group:hover .slope-line { stroke-width: 3.5; }
+.slope-line { transition: stroke-width .12s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .slope-dot, .slope-line { transition: none; }
+}
+a { color: var(--accent); text-underline-offset: 2px; }
+a:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+footer {
+  border-top: 1px solid var(--rule);
+  margin-top: 68px;
+  padding-top: 22px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink-3);
+  line-height: 1.7;
+}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">ZSC-Eval · Overcooked · random0 · Stage 2</p>
+  <h1>MORL&rsquo;s zero-shot deficit</h1>
+  <p class="standfirst">Stage&nbsp;1 showed that agents trained on the objective vector coordinate
+  better with themselves and much worse with strangers. Population training is supposed to repair
+  exactly that. These runs test whether it does.</p>
+
+  <dl class="meta">
+    <div><dt>Layout</dt><dd>random0</dd></div>
+    <div><dt>Stage-2 arms</dt><dd>4</dd></div>
+    <div><dt>Seeds / arm</dt><dd>2</dd></div>
+    <div><dt>Steps / run</dt><dd>1e6</dd></div>
+    <div><dt>Cross-play</dt><dd>39 × 39</dd></div>
+  </dl>
+  <p class="provisional">Pilot — half budget, two seeds</p>
+</header>
+
+<section>
+  <h2>Why these runs exist</h2>
+  <div class="col">
+    <p>The proposal replaces Overcooked&rsquo;s hand-tuned shaping reward with a <strong>vector</strong>
+    of four objectives — task completion, ingredient prep, plating, and coordination — scalarised by a
+    weight vector <code>w</code>. The stage-1 benchmark asked the narrow question: can that vector
+    replace hand-crafted shaping? It can. MORL with adaptive weights reached ~211 training return
+    against hand-shaped self-play&rsquo;s ~198, with no hand-tuned reward term anywhere.</p>
+
+    <p>But it also produced an uncomfortable result. Measured against <em>held-out</em> partners the
+    ordering inverted: hand-shaped self-play scored <span class="mono">52.9</span>, while the two MORL
+    arms scored <span class="mono">12.9</span> and <span class="mono">10.4</span>. The behavioural
+    breakdown said why — a MORL pair performed roughly three times as many counter handoffs as a
+    hand-shaped pair. The <code>coordination</code> objective did exactly what it was asked to do and
+    produced a high-throughput handoff protocol. But a tightly-timed protocol is a <em>convention</em>,
+    and a partner who does not share it cannot join.</p>
+
+    <p>That is a real finding, but it is not a verdict, because stage 1 only ever trains agents against
+    <em>themselves</em>. Self-play on any reward converges to a private convention; a reward that pays
+    for coordination converges to a tighter one. Repairing that is the entire purpose of the second
+    stage of the pipeline, which trains a best-response agent against a frozen <em>population</em> of
+    diverse partners.</p>
+  </div>
+
+  <div class="callout">
+    <span class="label">The question these runs answer</span>
+    <p>Stage 1 measured what each reward produces in self-play. It could not say what the
+    <em>pipeline</em> produces when the population it trains against was raised on the objective
+    vector. If FCP closes the gap, MORL&rsquo;s zero-shot deficit is a stage-1 artifact and the reward
+    design stands. If the gap survives, reward design and partner diversity are addressing different
+    failures — and the MORL component cannot substitute for the population component.</p>
+  </div>
+</section>
+
+<section>
+  <h2>The experiment</h2>
+  <div class="col">
+    <p>One stage-2 run per stage-1 population. Each population is that arm&rsquo;s three seeds at
+    <code>init</code>/<code>mid</code>/<code>final</code> — nine partners — so the arms are matched on
+    population size and differ <em>only</em> in the reward those partners optimised.</p>
+
+    <p>Two controls make the comparison readable. First, the ego agent optimises the <strong>task</strong>
+    reward in every arm; giving the MORL arms a MORL ego reward as well would confound &ldquo;MORL
+    population&rdquo; with &ldquo;MORL ego&rdquo; and neither result could be attributed. Second,
+    <code>--morl_objectives default</code> is passed to every arm, including the ones whose reward it
+    does not touch, so all four report the same behavioural breakdown.</p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Stage-2 arms — what differs is the population, not the ego</caption>
+      <thead>
+        <tr><th>Arm</th><th>Population trained on</th><th>Partners</th><th>Ego reward</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="tag" style="background:var(--s1)"></span>bench_sp</td>
+            <td class="dim" style="text-align:left">sparse + shaping (baseline)</td><td>9</td><td class="dim">task</td></tr>
+        <tr><td><span class="tag" style="background:var(--s2)"></span>bench_morl</td>
+            <td class="dim" style="text-align:left">w · r_vec, uniform fixed w</td><td>9</td><td class="dim">task</td></tr>
+        <tr><td><span class="tag" style="background:var(--s3)"></span>bench_morl_ad</td>
+            <td class="dim" style="text-align:left">w · r_vec, mirror-descent adaptive w</td><td>9</td><td class="dim">task</td></tr>
+        <tr><td><span class="tag" style="background:var(--s4)"></span>mixed</td>
+            <td class="dim" style="text-align:left">bench_sp + bench_morl_ad</td><td>18</td><td class="dim">task</td></tr>
+      </tbody>
+    </table>
+    <p class="note"><code>bench_sparse</code> is deliberately absent: its stage-1 agents never learned
+    to deliver, so a population of them is a population of near-random partners and the run would
+    measure nothing about the reward. <code>mixed</code> is <em>not</em> size-matched — it exists for
+    the reward-diversity question, and its 18 partners are a confound to be read carefully.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Result: the gap narrows but does not close</h2>
+
+  <figure>
+    <div class="chart-frame">
+      <svg viewBox="0 0 800 470" role="img" aria-labelledby="slope-title slope-desc">
+        <title id="slope-title">Zero-shot return before and after stage-2 population training</title>
+        <desc id="slope-desc">Every arm improves from stage 1 to stage 2, by a near-constant 20 to 23
+        points, so the ordering established in stage 1 is preserved. Hand-shaped SP rises from 52.9 to
+        74.4; MORL with uniform weights from 12.9 to 36.2; MORL with adaptive weights from 10.4 to 30.0.</desc>
+
+        <g stroke="var(--rule)" stroke-width="1">
+          <line x1="200" y1="380" x2="600" y2="380"/>
+          <line x1="200" y1="295" x2="600" y2="295"/>
+          <line x1="200" y1="210" x2="600" y2="210"/>
+          <line x1="200" y1="125" x2="600" y2="125"/>
+          <line x1="200" y1="40"  x2="600" y2="40"/>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-3)" text-anchor="end">
+          <text x="186" y="384">0</text>
+          <text x="186" y="299">20</text>
+          <text x="186" y="214">40</text>
+          <text x="186" y="129">60</text>
+          <text x="186" y="44">80</text>
+        </g>
+
+        <g stroke="var(--rule-strong)" stroke-width="1">
+          <line x1="200" y1="40" x2="200" y2="380"/>
+          <line x1="600" y1="40" x2="600" y2="380"/>
+        </g>
+
+        <!-- hand-shaped SP: 52.9 -> 74.4 -->
+        <g class="slope-group">
+          <title>SP population: 52.9 → 74.4 (+21.5)</title>
+          <line class="slope-line" x1="200" y1="155.2" x2="600" y2="63.8" stroke="var(--s1)" stroke-width="2"/>
+          <circle class="slope-dot" cx="200" cy="155.2" r="5.5" fill="var(--s1)" stroke="var(--surface)" stroke-width="2"/>
+          <circle class="slope-dot" cx="600" cy="63.8"  r="5.5" fill="var(--s1)" stroke="var(--surface)" stroke-width="2"/>
+          <text x="614" y="60" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink)" font-weight="500">74.4</text>
+          <text x="614" y="75" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">SP population</text>
+        </g>
+
+        <!-- MORL uniform: 12.9 -> 36.2 -->
+        <g class="slope-group">
+          <title>MORL uniform w population: 12.9 → 36.2 (+23.3)</title>
+          <line class="slope-line" x1="200" y1="325.2" x2="600" y2="226.1" stroke="var(--s2)" stroke-width="2"/>
+          <circle class="slope-dot" cx="200" cy="325.2" r="5.5" fill="var(--s2)" stroke="var(--surface)" stroke-width="2"/>
+          <circle class="slope-dot" cx="600" cy="226.1" r="5.5" fill="var(--s2)" stroke="var(--surface)" stroke-width="2"/>
+          <text x="614" y="222" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink)" font-weight="500">36.2</text>
+          <text x="614" y="237" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">MORL uniform w</text>
+        </g>
+
+        <!-- MORL adaptive: 10.4 -> 30.0 -->
+        <g class="slope-group">
+          <title>MORL adaptive w population: 10.4 → 30.0 (+19.6)</title>
+          <line class="slope-line" x1="200" y1="335.8" x2="600" y2="252.5" stroke="var(--s3)" stroke-width="2"/>
+          <circle class="slope-dot" cx="200" cy="335.8" r="5.5" fill="var(--s3)" stroke="var(--surface)" stroke-width="2"/>
+          <circle class="slope-dot" cx="600" cy="252.5" r="5.5" fill="var(--s3)" stroke="var(--surface)" stroke-width="2"/>
+          <text x="614" y="249" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink)" font-weight="500">30.0</text>
+          <text x="614" y="264" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">MORL adaptive w</text>
+        </g>
+
+        <!-- stage-1 value labels, nudged apart where the two MORL arms nearly touch -->
+        <g font-family="IBM Plex Mono, monospace" font-size="11.5" fill="var(--ink-2)" text-anchor="end">
+          <text x="186" y="159">52.9</text>
+          <text x="186" y="318">12.9</text>
+          <text x="186" y="345">10.4</text>
+        </g>
+
+        <!-- stage-2-only reference points: no stage-1 counterpart, so no line -->
+        <g class="slope-group">
+          <title>Mixed population (18 partners, not size-matched): 71.2</title>
+          <circle class="slope-dot" cx="600" cy="77.4" r="5.5" fill="none" stroke="var(--s4)" stroke-width="2" stroke-dasharray="3 2.4"/>
+          <text x="614" y="92" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink)" font-weight="500">71.2</text>
+          <text x="614" y="106" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">mixed (18 partners)</text>
+        </g>
+        <g class="slope-group">
+          <title>Existing pipeline FCP agent, 48 partners at 500k steps: 13.5</title>
+          <circle class="slope-dot" cx="600" cy="322.6" r="5.5" fill="none" stroke="var(--ink-3)" stroke-width="2" stroke-dasharray="3 2.4"/>
+          <text x="614" y="319" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--ink-2)" font-weight="500">13.5</text>
+          <text x="614" y="333" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)">existing fcp-S2 (undertrained)</text>
+        </g>
+
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-3)" text-anchor="middle">
+          <text x="200" y="410">STAGE 1</text>
+          <text x="200" y="426" font-size="10">self-play</text>
+          <text x="600" y="410">STAGE 2</text>
+          <text x="600" y="426" font-size="10">FCP best response</text>
+        </g>
+        <text x="30" y="212" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-3)"
+              transform="rotate(-90 30 212)" text-anchor="middle">ZERO-SHOT RETURN</text>
+      </svg>
+      <div class="legend">
+        <span><i class="swatch" style="background:var(--s1)"></i>SP population</span>
+        <span><i class="swatch" style="background:var(--s2)"></i>MORL uniform w</span>
+        <span><i class="swatch" style="background:var(--s3)"></i>MORL adaptive w</span>
+        <span><i class="swatch" style="background:var(--s4)"></i>mixed</span>
+        <span><i class="swatch hollow"></i>stage-2 only — no matched stage-1 counterpart</span>
+      </div>
+    </div>
+    <figcaption>Mean return against the eight held-out partners, deterministic evaluation, both
+    seating orders averaged. The held-out set is identical to the one the stage-1 report used, so the
+    two columns are directly comparable — <code>bench_sp</code>&rsquo;s 52.9 reproduces exactly.</figcaption>
+  </figure>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Stage-2 agents — full metric set</caption>
+      <thead>
+        <tr>
+          <th>Stage-2 agent</th><th>Self-play</th><th>ZSC mean</th><th>ZSC worst</th>
+          <th>Spread</th><th>Stability</th><th>BR-Prox*</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="tag" style="background:var(--s1)"></span>on SP population</td>
+            <td>180.0</td><td><strong>74.4</strong></td><td>0.0</td><td>80.6</td><td>17.1</td><td>0.50</td></tr>
+        <tr><td><span class="tag" style="background:var(--s4)"></span>on mixed population</td>
+            <td>90.0</td><td>71.2</td><td>0.0</td><td>60.1</td><td>19.5</td><td>0.50</td></tr>
+        <tr><td><span class="tag" style="background:var(--s2)"></span>on MORL uniform w</td>
+            <td>20.0</td><td>36.2</td><td>0.0</td><td>38.5</td><td>16.3</td><td>0.30</td></tr>
+        <tr><td><span class="tag" style="background:var(--s3)"></span>on MORL adaptive w</td>
+            <td>120.0</td><td>30.0</td><td>0.0</td><td>36.4</td><td>19.1</td><td>0.20</td></tr>
+        <tr><td class="dim"><span class="tag" style="background:var(--ink-3)"></span>existing fcp-S2 (48 partners, 500k)</td>
+            <td class="dim">4.0</td><td class="dim">13.5</td><td class="dim">0.0</td>
+            <td class="dim">26.2</td><td class="dim">13.4</td><td class="dim">0.10</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Self-play and ZSC are deterministic; stability is the standard deviation across
+    repeated stochastic rollouts of the same pair. BR-Prox* is a proxy — the denominator is the best
+    score any policy in the pool achieved with that partner, which is a lower bound on a true best
+    response, so the proxy is optimistic.</p>
+  </div>
+
+  <div class="col">
+    <p>Stage 2 helps every arm. In <em>relative</em> terms it helps the MORL arms most — roughly
+    threefold, against hand-shaped SP&rsquo;s 41%. That is the headline a generous reading would take.</p>
+
+    <p>The absolute numbers say something less generous. The gain is
+    <strong>near-constant across all three arms</strong>: +21.5, +23.3, +19.6. FCP adds a fixed
+    increment; it does not repair the deficit. <code>s2_bench_sp</code> still beats both MORL arms by
+    roughly 2×, which is the stage-1 ordering intact. Every supporting metric agrees — BR-Prox* runs
+    0.50 / 0.30 / 0.20 in the same order.</p>
+  </div>
+
+  <div class="callout warn">
+    <span class="label">Not fixed by any arm</span>
+    <p><strong>Worst-case zero-shot return is 0.0 for every group in the pool</strong>, including
+    <code>s2_bench_sp</code> and the mixed population. On forced coordination, every agent here still
+    fails completely with at least one held-out partner. Nothing in this experiment improves the
+    worst case — only the mean.</p>
+  </div>
+</section>
+
+<section>
+  <h2>The mixed population is the result worth following</h2>
+  <div class="col">
+    <p>The agent trained against <code>bench_sp</code> + <code>bench_morl_ad</code> together reaches
+    <span class="mono">71.2</span> — statistically indistinguishable from the SP-only
+    population&rsquo;s <span class="mono">74.4</span>, from a population that is <strong>half MORL
+    agents</strong>. Reward diversity costs nothing here when it is <em>added to</em> task-shaped
+    partners rather than replacing them.</p>
+
+    <p>The caveat is structural and cannot be argued away in this run: <code>mixed</code> has 18
+    partners against everyone else&rsquo;s 9. Population size and reward diversity are confounded, and
+    a larger population is independently expected to help. This is a hypothesis for a size-matched
+    follow-up — nine partners drawn half from each arm — not yet a finding.</p>
+  </div>
+</section>
+
+<section>
+  <h2>What the agents actually do</h2>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Objective breakdown — team totals per episode, self-play</caption>
+      <thead>
+        <tr><th>Agent</th><th>Deliveries</th><th>Ingredient prep</th><th>Plating</th><th>Handoffs</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="tag" style="background:var(--s1)"></span>s2 on SP population</td>
+            <td>9.0</td><td>28.5</td><td>18.0</td><td>76.0</td></tr>
+        <tr><td><span class="tag" style="background:var(--s3)"></span>s2 on MORL adaptive w</td>
+            <td>6.0</td><td>20.0</td><td>12.0</td><td>54.0</td></tr>
+        <tr><td><span class="tag" style="background:var(--s4)"></span>s2 on mixed</td>
+            <td>4.5</td><td>15.0</td><td>9.5</td><td>39.0</td></tr>
+        <tr><td><span class="tag" style="background:var(--s2)"></span>s2 on MORL uniform w</td>
+            <td>1.0</td><td>5.5</td><td>2.5</td><td>14.0</td></tr>
+        <tr><td class="dim">stage-1 bench_morl_ad, for reference</td>
+            <td class="dim">11.3</td><td class="dim">38.0</td><td class="dim">22.7</td><td class="dim">151.3</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Handoffs are counted for both the agent placing the object on the counter and the
+    one collecting it. The stage-1 MORL row is included to show the scale of what stage 2 gives up:
+    151.3 handoffs in self-play against its best-responding descendant&rsquo;s 54.</p>
+  </div>
+
+  <div class="col">
+    <p>The agent trained on the uniform-weight population barely functions — one delivery, fourteen
+    handoffs, and a deterministic self-play score of 20.0. That number needs a caveat rather than an
+    interpretation: its population contains the stage-1 seed that
+    <strong>collapsed to zero deliveries</strong> at ~1.05M steps under uniform weights, so roughly a
+    third of what it trained against never delivers a soup. It reflects a broken population at least
+    as much as a MORL one, and the <span class="mono">36.2</span> vs <span class="mono">30.0</span>
+    ordering between the two MORL arms should not be read as meaningful.</p>
+  </div>
+</section>
+
+<section>
+  <h2>What this means for the proposal</h2>
+  <ol class="findings">
+    <li><strong>Population training does not substitute for reward design.</strong> The stage-1 report
+    left open the possibility that FCP would repair MORL&rsquo;s brittleness. It improves it and
+    preserves the ranking. The two components address different failures, and this is an argument for
+    combining them — which is what the proposal already plans.</li>
+
+    <li><strong>A MORL population is not a drop-in replacement for a task-shaped one</strong>, but it
+    appears to compose with one at no cost. That is the most actionable direction here, and it is
+    cheap to test properly.</li>
+
+    <li><strong>Worst-case ZSC is untouched.</strong> Every group scores 0.0 against its worst
+    partner. If the proposal cares about worst-case coordination rather than mean, nothing measured
+    here moves it, and a different mechanism will be needed.</li>
+
+    <li><strong>The next run should be size-matched on the mixed arm.</strong> Nine partners drawn
+    half from <code>bench_sp</code> and half from <code>bench_morl_ad</code> separates reward
+    diversity from population size, which is the one question this pilot raised and could not
+    answer.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>How much to trust this</h2>
+  <div class="col">
+    <p>These are pilot numbers, and the honest reading is directional.</p>
+  </div>
+  <ul class="plain">
+    <li><strong>Two seeds at 1e6 steps</strong> — half the budget <code>morl-s2.slurm</code> defaults
+    to. On <code>random0</code>, stage 1 already showed a single seed swinging the fixed-weight
+    result, so the MORL-arm ordering is within noise.</li>
+    <li><strong>One layout, and the one most likely to flatter the coordination objective.</strong>
+    <code>random0</code> is forced coordination — a counter column separates the two cooks, so every
+    ingredient must be handed across. A non-partitioned layout is the obvious replication.</li>
+    <li><strong>The evaluation partners are held-out self-play checkpoints</strong>, not ZSC-Eval&rsquo;s
+    own HSP bias agents, so they are less behaviourally diverse than the benchmark intends.</li>
+    <li><strong>Nine-partner populations</strong> against the pipeline&rsquo;s usual 48. The existing
+    <code>fcp-S2</code> agent at 13.5 was trained for 500k steps against a mixed-quality pool and
+    should not anchor anything.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Reproducing this</h2>
+  <pre><code>cd pipelines
+sbatch morl-s2.slurm random0 "bench_sp bench_morl bench_morl_ad" 1 3 2e6
+bash morl-benchmark-eval.slurm random0 "1 2 3" "bench_sp bench_morl bench_morl_ad"</code></pre>
+  <div class="col">
+    <p>The pilot behind this page ran with two seeds, <code>1e6</code> steps and the experiment-name
+    suffix <code>-pilot</code>, which keeps its checkpoints from colliding with a full run&rsquo;s.
+    Artifacts land in <code>experiments/results/</code>:
+    <code>cross_play_random0_s2_{deterministic,stochastic}.json.gz</code> holds one record per episode,
+    so any statistic on this page can be recomputed without re-running rollouts;
+    <code>metrics_random0_s2.json</code> and <code>training_curves_s2_random0.json</code> hold the
+    derived numbers.</p>
+  </div>
+</section>
+
+<footer>
+  Generated from metrics_random0_s2.json and training_curves_s2_random0.json ·
+  cross-play matrix 39 × 39 = 1521 ordered pairings, evaluated once deterministically
+  and five times stochastically · random0, 2026-08-24
+</footer>
+
+</div>

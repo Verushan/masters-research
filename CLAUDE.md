@@ -134,8 +134,50 @@ Analysis lives in `experiments/`: `fetch_training_curves.py` (W&B → JSON), `an
 leave behaviour closer to balanced). Results land in `experiments/results/`; `experiments/logs/` is
 gitignored.
 
+## MORL stage 2 (does the pipeline fix MORL's zero-shot deficit?)
+
+`pipelines/morl-s2.slurm` takes each stage-1 arm's population through the rest of the FCP pipeline,
+which the stage-1 benchmark could not answer: MORL self-play agents coordinate better with
+themselves and worse with strangers, and repairing exactly that is what population training is for.
+
+One stage-2 run per arm. The population is that arm's three stage-1 seeds at `init`/`mid`/`final`
+(9 partners, `prep/gen_arm_S2_yml.py`), so arms are matched on population size and differ only in
+the reward those partners optimised. The ego agent optimises the **task** reward in every arm —
+giving the MORL arms a MORL ego reward too would confound "MORL population" with "MORL ego".
+`mixed` (bench_sp + bench_morl_ad, 18 partners) is available for the reward-diversity question and
+is deliberately *not* size-matched.
+
+```bash
+cd pipelines && sbatch morl-s2.slurm                       # layout arms seed_begin seed_max steps
+bash morl-benchmark-eval.slurm random0 "1 2 3" "bench_sp bench_morl bench_morl_ad"
+```
+
+The eval script's third argument adds the stage-2 agents to the cross-play pool and switches the
+output files to `*_s2_*`, so the stage-1-only results the current report is built from are not
+overwritten. `experiments/analyze_crossplay.py` groups them as `s2_{arm}`.
+
+- Stage-2 `num_env_steps` is **not** multiplied by population size — the `*= population_size` in
+  `overcooked_runner.train_mep` is the stage-1 branch — so the default 2e6 is 2e6, matched to
+  stage 1 and 4x what the existing (undertrained) `fcp-S2-s16` agent got.
+- `--morl_objectives` buys no extra logging in stage 2: `evaluate_with_multi_policy` drops every
+  key but `eval_ep_sparse_r` / `eval_ep_shaped_r` once `stage == 2` and wandb is on. The stage-2
+  objective breakdown comes from the cross-play pass.
+- Stage-2 metrics are namespaced by policy pair; the aggregate the extractor ranks on is
+  `either-fcp_adaptive-ep_sparse_r`, hence `fetch_training_curves.py --key_prefix`.
+- `extract_S2_models.py` now takes `--exp` (the arms are logged as `fcp-S2-{arm}`, not one of the
+  hardcoded `{algo}-S2-s{size}` names), and its retry loop is bounded — it previously spun forever
+  on a permanent error.
+
 **Gotchas that cost real time:**
 
+- `--s2_suffix` must be passed as `--s2_suffix=-pilot`, not `--s2_suffix -pilot`. Suffixes start
+  with a dash by convention and argparse reads a space-separated `-pilot` as a flag, not a value.
+  `morl-benchmark-eval.slurm` uses the `=` form for this reason.
+- `extract_S2_models.py` writes `{seed}.pt`, so two *finished* W&B runs sharing a seed overwrite each
+  other and the survivor depends on the order W&B returned them in. It now raises on duplicate seeds;
+  the fix is to tag the unwanted runs `unused` in W&B (the extractor's filter already drops
+  `hidden`/`unused`). This is not hypothetical — two concurrent pilot loops left `bench_sp` with four
+  finished runs, two of them from a stale copy of `train_morl_stage_2.sh` with `log_interval 50`.
 - `--use_recurrent_policy` and `--use_wandb` are `action="store_false"` in `zsceval/config.py`.
   Passing them *disables* the feature. That is why `train_sp.sh` passes `--use_recurrent_policy`
   with `algorithm_name=mappo` (which asserts it is False) and why every stage-1 checkpoint is an MLP
