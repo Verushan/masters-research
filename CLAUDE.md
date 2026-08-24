@@ -94,6 +94,63 @@ defaults assume the 400-step horizon, and the floor stops an objective being swi
 MORL checkpoints are ranked by `ep_morl_r` rather than `ep_sparse_r`. Both runs also log
 `ep_obj_{name}` / `eval_ep_obj_{name}` per objective and per agent.
 
+## MORL benchmark
+
+`pipelines/morl-benchmark.slurm` + `pipelines/morl-benchmark-eval.slurm` compare the MORL agent
+against the rest of the pipeline on one layout. Four stage-1 arms differ **only** in the reward the
+PPO buffer sees (`shell/train_morl_benchmark.sh <layout> <arm>`):
+
+| arm | reward |
+| --- | --- |
+| `bench_sp` | `sparse + reward_shaping_factor * shaped` — the ZSC-Eval baseline |
+| `bench_sparse` | sparse only, via `--use_morl --morl_weights "20,0,0,0"` |
+| `bench_morl` | `w · r_vec`, uniform fixed `w` |
+| `bench_morl_ad` | `w · r_vec`, mirror-descent adaptive `w` |
+
+`--morl_objectives default` is passed to every arm, including the two whose reward it does not
+touch, so all four log the same `ep_obj_*` breakdown and are directly comparable. Unlike
+`train_sp.sh`, the entropy and reward-shaping horizons are scaled to `num_env_steps` — on a 2e6-step
+run the upstream `0 5e6 1e7` schedule never leaves the 0.2 entropy phase, which is why the older
+1e6-step `sp` runs plateau near 45 sparse while these reach ~200.
+
+```bash
+cd pipelines && bash morl-benchmark.slurm                  # train + extract 4 arms
+bash morl-benchmark-eval.slurm random0 "1 2 3"             # cross-play + analysis
+```
+
+Evaluation is `eval/cross_play.py`, not `eval/eval.py`: it loads the pool once and gives each env
+thread a different pairing, so a full matrix costs one process instead of one per cell, and it
+writes one record per episode so mean / worst-case / variance are all derivable afterwards. The pool
+comes from `prep/gen_crossplay_yml.py` (arms + FCP stage-2 agent + held-out stage-1 partners).
+
+Two passes are run. Deterministic is the canonical ZSC-Eval number — fixed start state plus argmax
+actions means a pair replays identically, so one episode per cell is the entire distribution and
+repeats would be duplicate rows. Stochastic (`--eval_stochastic`) is the only pass in which repeated
+rollouts of one pair differ, so it is the only one that can report return stability.
+
+Analysis lives in `experiments/`: `fetch_training_curves.py` (W&B → JSON), `analyze_crossplay.py`
+(self-play / ZSC mean / worst-case / spread / stability / BR-Prox proxy), `analyze_preferences.py`
+(did the mirror-descent weights move, did they track the realised objective shares, did adapting
+leave behaviour closer to balanced). Results land in `experiments/results/`; `experiments/logs/` is
+gitignored.
+
+**Gotchas that cost real time:**
+
+- `--use_recurrent_policy` and `--use_wandb` are `action="store_false"` in `zsceval/config.py`.
+  Passing them *disables* the feature. That is why `train_sp.sh` passes `--use_recurrent_policy`
+  with `algorithm_name=mappo` (which asserts it is False) and why every stage-1 checkpoint is an MLP
+  loaded through `mlp_policy_config.pkl`. The stage-2 `fcp_adaptive` agent *is* recurrent and needs
+  `rnn_policy_config.pkl`.
+- `--dummy_batch_size` is envs per worker process, not a minibatch size. Setting it equal to
+  `--n_eval_rollout_threads` puts every env in one process and serialises the run.
+- Per-agent episode counters (`ep_sparse_r_by_agent`, `ep_category_r_by_agent`, `ep_vec_r_by_agent`)
+  are reported in **base-env player order**, while rewards are swapped into ego order. They agree
+  only because `--random_index` defaults to False; `cross_play.py` asserts on it.
+- `random0` is forced coordination — a counter column separates the two agents, so every onion and
+  dish must be handed across it. Self-play agents converge on a private protocol and their cross-play
+  sparse return collapses to 0 with anyone else, which is why the objective breakdown, not the
+  return, is what discriminates methods there.
+
 There is no test suite and no lint target. The submodule has a `.pre-commit-config.yaml` (black at line-length 120, isort, autoflake) but the fork's files have been reformatted at black's default 88 columns — running pre-commit would rewrite large parts of the diff, so don't run it opportunistically.
 
 ## Pipeline architecture

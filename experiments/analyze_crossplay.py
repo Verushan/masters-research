@@ -28,6 +28,7 @@ Usage:
 """
 
 import argparse
+import gzip
 import json
 import re
 from collections import defaultdict
@@ -42,8 +43,10 @@ OBJECTIVES = ["task_completion", "ingredient_prep", "plating", "coordination"]
 GROUPS = [
     ("bench_sp", r"^bench_sp_s\d+$", "SP (sparse + hand-shaped)"),
     ("bench_sparse", r"^bench_sparse_s\d+$", "SP (sparse only)"),
-    ("bench_morl", r"^bench_morl_s\d+$", "MORL (fixed weights)"),
-    ("bench_morl_ad", r"^bench_morl_ad_s\d+$", "MORL (adaptive weights)"),
+    ("bench_morl", r"^bench_morl_s\d+$", "MORL (fixed w, final)"),
+    ("bench_morl_peak", r"^bench_morl_s\d+_peak$", "MORL (fixed w, peak)"),
+    ("bench_morl_ad", r"^bench_morl_ad_s\d+$", "MORL (adaptive w, final)"),
+    ("bench_morl_ad_peak", r"^bench_morl_ad_s\d+_peak$", "MORL (adaptive w, peak)"),
     ("fcp_s2", r"^fcp_s2_s\d+$", "FCP stage-2 (population)"),
     ("heldout", r"^heldout_", "Held-out partners"),
 ]
@@ -59,7 +62,11 @@ def group_of(name):
 def load(paths):
     rows = []
     for path in paths:
-        blob = json.load(open(path))
+        # The raw episode dumps compress ~35x and are committed gzipped, so accept
+        # either form and let the caller name whichever is on disk.
+        opener = gzip.open if str(path).endswith(".gz") else open
+        with opener(path, "rt", encoding="utf-8") as f:
+            blob = json.load(f)
         tag = "stochastic" if blob.get("eval_stochastic") else "deterministic"
         for record in blob["records"]:
             record["mode"] = tag

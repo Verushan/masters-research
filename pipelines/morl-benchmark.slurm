@@ -56,3 +56,11 @@ python extract_models/extract_sp_models.py $LAYOUT overcooked bench_sp      ep_s
 python extract_models/extract_sp_models.py $LAYOUT overcooked bench_sparse  ep_sparse_r
 python extract_models/extract_sp_models.py $LAYOUT overcooked bench_morl    ep_morl_r
 python extract_models/extract_sp_models.py $LAYOUT overcooked bench_morl_ad ep_morl_r
+
+# The MORL arms' own reward and the task's return can come apart -- a run whose
+# scalarized reward keeps climbing while deliveries stop would otherwise be
+# benchmarked only on the policy it collapsed to. Also take the checkpoint where
+# sparse return actually peaked, so the report can separate "what this reward
+# reached" from "where it ended up".
+python extract_models/extract_peak_models.py --layout $LAYOUT --env Overcooked \
+    --exp bench_morl --exp bench_morl_ad --metric ep_sparse_r

@@ -93,7 +93,17 @@ def main():
                 entry["mean_imbalance"] = float(np.mean(imbalance))
 
             w_steps, weights = aligned(series, [f"ep_morl_w_{o}" for o in OBJECTIVES])
-            if w_steps is not None:
+            # Drift is measured against the 1/K the update resets to, so it only
+            # means anything for weights that live on the simplex. bench_sparse
+            # uses w = (20,0,0,0) -- a scalarization, not a preference vector --
+            # and would otherwise report a drift of 20.5 that describes nothing.
+            on_simplex = w_steps is not None and np.allclose(weights.sum(axis=-1), 1.0, atol=1e-6)
+            if w_steps is not None and not on_simplex:
+                entry["weights_off_simplex"] = True
+                entry["fixed_weights"] = {
+                    o: float(weights[0, i]) for i, o in enumerate(OBJECTIVES)
+                }
+            if on_simplex:
                 entry["weight_steps"] = w_steps.tolist()
                 entry["weights"] = {o: weights[:, i].tolist() for i, o in enumerate(OBJECTIVES)}
                 entry["final_weights"] = {

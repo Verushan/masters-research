@@ -40,8 +40,11 @@ conda activate zsceval
 
 LAYOUT=${1:-random0}
 ARM_SEEDS=${2:-"1 2 3"}
-THREADS=10
-EPISODES_STOCHASTIC=8
+THREADS=12
+# Envs per worker process, not a minibatch size: dummy_batch_size == THREADS
+# would put every env in one process and serialise the whole matrix.
+DUMMY=2
+EPISODES_STOCHASTIC=5
 RESULTS=$PYTHONPATH/../experiments/results
 
 cd $PYTHONPATH/zsceval/scripts
@@ -58,7 +61,7 @@ cd overcooked
 
 common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
         --num_agents 2 --seed 1 --episode_length 400 --overcooked_version old
-        --n_eval_rollout_threads $THREADS --dummy_batch_size $THREADS
+        --n_eval_rollout_threads $THREADS --dummy_batch_size $DUMMY
         --n_training_threads 2 --morl_objectives default
         --population_yaml_path $YML
         --ego_policy_names $AGENTS --partner_policy_names $AGENTS)
@@ -80,3 +83,8 @@ python experiments/analyze_crossplay.py \
     --records experiments/results/cross_play_${LAYOUT}_deterministic.json \
               experiments/results/cross_play_${LAYOUT}_stochastic.json \
     --out experiments/results/metrics_${LAYOUT}.json
+
+# The per-episode dumps are the expensive artifact -- ~45 min of rollouts -- and
+# compress about 35x, so they are kept gzipped. analyze_crossplay.py reads either.
+gzip -9 -f experiments/results/cross_play_${LAYOUT}_deterministic.json \
+           experiments/results/cross_play_${LAYOUT}_stochastic.json
