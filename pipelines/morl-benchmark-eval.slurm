@@ -4,7 +4,7 @@
 #SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/morl-benchmark-eval.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1
-#SBATCH -c 16
+#SBATCH -c 14
 #SBATCH -t 8:00:00
 
 # MORL benchmark, evaluation half. Run after morl-benchmark.slurm has trained

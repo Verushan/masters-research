@@ -4,7 +4,7 @@
 #SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/sp-run.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1                   # Number of tasks (processes)
-#SBATCH -c 16                  # Number of CPU cores per task
+#SBATCH -c 14                  # Number of CPU cores per task
 #SBATCH -t 36:00:00            # Max runtime (hh:mm:ss)
 
 if [ -f ../.env ]; then

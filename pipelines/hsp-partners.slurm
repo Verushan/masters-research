@@ -4,9 +4,16 @@
 #SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/hsp-partners-%a.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1
-#SBATCH -c 16
-#SBATCH -t 24:00:00
+#SBATCH -c 14
+#SBATCH -t 36:00:00
 #SBATCH --array=0-2
+
+# -c 14 is one whole bigbatch node (14 CPUs, 124 GB). The partition rejects
+# anything larger -- that is what "cpu count per node cannot be satisfied"
+# means, and every pipeline in this repo asked for 16 until it was measured.
+# stampede has 16 CPUs but a quarter of the memory; bigbatch's 48 nodes make a
+# 3-task array easy to place. The concurrency below sizes itself to whatever
+# the allocation actually is, so changing -c needs no other edit.
 
 # Train the HSP bias agents that ZSC-Eval evaluates zero-shot coordination
 # against, so the ZSC metric stops depending on held-out self-play checkpoints.
@@ -80,14 +87,29 @@ EXP=${EXP:-hsp-s1}
 EXCLUDE=${EXCLUDE:-}
 
 # Measured on a 20-thread box: throughput peaks near 5 worker processes, and two
-# concurrent runs give ~2x aggregate while three collapse. ROLLOUT_THREADS is
-# split into worker processes by DUMMY_BATCH_SIZE (12/4 = 3 workers + a main),
-# so CONCURRENCY=2 fits the 16 cores this job asks for.
+# concurrent runs give ~2x aggregate while three collapse.
+#
+# ROLLOUT_THREADS is deliberately NOT scaled to the allocation: it is the number
+# of envs in the PPO batch, so changing it changes the learning dynamics, and a
+# partner set trained at two different batch sizes is not one partner set.
+# Concurrency is pure scheduling and can safely follow the node.
 export ROLLOUT_THREADS=${ROLLOUT_THREADS:-12}
 export DUMMY_BATCH_SIZE=${DUMMY_BATCH_SIZE:-4}
 export TRAINING_THREADS=${TRAINING_THREADS:-4}
 export HSP_EVAL_THREADS=${HSP_EVAL_THREADS:-20}
-CONCURRENCY=${CONCURRENCY:-2}
+
+# Fit the batch size to the allocation instead of assuming the 16 cores this
+# file used to ask for. ROLLOUT_THREADS envs are split into worker processes of
+# DUMMY_BATCH_SIZE each, plus a main process per run. Oversubscribing is worse
+# than running fewer seeds at once: the workers step in lockstep, so a run
+# proceeds at the pace of its slowest env.
+CPUS=${SLURM_CPUS_PER_TASK:-$(nproc)}
+PER_RUN=$(( ROLLOUT_THREADS / DUMMY_BATCH_SIZE + 1 ))
+if [ -z "$CONCURRENCY" ]; then
+    CONCURRENCY=$(( CPUS / PER_RUN ))
+    [ "$CONCURRENCY" -lt 1 ] && CONCURRENCY=1
+    [ "$CONCURRENCY" -gt 2 ] && CONCURRENCY=2
+fi
 
 # Per-seed training output. The batch loop only reports pass/fail, so this is
 # where a failed seed's traceback actually is. experiments/logs/ is gitignored.
@@ -115,6 +137,7 @@ echo "layout      $LAYOUT"
 echo "exp         $EXP"
 echo "steps       $STEPS"
 echo "seeds (k=$K) $SEEDS"
+echo "cpus        $CPUS ($PER_RUN per run)"
 echo "concurrency $CONCURRENCY"
 echo "logs        $LOGDIR"
 echo "started     $(date)"

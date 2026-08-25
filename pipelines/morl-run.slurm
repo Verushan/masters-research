@@ -4,7 +4,7 @@
 #SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/morl-run.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1                   # Number of tasks (processes)
-#SBATCH -c 16                  # Number of CPU cores per task
+#SBATCH -c 14                  # Number of CPU cores per task
 #SBATCH -t 36:00:00            # Max runtime (hh:mm:ss)
 
 # Stage 1 for the MORL agent: self-play trained on the scalarized objective
