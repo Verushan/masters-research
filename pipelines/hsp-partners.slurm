@@ -93,7 +93,12 @@ EXCLUDE=${EXCLUDE:-}
 # of envs in the PPO batch, so changing it changes the learning dynamics, and a
 # partner set trained at two different batch sizes is not one partner set.
 # Concurrency is pure scheduling and can safely follow the node.
-export ROLLOUT_THREADS=${ROLLOUT_THREADS:-12}
+#
+# The name is deliberately not ROLLOUT_THREADS: .env exports a repo-wide value
+# (16 on the cluster, 4 locally), so a ${ROLLOUT_THREADS:-12} default would
+# never have applied and the partner sets would have been trained at whatever
+# batch size the machine's .env happened to carry.
+export ROLLOUT_THREADS=${HSP_ROLLOUT_THREADS:-12}
 export DUMMY_BATCH_SIZE=${DUMMY_BATCH_SIZE:-4}
 export TRAINING_THREADS=${TRAINING_THREADS:-4}
 export HSP_EVAL_THREADS=${HSP_EVAL_THREADS:-20}
