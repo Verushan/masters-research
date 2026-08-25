@@ -36,9 +36,10 @@ fi
 
 conda activate zsceval
 
-LAYOUT="random0"
-SEED_BEGIN=1
-SEED_MAX=3
+# Usage: sbatch morl-benchmark.slurm [layout] [seed_begin] [seed_max]
+LAYOUT=${1:-random0}
+SEED_BEGIN=${2:-1}
+SEED_MAX=${3:-3}
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
 

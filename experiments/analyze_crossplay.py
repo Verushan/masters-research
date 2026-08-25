@@ -52,7 +52,8 @@ GROUPS = [
     ("s2_bench_morl_ad", r"^s2_bench_morl_ad_s\d+$", "FCP S2 on MORL (adaptive w) population"),
     ("s2_mixed", r"^s2_mixed_s\d+$", "FCP S2 on mixed population"),
     ("fcp_s2", r"^fcp_s2_s\d+$", "FCP stage-2 (pipeline, 16x3 SP)"),
-    ("heldout", r"^heldout_", "Held-out partners"),
+    ("heldout", r"^heldout_sp", "Held-out partners (self-play)"),
+    ("heldout_hsp", r"^heldout_hsp", "Held-out partners (HSP bias agents)"),
 ]
 
 
