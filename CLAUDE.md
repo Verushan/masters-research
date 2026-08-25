@@ -38,6 +38,9 @@ cd pipelines && bash sp-run.slurm
 # MORL agent: stage-1 self-play on the objective-vector reward
 cd pipelines && sbatch morl-run.slurm
 
+# HSP bias agents: the held-out partner set the ZSC metric is measured against
+cd pipelines && sbatch hsp-partners.slurm
+
 # Render/eval two named policies against each other
 cd pipelines && bash eval-run.slurm
 
@@ -194,6 +197,84 @@ overwritten. `experiments/analyze_crossplay.py` groups them as `s2_{arm}`.
   return, is what discriminates methods there.
 
 There is no test suite and no lint target. The submodule has a `.pre-commit-config.yaml` (black at line-length 120, isort, autoflake) but the fork's files have been reformatted at black's default 88 columns — running pre-commit would rewrite large parts of the diff, so don't run it opportunistically.
+
+## HSP partners (the held-out set the ZSC metric is measured against)
+
+`pipelines/hsp-partners.slurm` trains the partners the zero-shot number is computed against.
+Before it, `gen_crossplay_yml.py` drew them from a pre-existing `sp` pool that only ever existed
+for `random0`, so no cross-layout comparison was possible. HSP bias agents are what ZSC-Eval
+actually intends: they can be produced for any layout, and reward-randomised agents are far more
+behaviourally diverse than self-play checkpoints of one reward.
+
+Each agent is a pair. `w0` is the biased policy — a reward vector drawn from the enumerated
+candidate space — and `w1` is a plain sparse-reward partner trained alongside it. **Only `w0` is
+worth evaluating against**; `w1` is an artefact of how the pair is trained, which is why
+`gen_crossplay_yml.py` only ever references `hsp{i}_{tag}_w0_actor.pt`.
+
+`w0` is an *enumeration*, not a random draw: `train_bias_agent.py` takes the product of the
+bracketed ranges in `shell/train_bias_agents.sh`, filters to at most three non-zero bias terms, and
+picks `candidates[(seed + w0_offset) % len]`. A contiguous or evenly-strided seed range therefore
+aliases onto a corner of the space — `itertools.product` varies the *last* dimension fastest and
+`sparse_r` is last, so any even stride pins it to one level. `seed_max` in the shell script is also
+not the candidate count (176 vs an actual 52 for `random3` / `unident_s`), so seeds past the count
+wrap and silently retrain duplicates.
+
+`prep/select_hsp_seeds.py` (fork-only) does the picking instead: greedy max-min over the bias terms,
+each dimension scaled to unit range first so the ±20 terms do not swamp the ±0.1 ones. It also drops
+the vectors where idling out-earns cooking — but only when nothing in the vector pays to act, since
+a +10 dispenser pickup sits inside the delivery loop and rescues a vector that looks idle-dominant
+on the STAY term alone. Selection is deterministic, so a layout name reproduces its seed list.
+
+| layout | candidates | usable after the idle filter |
+| --- | --- | --- |
+| `random0` | 30 | 28 |
+| `random3` | 52 | 48 |
+| `unident_s` | 52 | 48 |
+
+```bash
+cd pipelines && sbatch hsp-partners.slurm              # one array task per layout
+sbatch --array=0 hsp-partners.slurm                    # random0 only
+sbatch -p stampede -c 16 hsp-partners.slurm            # override partition/cores at submit time
+
+cd $PYTHONPATH/zsceval/scripts
+python prep/select_hsp_seeds.py random3 -k 16          # inspect the seed list without training
+python prep/gen_crossplay_yml.py random0 --heldout hsp --hsp_partners auto
+```
+
+Knobs are environment variables (`LAYOUTS K STEPS EXP EXCLUDE CONCURRENCY HSP_ROLLOUT_THREADS`) so
+they survive `sbatch --export`. Budget is 2e6 steps against upstream's 1e7: a `random0` pilot at that
+budget reached 156–200 sparse return against `select_bias_agent_br.py`'s filter threshold of 10.
+
+Cross-play then takes `--heldout {sp,hsp,both}`, and `analyze_crossplay.py` reports the HSP partners
+as their own group — pass `--partner_group heldout_hsp`. The two sets are deliberately *not* merged:
+the ZSC metric averages over a single partner group, and mixing bias agents with self-play
+checkpoints would average two different evaluations.
+
+**Gotchas that cost real time:**
+
+- **`.env` silently overrides pipeline defaults.** It exports a repo-wide `ROLLOUT_THREADS` (16 on
+  the cluster, 4 locally) and is loaded *before* a script's own defaults, so `${ROLLOUT_THREADS:-12}`
+  never applies. That variable is the PPO batch size, so each machine would train partners at a
+  different one and the layouts stop being comparable. `hsp-partners.slurm` reads
+  `HSP_ROLLOUT_THREADS` for exactly this reason. Any new pipeline wanting a value `.env` also sets
+  needs its own name too.
+- **`bigbatch` nodes have 14 CPUs, not 16.** Every `#SBATCH -c 16` in this repo was rejected with
+  `cpu count per node cannot be satisfied`, which is why the slurm files sat unused while the runs
+  happened on a workstation. `stampede` is the only 16-CPU partition and has a quarter of the memory.
+  `hsp-partners.slurm` sizes its concurrency from `SLURM_CPUS_PER_TASK`, so `-c` can be overridden at
+  submit time without editing the file; the other pipelines still hardcode their thread counts.
+- **The experiment name is case-sensitive.** Upstream's `train_bias_agents.sh` writes `hsp-S1` while
+  `extract_bias_agents_models.py` looks for `hsp-s1`, and the W&B filter does not fold case, so the
+  upstream pair never matched. The fork defaults both to `hsp-s1`; the extractor takes an optional
+  third positional to override it for pilots under another name.
+- **The bias extractor writes `mid` and `final` only** — not `init`, unlike `extract_sp_models.py`.
+  `HSP_TAGS` in `gen_crossplay_yml.py` defaults to `["final"]`.
+- Extraction reads the **W&B API**, so runs must be finished and synced. `WANDB_MODE=offline` means
+  nothing is extracted until `util/sync-wandb.slurm` has run — worth checking before a job whose
+  extraction step is 6 hours away.
+- A seed that dies does not abort its layout: extraction only picks up finished runs, so the
+  survivors are still a usable pool. Per-seed output goes to `experiments/logs/hsp/{layout}/`
+  (gitignored) — the batch loop only reports pass/fail, so that is where a traceback actually is.
 
 ## Pipeline architecture
 
