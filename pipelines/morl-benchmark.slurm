@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -J ZSCEvalMORLBench
-#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/morl-benchmark.log
-#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/morl-benchmark.err
+#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/logs/morl-benchmark-%j.log
+#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/logs/morl-benchmark-%j.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1
 #SBATCH -c 14
@@ -22,6 +22,10 @@
 # column, so every onion and dish must be handed across it. That makes it the
 # layout where the `coordination` objective -- which the hand-crafted shaping
 # does not reward at all -- has the most to say.
+#
+# The layout is a positional argument, so one submission per layout. Logs are
+# keyed by %j because two layouts submitted concurrently would otherwise write
+# the same file -- there is no array index here to tell them apart.
 
 if [ -f ../.env ]; then
     export $(grep -v '^#' ../.env | xargs)
