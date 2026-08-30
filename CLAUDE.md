@@ -236,13 +236,19 @@ cd pipelines && sbatch hsp-partners.slurm              # one array task per layo
 sbatch --array=0 hsp-partners.slurm                    # random0 only
 sbatch -p stampede -c 16 hsp-partners.slurm            # override partition/cores at submit time
 
+# top up one layout with named seeds, skipping selection entirely
+LAYOUTS=random3 SEEDS="41 42 50 51" sbatch --array=0 --export=ALL hsp-partners.slurm
+
 cd $PYTHONPATH/zsceval/scripts
 python prep/select_hsp_seeds.py random3 -k 16          # inspect the seed list without training
 python prep/gen_crossplay_yml.py random0 --heldout hsp --hsp_partners auto
 ```
 
-Knobs are environment variables (`LAYOUTS K STEPS EXP EXCLUDE CONCURRENCY HSP_ROLLOUT_THREADS`) so
-they survive `sbatch --export`. Budget is 2e6 steps against upstream's 1e7: a `random0` pilot at that
+Knobs are environment variables (`LAYOUTS SEEDS K STEPS EXP EXCLUDE CONCURRENCY
+HSP_ROLLOUT_THREADS`) so they survive `sbatch --export`. `SEEDS` bypasses `select_hsp_seeds.py`
+entirely, which is how a layout is topped up after losing seeds: selection is deterministic, so seed
+*n* still denotes the same `w0` it did on the first attempt, and re-selecting with the same `-k`
+would retrain everything that already succeeded. Budget is 2e6 steps against upstream's 1e7: a `random0` pilot at that
 budget reached 156–200 sparse return against `select_bias_agent_br.py`'s filter threshold of 10.
 
 Cross-play then takes `--heldout {sp,hsp,both}`, and `analyze_crossplay.py` reports the HSP partners
@@ -269,9 +275,30 @@ checkpoints would average two different evaluations.
   third positional to override it for pilots under another name.
 - **The bias extractor writes `mid` and `final` only** — not `init`, unlike `extract_sp_models.py`.
   `HSP_TAGS` in `gen_crossplay_yml.py` defaults to `["final"]`.
-- Extraction reads the **W&B API**, so runs must be finished and synced. `WANDB_MODE=offline` means
-  nothing is extracted until `util/sync-wandb.slurm` has run — worth checking before a job whose
-  extraction step is 6 hours away.
+- **The separated runner did not upload its checkpoints.** Bias agents train through
+  `runner/separated/`, whose `save()` wrote each actor into `wandb.run.dir` but never called
+  `wandb.save()`. Older wandb clients swept the run directory up at exit; 0.25.0 only uploads
+  registered files, so every bias-agent checkpoint stayed local while the *shared* runner — which
+  does call it — kept working. `extract_bias_agents_models.py` reads the W&B API, so it found an
+  empty file list and died on `max() arg is an empty sequence` *after* logging the first run's
+  return, which made it look like the second run was at fault. Both halves are fixed: the runner
+  registers its checkpoints, and the extractor falls back to the run's own directory under
+  `$PYTHONPATH/results/{env}/{layout}/{algo}/{exp}/wandb/run-*-{run_id}/files/` when W&B has none.
+  Runs trained before the fix have checkpoints **only on the machine that trained them**.
+- Extraction still reads the **W&B API** for run state and the `ep_sparse_r` curve that picks the
+  `mid` checkpoint, so runs must be finished and synced. `WANDB_MODE=offline` means nothing is
+  extracted until `util/sync-wandb.slurm` has run — worth checking before a job whose extraction
+  step is 6 hours away.
+- **The layouts do not train at one pace, and the wall clock was sized on the fastest.** Measured
+  over array 46291 at concurrency 2: `random0` 3.2 h/seed (16 seeds in 26 h), `random3` 5.2 h/seed
+  (~42 h), `unident_s` 5.9 h/seed (~47 h). The 36 h wall the pipeline used to carry cost the two
+  slower layouts four seeds. It is now `72:00:00`, the cluster maximum; a `k` much above 16 needs
+  higher concurrency or a split submission, because there is no more wall to buy.
+- **A top-up submission is a one-task array, so its `%a` is 0 — the same as any other.** Job logs are
+  `logs/hsp-partners-%A_%a.{log,err}` so two concurrent top-ups do not write the same file.
+- **Concurrent seeds raced to create the shared run directory.** `train_bias_agent.py` used a
+  test-then-`makedirs`, and the loser died before `wandb.init()` — leaving no W&B run at all, only a
+  traceback in the per-seed log. Now `exist_ok=True`.
 - A seed that dies does not abort its layout: extraction only picks up finished runs, so the
   survivors are still a usable pool. Per-seed output goes to `experiments/logs/hsp/{layout}/`
   (gitignored) — the batch loop only reports pass/fail, so that is where a traceback actually is.
