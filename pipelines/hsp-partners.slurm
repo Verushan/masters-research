@@ -1,12 +1,16 @@
 #!/bin/bash -l
 #SBATCH -J ZSCEvalHSPPartners
-#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/hsp-partners-%a.log
-#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/hsp-partners-%a.err
+#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/logs/hsp-partners-%A_%a.log
+#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/logs/hsp-partners-%A_%a.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1
 #SBATCH -c 14
 #SBATCH -t 72:00:00
 #SBATCH --array=0-2
+
+# %A_%a, not %a: a top-up submission is a one-task array, so two of them
+# concurrently are both task 0 and would write the same log. The job id keeps
+# them apart and keeps the previous attempt's log around to compare against.
 
 # -c 14 is one whole bigbatch node (14 CPUs, 124 GB). The partition rejects
 # anything larger -- that is what "cpu count per node cannot be satisfied"
