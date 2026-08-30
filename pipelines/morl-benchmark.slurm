@@ -45,6 +45,15 @@ LAYOUT=${1:-random0}
 SEED_BEGIN=${2:-1}
 SEED_MAX=${3:-3}
 
+# Same trap HSP_ROLLOUT_THREADS exists for: .env exports a repo-wide
+# ROLLOUT_THREADS (16 on the cluster, 4 on the workstation) and is loaded above,
+# so train_morl_benchmark.sh would take whichever value the machine happens to
+# carry. That is the PPO batch size. The random0 arms were trained at 12 on the
+# workstation, so a cluster run at 16 produces arms that are NOT comparable with
+# them -- and a cross-layout comparison is the whole point of running this on a
+# second layout. Pin it, and override deliberately if it ever needs to change.
+export ROLLOUT_THREADS=${MORL_ROLLOUT_THREADS:-12}
+
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
 # Cheap offline assertion that the MORL reward path is what we think it is.
