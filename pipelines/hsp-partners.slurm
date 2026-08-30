@@ -5,7 +5,7 @@
 #SBATCH --partition=bigbatch
 #SBATCH -n 1
 #SBATCH -c 14
-#SBATCH -t 36:00:00
+#SBATCH -t 72:00:00
 #SBATCH --array=0-2
 
 # -c 14 is one whole bigbatch node (14 CPUs, 124 GB). The partition rejects
@@ -37,8 +37,14 @@
 # horizons scaled to the budget) reached 156-200 sparse return against a filter
 # threshold of 10, so a fifth of the upstream budget is enough here. Of six
 # pilot agents, five cleared the filter; the one that did not is idle-dominant,
-# which prep/select_hsp_seeds.py now excludes up front. At 2 concurrent runs a
-# 2e6 seed takes ~40 min, so 16 seeds is ~5-6 h per layout.
+# which prep/select_hsp_seeds.py now excludes up front.
+#
+# -t is 72:00:00, the cluster maximum, because the layouts do not run at one
+# pace. Measured over array 46291 at concurrency 2: random0 3.2 h/seed (16 seeds
+# in 26 h), random3 5.2 h/seed (~42 h), unident_s 5.9 h/seed (~47 h). The 36 h
+# wall this file used to carry was sized on random0 alone and cost the other two
+# layouts four seeds between them. 47 h fits in 72 h; nothing larger does, so a
+# k much above 16 needs either higher concurrency or a split submission.
 #
 # Seed choice is delegated to prep/select_hsp_seeds.py rather than a range: w0 is
 # an *enumeration*, not a random draw, so a contiguous or evenly-strided range
@@ -51,8 +57,11 @@
 #   sbatch --export=ALL,K=8,STEPS=1e6 hsp-partners.slurm
 #   bash hsp-partners.slurm random3                 # locally, one layout
 #
-# Knobs (environment, so they survive --export): LAYOUTS K STEPS EXP EXCLUDE
-# CONCURRENCY ROLLOUT_THREADS DUMMY_BATCH_SIZE TRAINING_THREADS.
+#   # top up one layout with named seeds, skipping selection entirely
+#   LAYOUTS=random3 SEEDS="41 42 50 51" sbatch --array=0 --export=ALL hsp-partners.slurm
+#
+# Knobs (environment, so they survive --export): LAYOUTS SEEDS K STEPS EXP
+# EXCLUDE CONCURRENCY HSP_ROLLOUT_THREADS DUMMY_BATCH_SIZE TRAINING_THREADS.
 
 SUBMIT_DIR="${SLURM_SUBMIT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 
@@ -123,25 +132,38 @@ mkdir -p "$LOGDIR"
 
 cd $PYTHONPATH/zsceval/scripts || exit 1
 
-EXCLUDE_FLAG=""
-[ -n "$EXCLUDE" ] && EXCLUDE_FLAG="--exclude $EXCLUDE"
-# select_hsp_seeds.py logs the candidate count and how many idle-dominant
-# vectors it dropped to stderr; that is the provenance for the seed list, so it
-# is kept in the job log rather than discarded, and reprinted whole on failure.
-SEED_OUT=$(python prep/select_hsp_seeds.py $LAYOUT -k $K $EXCLUDE_FLAG 2>&1)
-SEEDS=$(printf '%s\n' "$SEED_OUT" | grep '^seeds: ' | sed 's/^seeds: //')
-if [ -z "$SEEDS" ]; then
-    echo "seed selection failed for $LAYOUT:"
-    printf '%s\n' "$SEED_OUT"
-    exit 1
+# An explicit SEEDS list bypasses selection. This is how a layout is topped up
+# after losing seeds to the wall clock: selection is deterministic, so seed n
+# still denotes the same w0 it did on the first attempt, and re-selecting with
+# the same -k would retrain every seed that already succeeded.
+if [ -n "$SEEDS" ]; then
+    # commas are accepted because sbatch --export splits its own value on them;
+    # the reliable way to pass a space-separated list is to export it first.
+    SEEDS=$(echo "$SEEDS" | tr ',' ' ')
+    SEED_SOURCE="explicit"
+else
+    SEED_SOURCE="select_hsp_seeds.py (k=$K)"
+    EXCLUDE_FLAG=""
+    [ -n "$EXCLUDE" ] && EXCLUDE_FLAG="--exclude $EXCLUDE"
+    # select_hsp_seeds.py logs the candidate count and how many idle-dominant
+    # vectors it dropped to stderr; that is the provenance for the seed list, so
+    # it is kept in the job log rather than discarded, and reprinted on failure.
+    SEED_OUT=$(python prep/select_hsp_seeds.py $LAYOUT -k $K $EXCLUDE_FLAG 2>&1)
+    SEEDS=$(printf '%s\n' "$SEED_OUT" | grep '^seeds: ' | sed 's/^seeds: //')
+    if [ -z "$SEEDS" ]; then
+        echo "seed selection failed for $LAYOUT:"
+        printf '%s\n' "$SEED_OUT"
+        exit 1
+    fi
+    printf '%s\n' "$SEED_OUT" | grep -E "candidates,|usable candidates|dropped"
 fi
-printf '%s\n' "$SEED_OUT" | grep -E "candidates,|usable candidates|dropped"
 
 echo "=========================================================="
 echo "layout      $LAYOUT"
 echo "exp         $EXP"
 echo "steps       $STEPS"
-echo "seeds (k=$K) $SEEDS"
+echo "seeds       $SEEDS"
+echo "  from      $SEED_SOURCE"
 echo "cpus        $CPUS ($PER_RUN per run)"
 echo "concurrency $CONCURRENCY"
 echo "logs        $LOGDIR"
