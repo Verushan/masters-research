@@ -85,10 +85,22 @@ so any existing sp/fcp/mep run can log per-objective breakdowns without its rewa
 `--use_morl` additionally makes it the reward. `--morl_weights` (default uniform `1/K`),
 `--morl_reward_scale`, and `--morl_adaptive_weights` + `--morl_eta_min/max`, `--morl_weight_floor`,
 `--morl_weight_update_interval` for the mirror-descent preference update
-(`envs/morl/preferences.py`, proposal §4.2.3). Adaptive weights are off by default: they make the
-reward non-stationary while `w` is not yet part of the observation. The update is multiplicative
-and fires every env step, so per-episode movement scales with `eta * episode_length` — the `eta`
-defaults assume the 400-step horizon, and the floor stops an objective being switched off entirely.
+(`envs/morl/preferences.py`, proposal §4.2.3). Adaptive weights are off by default: on their own
+they make the reward non-stationary, because `w` moves mid-episode while the agent has no way to
+see that it moved, so two identical observations carry different returns. The update is
+multiplicative and fires every env step, so per-episode movement scales with `eta * episode_length`
+— the `eta` defaults assume the 400-step horizon, and the floor stops an objective being switched
+off entirely.
+
+`--use_morl_obs_weights` restores the Markov property by appending the live `w` to the observation
+and the share observation as `K` constant channels, scaled by 255 to match the rest of the `ppo`
+featurisation (raw weights of order `1/K` sit two orders of magnitude below every other feature and
+the network never sees them). It requires `--use_morl`, and it is **opt-in because it widens the
+observation space** — a policy trained with it cannot load a checkpoint saved without it, and every
+agent currently in the policy pool was trained without it. `check_morl_reward.py --only obs_weights`
+covers the widths, the space/observation agreement, per-step tracking under adaptive weights, and
+that `reset()` restores the target rather than leaking the previous episode's `w`. Requires the
+grid (`ppo`) featurisation; `bc` features are a flat vector with no channel axis.
 
 **Old layouts only.** Only `zsceval/envs/overcooked/` carries the objective layer;
 `train_sp.py` asserts on `--use_morl` with `--overcooked_version new`.
