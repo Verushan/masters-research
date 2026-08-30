@@ -105,6 +105,38 @@ grid (`ppo`) featurisation; `bc` features are a flat vector with no channel axis
 **Old layouts only.** Only `zsceval/envs/overcooked/` carries the objective layer;
 `train_sp.py` asserts on `--use_morl` with `--overcooked_version new`.
 
+## Partner-conditioned agents (oracle upper bound, not a ZSC method)
+
+`--use_agent_policy_id` is upstream and feeds the partner's identity to the **centralised critic
+only** — it is applied in `_gen_share_observation`, so the actor never sees it and the policy cannot
+condition on its partner at execution time. `--use_agent_policy_id_obs` (fork-only) appends the
+identity to the **actor's** observation as well, which is what a partner-conditioning experiment
+actually needs. Each agent is shown its *partner's* id, not its own: an agent's own id is constant,
+and for the trainable agent it is the `-1.0` sentinel.
+
+**This cannot generalise zero-shot, by construction.** A held-out partner has no id the agent was
+ever trained on. Its value is as an *oracle ceiling*: train with the id, evaluate against training
+partners with the true id, and the gap to the real ZSC number separates partner **uncertainty**
+(closed by knowing who) from partner **diversity** (bad coordination even knowing who). Reporting it
+as a ZSC result would be wrong.
+
+**The id encoding is pool-size dependent.** `policy_pool.load_population` assigns
+`id = (i + 1) / num_policies`, so:
+
+- the *same* partner has a *different* id in a pool of a different size — an agent trained against a
+  stage-2 yml and evaluated in a larger cross-play pool sees every partner's id shift;
+- adjacent ids mean nothing but adjacency in the yml, so the raw scalar imposes an ordinal structure
+  on what is categorical.
+
+`--agent_policy_id_obs_dim N` one-hots the id over `N` partners and fixes both. `N` **must equal the
+number of entries in the population yml the ids came from**; a mismatch raises rather than silently
+aliasing two partners onto one index. `0` (the default) keeps the raw scalar the critic uses.
+
+Both this and `--use_morl_obs_weights` widen the observation space, so a policy trained with either
+cannot load a checkpoint saved without it — every agent currently in the pool was trained without
+both. `check_morl_reward.py --only policy_id_obs` covers the widths, the partner-not-self semantics,
+the one-hot recovery, the unknown-partner case, and the width mismatch.
+
 `extract_sp_models.py` takes two optional positional args — `{layout} {env} [exp] [metric]` — so
 MORL checkpoints are ranked by `ep_morl_r` rather than `ep_sparse_r`. Both runs also log
 `ep_obj_{name}` / `eval_ep_obj_{name}` per objective and per agent.
