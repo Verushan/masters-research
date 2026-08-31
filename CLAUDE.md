@@ -137,6 +137,25 @@ cannot load a checkpoint saved without it — every agent currently in the pool 
 both. `check_morl_reward.py --only policy_id_obs` covers the widths, the partner-not-self semantics,
 the one-hot recovery, the unknown-partner case, and the width mismatch.
 
+`pipelines/pid-ladder.sh` runs the ablation as a ladder, all rungs concurrently, one stage-2 run
+per rung per seed. The rungs differ **only** in what the actor sees — same population, reward,
+budget and schedules — so the gap between them is the partner-conditioning effect and nothing else:
+
+| rung | actor observation |
+| --- | --- |
+| `rung1` | control — critic sees the partner id (`--use_agent_policy_id`), actor does not |
+| `rung2` | raw scalar id, the same one the critic gets (`PID_OBS=1 PID_OBS_DIM=0`) |
+| `rung3` | one-hot over the population (`PID_OBS=1`, width defaults to the yml's entry count) |
+
+```bash
+cd pipelines && bash pid-ladder.sh random0 bench_sp 1 3 rung1 rung3
+```
+
+It pins `ROLLOUT_THREADS` to 12 via `LADDER_ROLLOUT_THREADS` for the reason every other pipeline
+has had to: `.env` sets that variable repo-wide and it is the PPO batch size, so a rung trained at
+a different value than the rung it is compared against is a batch-size result, not a
+partner-conditioning one. Per-rung output goes to `experiments/logs/pid-ladder/` (gitignored).
+
 `extract_sp_models.py` takes two optional positional args — `{layout} {env} [exp] [metric]` — so
 MORL checkpoints are ranked by `ep_morl_r` rather than `ep_sparse_r`. Both runs also log
 `ep_obj_{name}` / `eval_ep_obj_{name}` per objective and per agent.
@@ -163,7 +182,27 @@ run the upstream `0 5e6 1e7` schedule never leaves the 0.2 entropy phase, which 
 ```bash
 cd pipelines && bash morl-benchmark.slurm                  # train + extract 4 arms
 bash morl-benchmark-eval.slurm random0 "1 2 3"             # cross-play + analysis
+
+# on any layout other than random0, the ZSC partners have to be the HSP bias agents
+HELDOUT=hsp bash morl-benchmark-eval.slurm unident_s "1 2 3"
 ```
+
+**A new layout needs two things before it can be cross-played at all**, and neither is obvious from
+a failure:
+
+- `policy_config/{mlp,rnn}_policy_config.pkl`, which every yml entry names and `env_policy.py`
+  rebuilds each frozen policy from. It is the `(args, obs_space, share_obs_space, act_space)` tuple
+  `base_runner` dumps, and the spaces are **layout-shaped** — `random0` is `(5,5,20)`, `random3`
+  `(8,5,20)`, `unident_s` `(9,5,20)` — so it cannot be copied between layouts. Upstream's
+  `shell/store_config.sh` produces it by training two throwaway agents for 1e7 steps each;
+  `prep/store_policy_config.py {layout}...` builds the same tuple from the env constructor in
+  seconds, and works for a layout nothing has been trained on yet.
+- `HELDOUT=hsp`. The eval script's default partner set is the `sp` pool, which only ever existed
+  for `random0`. On another layout every `sp` entry is dropped by `--skip_missing`, the matrix comes
+  out with no held-out column, and `analyze_crossplay.py` asserts on the empty partner group —
+  *after* both cross-play passes have been paid for. `HELDOUT=hsp` also selects the matching
+  `--partner_group`. The non-default set is folded into the output filenames, so a `sp` run still
+  writes exactly the paths the existing `random0` results live at.
 
 Evaluation is `eval/cross_play.py`, not `eval/eval.py`: it loads the pool once and gives each env
 thread a different pairing, so a full matrix costs one process instead of one per cell, and it
