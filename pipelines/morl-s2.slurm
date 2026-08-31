@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -J ZSCEvalMORLS2
-#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/morl-s2.log
-#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/morl-s2.err
+#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/logs/morl-s2-%j.log
+#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/logs/morl-s2-%j.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1
 #SBATCH -c 14
@@ -49,6 +49,14 @@ else
 fi
 
 conda activate zsceval
+
+# The trap MORL_ROLLOUT_THREADS and HSP_ROLLOUT_THREADS both exist for: .env
+# exports a repo-wide ROLLOUT_THREADS (16 on the cluster, 4 on the workstation)
+# and is loaded above, so this would otherwise take whichever value the machine
+# happens to carry. It is the PPO batch size. Every stage-1 arm these
+# populations are built from was trained at 12, and so were the pid-ladder
+# stage-2 runs -- a stage-2 arm at 16 is not comparable with either.
+export ROLLOUT_THREADS=${S2_ROLLOUT_THREADS:-12}
 
 LAYOUT=${1:-random0}
 # bench_sparse is left out on purpose: its stage-1 agents never learned to
