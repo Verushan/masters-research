@@ -143,6 +143,7 @@ footer{border-top:1px solid var(--rule);padding-top:26px;color:var(--ink-3);font
     <span><b>Arms</b> 4 × 3 seeds × 2e6 steps</span>
     <span><b>Partners</b> 16 HSP bias agents per layout</span>
     <span><b>Cross-play</b> 48415 · 48439 · 48468</span>
+    <span><b>Ladder</b> 3 rungs × 3 seeds × 2 layouts</span>
     <span><b>Date</b> 31 Aug 2026</span>
   </div>
 </header>
@@ -467,41 +468,64 @@ footer{border-top:1px solid var(--rule);padding-top:26px;color:var(--ink-3);font
 
 <section>
   <h2>Does knowing your partner help?</h2>
-  <div class="finding null">
-    <div><span class="chip warn">null result · one layout · unident_s pending</span></div>
-    <h3>The oracle ceiling sits below the control</h3>
+  <div class="finding strong">
+    <div><span class="chip ok">replicated on both layouts</span></div>
+    <h3>No — and the cheap encoding actively hurts</h3>
     <p>A stage-2 agent normally sees its partner's identity only through the centralised critic.
     The ladder feeds it to the actor as well — as the raw scalar the critic gets, and as a one-hot
     over the population — and measures against the training population, where the identity is
     truthful. This is an <strong>oracle upper bound, not a ZSC method</strong>: a held-out partner
-    has no id the agent was ever trained on. Its value is separating partner
-    <em>uncertainty</em> from partner <em>diversity</em>.</p>
+    has no id the agent was ever trained on. Its value is separating partner <em>uncertainty</em>
+    from partner <em>diversity</em>.</p>
     <div class="panel scroll">
       <table>
-        <caption>random0 · fcp-S2 on the bench_sp population · eval sparse return</caption>
+        <caption>fcp-S2 on the bench_sp population · eval sparse return · 3 seeds each</caption>
         <thead><tr><th scope="col" style="text-align:left">Rung — what the actor sees</th>
-        <th scope="col">Seed 1</th><th scope="col">Seed 2</th><th scope="col">Seed 3</th>
-        <th scope="col">Mean</th><th scope="col">sd</th></tr></thead>
+        <th scope="col">random0 mean</th><th scope="col">sd</th>
+        <th scope="col">unident_s mean</th><th scope="col">sd</th></tr></thead>
         <tbody>
-          <tr><th scope="row">1 · nothing (control)</th><td>103.3</td><td>60.0</td><td>55.0</td>
-            <td class="hi">72.8</td><td>26.6</td></tr>
-          <tr><th scope="row">2 · raw scalar id</th><td>88.3</td><td>51.7</td><td>48.3</td>
-            <td class="hi">62.8</td><td>22.2</td></tr>
-          <tr><th scope="row">3 · one-hot id</th><td>75.0</td><td>43.3</td><td>66.7</td>
-            <td class="hi">61.7</td><td>16.4</td></tr>
+          <tr><th scope="row">1 · nothing (control)</th><td class="hi">72.8</td><td>26.6</td>
+            <td class="hi">191.7</td><td>12.0</td></tr>
+          <tr><th scope="row">2 · raw scalar id</th><td>62.8</td><td>22.2</td>
+            <td>168.3</td><td>20.8</td></tr>
+          <tr><th scope="row">3 · one-hot id</th><td>61.7</td><td>16.4</td>
+            <td>188.3</td><td>34.4</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Paired by seed, rung 1 − rung 2 is +15.0, +8.3, +6.7 — same sign every seed, mean 10.0,
-    se 2.5, t = 3.93. Rung 1 − rung 3 is +28.3, +16.7, −11.7: mean 11.1, se 11.9, t = 0.94, no
-    effect. <strong>Telling the actor who its partner is buys nothing, and the cheap encoding costs
-    about ten points.</strong> The coordination deficit on <code>random0</code> is not partner
-    uncertainty.</p>
-    <p class="note">The caveat that matters: these agents reach only ~73 on a layout where stage-1
-    self-play cross-plays to zero. An agent that has not learned to cook cannot exploit knowing its
-    partner, so this may be a floor effect. The same three rungs are running on
-    <code>unident_s</code>, where the agents reach 400+, and that result decides whether the null
-    holds.</p>
+    <div class="panel scroll">
+      <table>
+        <caption>Paired by seed — the contrast the design is powered for</caption>
+        <thead><tr><th scope="col" style="text-align:left">Contrast</th><th scope="col">Layout</th>
+        <th scope="col">Per-seed differences</th><th scope="col">Mean</th><th scope="col">se</th>
+        <th scope="col">t</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">control − raw scalar</th><td>random0</td><td>+15.0, +8.3, +6.7</td>
+            <td class="hi">10.0</td><td>2.5</td><td class="hi">3.93</td></tr>
+          <tr><th scope="row">control − raw scalar</th><td>unident_s</td><td>+10.0, +26.7, +33.3</td>
+            <td class="hi">23.3</td><td>6.9</td><td class="hi">3.36</td></tr>
+          <tr class="ref"><th scope="row">control − one-hot</th><td>random0</td>
+            <td>+28.3, +16.7, −11.7</td><td>11.1</td><td>11.9</td><td>0.94</td></tr>
+          <tr class="ref"><th scope="row">control − one-hot</th><td>unident_s</td>
+            <td>−18.3, +26.7, +1.7</td><td>3.3</td><td>13.0</td><td>0.26</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>The raw scalar costs return on both layouts, in all six seed pairs, in the same
+    direction</strong> — t = 3.93 and 3.36. The one-hot is indistinguishable from the control on
+    both (t = 0.94, 0.26). Telling the actor who its partner is buys nothing even when the
+    identity is truthful and the partner was trained against; the only measurable effect of the
+    ladder is the damage done by the cheaper encoding.</p>
+    <p>That damage is the encoding fault the flag's own documentation predicts.
+    <code>load_population</code> assigns <code>id = (i + 1) / num_policies</code>, so partners
+    adjacent in the yml get adjacent ids and the network is handed a continuous feature over what
+    is a categorical variable. One-hotting removes the false ordering — and once it is removed
+    there is simply nothing left to gain.</p>
+    <p class="note">The floor-effect caveat is now answered. The <code>random0</code> agents reach
+    ~73 on a layout where stage-1 self-play cross-plays to zero, so the first null could have been
+    an agent too weak to exploit what it was told. The <code>unident_s</code> agents reach ~192 and
+    give the same answer. <strong>The stage-2 coordination deficit is not partner
+    uncertainty.</strong></p>
   </div>
 </section>
 
@@ -593,6 +617,10 @@ footer{border-top:1px solid var(--rule);padding-top:26px;color:var(--ink-3);font
       <li><strong>Adaptive versus fixed weights is unresolved.</strong> Adaptive leads on
       <code>unident_s</code> by 33 points with a ±46.9 spread, and the two are indistinguishable on
       <code>random0</code>. Deciding it needs more seeds, not another layout.</li>
+      <li><strong>Partner conditioning is closed.</strong> The oracle ceiling is not above the
+      control on either layout, so the remaining gap is partner diversity, not partner
+      uncertainty. Whatever repairs stage-2 coordination, it is not more information about who the
+      partner is.</li>
       <li><strong>Rebuild <code>random3</code>'s bias agents before spending on its arms.</strong>
       More steps alone fixes the wrong half.</li>
     </ul>
