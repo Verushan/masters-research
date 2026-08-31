@@ -1,7 +1,7 @@
 #!/bin/bash -l
 #SBATCH -J ZSCEvalMORLBenchEval
-#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/morl-benchmark-eval.log
-#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/morl-benchmark-eval.err
+#SBATCH -o /home-mscluster/vnaidoo/Coding/masters-research/logs/morl-benchmark-eval-%j.log
+#SBATCH -e /home-mscluster/vnaidoo/Coding/masters-research/logs/morl-benchmark-eval-%j.err
 #SBATCH --partition=bigbatch
 #SBATCH -n 1
 #SBATCH -c 14
@@ -25,13 +25,24 @@
 # well as the return, which is what keeps the comparison legible on layouts where
 # cross-play sparse return collapses to zero for every method.
 #
-# Usage: bash morl-benchmark-eval.slurm [layout] [arm_seeds] [s2_arms]
+# Usage: bash morl-benchmark-eval.slurm [layout] [arm_seeds] [s2_arms] [s2_suffix]
 #
 # The third argument adds the stage-2 agents trained by morl-s2.slurm to the
 # pool (`fcp-S2-{arm}`), so the stage-1 arms and the FCP agents built from them
 # are scored in one matrix against the same held-out partners. Results then go
 # to *_s2_* files rather than overwriting the stage-1-only run the current
 # report is built from.
+#
+# HELDOUT picks the partner set the ZSC number is averaged over. `sp` is the
+# pre-existing self-play pool and exists for random0 only, which is why it was
+# the default while random0 was the only layout: on any other layout every `sp`
+# entry is silently dropped by --skip_missing and the matrix comes out with no
+# held-out column at all. `hsp` is the bias-agent set hsp-partners.slurm trains,
+# which exists for every layout. The two are never merged -- averaging a ZSC
+# metric over bias agents and self-play checkpoints together would average two
+# different evaluations.
+#
+#   HELDOUT=hsp bash morl-benchmark-eval.slurm unident_s "1 2 3"
 
 if [ -f ../.env ]; then
     export $(grep -v '^#' ../.env | xargs)
@@ -49,6 +60,8 @@ conda activate zsceval
 LAYOUT=${1:-random0}
 ARM_SEEDS=${2:-"1 2 3"}
 S2_ARMS=${3:-""}
+HELDOUT=${HELDOUT:-sp}
+HSP_EXP=${HSP_EXP:-hsp-s1}
 # Experiment-name suffix the stage-2 runs used, e.g. "-pilot". Must match.
 S2_SUFFIX=${4:-""}
 THREADS=12
@@ -73,7 +86,20 @@ else
     TAG=""
 fi
 
-YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $ARM_SEEDS $S2_FLAG --skip_missing | tail -1)
+# Only the non-default partner set changes the file names, so a `sp` run still
+# writes exactly the paths the existing random0 results live at.
+if [ "$HELDOUT" = "sp" ]; then
+    HELDOUT_FLAG="--heldout sp"
+else
+    HELDOUT_FLAG="--heldout $HELDOUT --hsp_partners auto --hsp_exp $HSP_EXP"
+    TAG="${TAG}_${HELDOUT}"
+fi
+
+# One yml per (layout, pool shape): the default path is shared, so an hsp run
+# would otherwise overwrite the sp pool the earlier results were produced from.
+YML_OUT=$POLICY_POOL/$LAYOUT/morl_benchmark/cross_play${TAG}.yml
+YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $ARM_SEEDS $S2_FLAG \
+    $HELDOUT_FLAG --out $YML_OUT --skip_missing | tail -1)
 echo "population yml: $YML"
 
 # Every policy in the pool plays every other, in both seats.
@@ -103,9 +129,19 @@ python eval/cross_play.py "${common[@]}" \
 cd $PYTHONPATH/..
 python experiments/fetch_training_curves.py --layout $LAYOUT \
     --out experiments/results/training_curves_${LAYOUT}.json
+# group_of() names the sp pool's partners "heldout" and the bias agents
+# "heldout_hsp", and analyze_crossplay.py asserts rather than reporting an
+# average over nothing -- but only after both cross-play passes have been paid
+# for, so the group has to match the pool the yml was built from.
+if [ "$HELDOUT" = "sp" ]; then
+    PARTNER_GROUP=heldout
+else
+    PARTNER_GROUP=heldout_$HELDOUT
+fi
 python experiments/analyze_crossplay.py \
     --records experiments/results/cross_play_${LAYOUT}${TAG}_deterministic.json \
               experiments/results/cross_play_${LAYOUT}${TAG}_stochastic.json \
+    --partner_group $PARTNER_GROUP \
     --out experiments/results/metrics_${LAYOUT}${TAG}.json
 
 # The per-episode dumps are the expensive artifact -- ~45 min of rollouts -- and
