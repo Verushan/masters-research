@@ -51,6 +51,24 @@ GROUPS = [
     ("s2_bench_morl", r"^s2_bench_morl_s\d+$", "FCP S2 on MORL (fixed w) population"),
     ("s2_bench_morl_ad", r"^s2_bench_morl_ad_s\d+$", "FCP S2 on MORL (adaptive w) population"),
     ("s2_mixed", r"^s2_mixed_s\d+$", "FCP S2 on mixed population"),
+    # pid-ladder.sh rungs. The arm name carries the rung ("bench_sp-rung1"), so
+    # the pool entry is `s2_bench_sp-rung1_s{seed}` and the plain s2_bench_sp
+    # pattern above -- anchored on `_s\d+$` -- does not match it.
+    (
+        "s2_pid_rung1",
+        r"^s2_bench_sp-rung1_s\d+$",
+        "FCP S2 - partner id: critic only (control)",
+    ),
+    (
+        "s2_pid_rung2",
+        r"^s2_bench_sp-rung2_s\d+$",
+        "FCP S2 - partner id: actor sees raw scalar",
+    ),
+    (
+        "s2_pid_rung3",
+        r"^s2_bench_sp-rung3_s\d+$",
+        "FCP S2 - partner id: actor sees one-hot",
+    ),
     ("fcp_s2", r"^fcp_s2_s\d+$", "FCP stage-2 (pipeline, 16x3 SP)"),
     ("heldout", r"^heldout_sp", "Held-out partners (self-play)"),
     ("heldout_hsp", r"^heldout_hsp", "Held-out partners (HSP bias agents)"),
