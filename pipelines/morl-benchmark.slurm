@@ -40,10 +40,16 @@ fi
 
 conda activate zsceval
 
-# Usage: sbatch morl-benchmark.slurm [layout] [seed_begin] [seed_max]
+# Usage: sbatch morl-benchmark.slurm [layout] [seed_begin] [seed_max] [arms]
+#
+# The fourth argument narrows the run to a subset of the arms, so a seed range
+# can be split across concurrent jobs instead of training 4 x N runs in series
+# inside one wall clock. Extraction is restricted to the same subset, and since
+# it keys checkpoints by seed it adds to the pool rather than replacing it.
 LAYOUT=${1:-random0}
 SEED_BEGIN=${2:-1}
 SEED_MAX=${3:-3}
+ARMS=${4:-"bench_sp bench_sparse bench_morl bench_morl_ad"}
 
 # Same trap HSP_ROLLOUT_THREADS exists for: .env exports a repo-wide
 # ROLLOUT_THREADS (16 on the cluster, 4 on the workstation) and is loaded above,
@@ -59,22 +65,29 @@ cd $PYTHONPATH/zsceval/scripts/overcooked
 # Cheap offline assertion that the MORL reward path is what we think it is.
 python morl/check_morl_reward.py || exit 1
 
-for ARM in bench_sp bench_sparse bench_morl bench_morl_ad; do
+for ARM in $ARMS; do
     bash shell/train_morl_benchmark.sh $LAYOUT $ARM $SEED_BEGIN $SEED_MAX || exit 1
 done
 
 # The MORL arms are ranked by the reward they actually optimised; the other two
 # by sparse return.
 cd ..
-python extract_models/extract_sp_models.py $LAYOUT overcooked bench_sp      ep_sparse_r
-python extract_models/extract_sp_models.py $LAYOUT overcooked bench_sparse  ep_sparse_r
-python extract_models/extract_sp_models.py $LAYOUT overcooked bench_morl    ep_morl_r
-python extract_models/extract_sp_models.py $LAYOUT overcooked bench_morl_ad ep_morl_r
+for ARM in $ARMS; do
+    case "$ARM" in
+        bench_morl|bench_morl_ad) METRIC=ep_morl_r ;;
+        *)                        METRIC=ep_sparse_r ;;
+    esac
+    python extract_models/extract_sp_models.py $LAYOUT overcooked $ARM $METRIC
+done
 
 # The MORL arms' own reward and the task's return can come apart -- a run whose
 # scalarized reward keeps climbing while deliveries stop would otherwise be
 # benchmarked only on the policy it collapsed to. Also take the checkpoint where
 # sparse return actually peaked, so the report can separate "what this reward
 # reached" from "where it ended up".
-python extract_models/extract_peak_models.py --layout $LAYOUT --env Overcooked \
-    --exp bench_morl --exp bench_morl_ad --metric ep_sparse_r
+PEAK_EXPS=""
+for ARM in $ARMS; do
+    case "$ARM" in bench_morl|bench_morl_ad) PEAK_EXPS="$PEAK_EXPS --exp $ARM" ;; esac
+done
+[ -n "$PEAK_EXPS" ] && python extract_models/extract_peak_models.py \
+    --layout $LAYOUT --env Overcooked $PEAK_EXPS --metric ep_sparse_r
