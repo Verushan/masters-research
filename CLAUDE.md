@@ -102,8 +102,19 @@ covers the widths, the space/observation agreement, per-step tracking under adap
 that `reset()` restores the target rather than leaking the previous episode's `w`. Requires the
 grid (`ppo`) featurisation; `bc` features are a flat vector with no channel axis.
 
-**Old layouts only.** Only `zsceval/envs/overcooked/` carries the objective layer;
-`train_sp.py` asserts on `--use_morl` with `--overcooked_version new`.
+**Both env versions carry the objective layer.** `zsceval/envs/overcooked_new/` was given
+the same hooks (`objectives=` on `OvercookedEnv`/`from_mdp`, `_update_objectives` in `step`,
+`_setup_morl`/`_morl_reward`/`_update_morl_weights` on the gym wrapper), so `--use_morl` works on the
+multi-recipe `*_m` layouts. `--use_morl_obs_weights` is still **old-env only** and both
+`train_sp.py` and the new env raise on it: it widens the observation space, which the multi-recipe
+env builds in `reset_featurize_type()` rather than in `__init__`, so it is not the same change.
+
+`rollout_objectives.py` takes `--version {old,new}` (inferred from the layout name by default) and
+its consistency checks are version-aware: the multi-recipe MDP prices recipes individually and has
+no scalar `delivery_reward`, so `task_completion` is checked against the raw `delivery` counter
+rather than against `ep_sparse_r`. Note the new package's **script agents are broken upstream**
+(`utils.compute_valid_map` reads `mdp.num_items_for_soup`, which the multi-recipe
+`OvercookedGridworld` does not define), so `--agents random` is the only working mode there for now.
 
 ## Partner-conditioned agents (oracle upper bound, not a ZSC method)
 
