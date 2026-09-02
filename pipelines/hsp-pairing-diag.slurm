@@ -46,7 +46,7 @@ fi
 conda activate zsceval
 
 LAYOUTS=${1:-"random3 random0"}
-SEEDS=${2:-"12 40"}
+SEEDS=${2:-"12 13"}
 EPISODES=${EPISODES:-5}
 
 cd $PYTHONPATH/zsceval/scripts/overcooked
@@ -88,7 +88,7 @@ YAMLEOF
             --experiment_name hsp_pair_diag \
             --layout_name "$LAYOUT" \
             --num_agents 2 \
-            --seed 1 \
+            --seed 1 --use_wandb \
             --episode_length 400 \
             --n_eval_rollout_threads 1 \
             --eval_episodes "$EPISODES" \
@@ -108,7 +108,7 @@ YAMLEOF
             --experiment_name hsp_pair_diag \
             --layout_name "$LAYOUT" \
             --num_agents 2 \
-            --seed 1 \
+            --seed 1 --use_wandb \
             --episode_length 400 \
             --n_eval_rollout_threads 1 \
             --eval_episodes "$EPISODES" \
