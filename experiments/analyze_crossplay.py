@@ -41,35 +41,35 @@ OBJECTIVES = ["task_completion", "ingredient_prep", "plating", "coordination"]
 # Display order and labels for the agent groups. The regex matches the policy
 # names written by prep/gen_crossplay_yml.py.
 GROUPS = [
-    ("bench_sp", r"^bench_sp_s\d+$", "SP (sparse + hand-shaped)"),
-    ("bench_sparse", r"^bench_sparse_s\d+$", "SP (sparse only)"),
-    ("bench_morl", r"^bench_morl_s\d+$", "MORL (fixed w, final)"),
-    ("bench_morl_peak", r"^bench_morl_s\d+_peak$", "MORL (fixed w, peak)"),
-    ("bench_morl_ad", r"^bench_morl_ad_s\d+$", "MORL (adaptive w, final)"),
-    ("bench_morl_ad_peak", r"^bench_morl_ad_s\d+_peak$", "MORL (adaptive w, peak)"),
-    ("s2_bench_sp", r"^s2_bench_sp_s\d+$", "FCP S2 on SP population"),
-    ("s2_bench_morl", r"^s2_bench_morl_s\d+$", "FCP S2 on MORL (fixed w) population"),
-    ("s2_bench_morl_ad", r"^s2_bench_morl_ad_s\d+$", "FCP S2 on MORL (adaptive w) population"),
-    ("s2_mixed", r"^s2_mixed_s\d+$", "FCP S2 on mixed population"),
+    ("bench_sp", r"^bench_sp_s\d+(?:r\d+)?$", "SP (sparse + hand-shaped)"),
+    ("bench_sparse", r"^bench_sparse_s\d+(?:r\d+)?$", "SP (sparse only)"),
+    ("bench_morl", r"^bench_morl_s\d+(?:r\d+)?$", "MORL (fixed w, final)"),
+    ("bench_morl_peak", r"^bench_morl_s\d+(?:r\d+)?_peak$", "MORL (fixed w, peak)"),
+    ("bench_morl_ad", r"^bench_morl_ad_s\d+(?:r\d+)?$", "MORL (adaptive w, final)"),
+    ("bench_morl_ad_peak", r"^bench_morl_ad_s\d+(?:r\d+)?_peak$", "MORL (adaptive w, peak)"),
+    ("s2_bench_sp", r"^s2_bench_sp_s\d+(?:r\d+)?$", "FCP S2 on SP population"),
+    ("s2_bench_morl", r"^s2_bench_morl_s\d+(?:r\d+)?$", "FCP S2 on MORL (fixed w) population"),
+    ("s2_bench_morl_ad", r"^s2_bench_morl_ad_s\d+(?:r\d+)?$", "FCP S2 on MORL (adaptive w) population"),
+    ("s2_mixed", r"^s2_mixed_s\d+(?:r\d+)?$", "FCP S2 on mixed population"),
     # pid-ladder.sh rungs. The arm name carries the rung ("bench_sp-rung1"), so
     # the pool entry is `s2_bench_sp-rung1_s{seed}` and the plain s2_bench_sp
-    # pattern above -- anchored on `_s\d+$` -- does not match it.
+    # pattern above -- anchored on `_s\d+(?:r\d+)?$` -- does not match it.
     (
         "s2_pid_rung1",
-        r"^s2_bench_sp-rung1_s\d+$",
+        r"^s2_bench_sp-rung1_s\d+(?:r\d+)?$",
         "FCP S2 - partner id: critic only (control)",
     ),
     (
         "s2_pid_rung2",
-        r"^s2_bench_sp-rung2_s\d+$",
+        r"^s2_bench_sp-rung2_s\d+(?:r\d+)?$",
         "FCP S2 - partner id: actor sees raw scalar",
     ),
     (
         "s2_pid_rung3",
-        r"^s2_bench_sp-rung3_s\d+$",
+        r"^s2_bench_sp-rung3_s\d+(?:r\d+)?$",
         "FCP S2 - partner id: actor sees one-hot",
     ),
-    ("fcp_s2", r"^fcp_s2_s\d+$", "FCP stage-2 (pipeline, 16x3 SP)"),
+    ("fcp_s2", r"^fcp_s2_s\d+(?:r\d+)?$", "FCP stage-2 (pipeline, 16x3 SP)"),
     ("heldout", r"^heldout_sp", "Held-out partners (self-play)"),
     ("heldout_hsp", r"^heldout_hsp", "Held-out partners (HSP bias agents)"),
 ]
