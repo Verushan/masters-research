@@ -62,6 +62,13 @@ ARM_SEEDS=${2:-"1 2 3"}
 S2_ARMS=${3:-""}
 HELDOUT=${HELDOUT:-sp}
 HSP_EXP=${HSP_EXP:-hsp-s1}
+# Stage-2 seed labels. Left empty, gen_crossplay_yml uses its own default of
+# 1 2 3. Set it when `extract_S2_models.py --replicates` has recovered repeat
+# runs of a seed, which land as `1r2.pt`, `2r2.pt` and so on: pass the union of
+# every arm's labels and let --skip_missing drop the ones an arm does not have.
+#
+#   S2_ARM_SEEDS="1 2 3 1r2 2r2 3r2" HELDOUT=hsp bash morl-benchmark-eval.slurm ...
+S2_ARM_SEEDS=${S2_ARM_SEEDS:-""}
 # Experiment-name suffix the stage-2 runs used, e.g. "-pilot". Must match.
 S2_SUFFIX=${4:-""}
 THREADS=12
@@ -80,6 +87,7 @@ if [ -n "$S2_ARMS" ]; then
     # a dash ("-pilot"), and argparse reads a space-separated "-pilot" as a flag
     # rather than as this option's value.
     [ -n "$S2_SUFFIX" ] && S2_FLAG="$S2_FLAG --s2_suffix=$S2_SUFFIX"
+    [ -n "$S2_ARM_SEEDS" ] && S2_FLAG="$S2_FLAG --s2_arm_seeds $S2_ARM_SEEDS"
     TAG="_s2"
 else
     S2_FLAG=""
