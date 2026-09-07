@@ -69,6 +69,10 @@ HSP_EXP=${HSP_EXP:-hsp-s1}
 #
 #   S2_ARM_SEEDS="1 2 3 1r2 2r2 3r2" HELDOUT=hsp bash morl-benchmark-eval.slurm ...
 S2_ARM_SEEDS=${S2_ARM_SEEDS:-""}
+# Stage-1 arms in the pool. Left empty, gen_crossplay_yml uses its own default
+# of the four original arms; set it to score the anchored re-baseline, whose
+# arms carry an -anc suffix.
+ARMS=${ARMS:-""}
 # Experiment-name suffix the stage-2 runs used, e.g. "-pilot". Must match.
 S2_SUFFIX=${4:-""}
 THREADS=12
@@ -106,7 +110,9 @@ fi
 # One yml per (layout, pool shape): the default path is shared, so an hsp run
 # would otherwise overwrite the sp pool the earlier results were produced from.
 YML_OUT=$POLICY_POOL/$LAYOUT/morl_benchmark/cross_play${TAG}.yml
-YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $ARM_SEEDS $S2_FLAG \
+ARMS_FLAG=""
+[ -n "$ARMS" ] && ARMS_FLAG="--arms $ARMS"
+YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $ARM_SEEDS $S2_FLAG $ARMS_FLAG \
     $HELDOUT_FLAG --out $YML_OUT --skip_missing | tail -1)
 echo "population yml: $YML"
 

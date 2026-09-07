@@ -47,6 +47,12 @@ GROUPS = [
     ("bench_morl_peak", r"^bench_morl_s\d+(?:r\d+)?_peak$", "MORL (fixed w, peak)"),
     ("bench_morl_ad", r"^bench_morl_ad_s\d+(?:r\d+)?$", "MORL (adaptive w, final)"),
     ("bench_morl_div", r"^bench_morl_div_s\d+(?:r\d+)?$", "MORL (per-member w, final)"),
+    # The anchored re-baseline. Named `bench_morl-anc` so it cannot share an
+    # experiment_name with the farmable-objective runs it supersedes; the `-`
+    # also means the patterns above cannot match these by accident.
+    ("bench_morl_anc", r"^bench_morl-anc_s\d+(?:r\d+)?$", "MORL uniform w (anchored)"),
+    ("bench_morl_ad_anc", r"^bench_morl_ad-anc_s\d+(?:r\d+)?$", "MORL adaptive w (anchored)"),
+    ("bench_morl_div_anc", r"^bench_morl_div-anc_s\d+(?:r\d+)?$", "MORL per-member w (anchored)"),
     ("bench_morl_div_peak", r"^bench_morl_div_s\d+(?:r\d+)?_peak$", "MORL (per-member w, peak)"),
     ("bench_morl_ad_peak", r"^bench_morl_ad_s\d+(?:r\d+)?_peak$", "MORL (adaptive w, peak)"),
     ("s2_bench_sp", r"^s2_bench_sp_s\d+(?:r\d+)?$", "FCP S2 on SP population"),
