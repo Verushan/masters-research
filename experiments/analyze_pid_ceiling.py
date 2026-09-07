@@ -67,7 +67,10 @@ def permutation_test(a, b):
         diffs.append(pool[mask].mean() - pool[~mask].mean())
     diffs = np.array(diffs)
     p = float(np.mean(np.abs(diffs) >= abs(observed) - 1e-12))
-    return observed, p, 2.0 / len(diffs), len(diffs)
+    # A split and its mirror are both enumerated only when the groups are
+    # the same size; with unequal sizes each split appears once.
+    floor = (2.0 if len(a) == len(b) else 1.0) / len(diffs)
+    return observed, p, floor, len(diffs)
 
 
 def main():

@@ -91,7 +91,13 @@ def permutation_test(a, b, n_max=200000, seed=0):
     # separation the data could possibly show still leaves two of them at least
     # as extreme (the split and its mirror), so p can never fall below 0.1 --
     # significance at .05 is unreachable in principle, not merely unattained.
-    p_floor = float(2.0 / len(diffs)) if exact else 1.0 / n_max
+    # 2/C only when the groups are the same size, so that a split and its
+    # mirror are both enumerated; with unequal sizes each appears once.
+    p_floor = (
+        float((2.0 if len(a) == len(b) else 1.0) / len(diffs))
+        if exact
+        else 1.0 / n_max
+    )
     return observed, p, exact, len(diffs), p_floor
 
 
