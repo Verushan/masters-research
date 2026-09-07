@@ -90,7 +90,7 @@ for i in $PARTNERS; do
     fi
     echo "=== BR for partner ${i} ==="
     (
-        python train/train_adaptive.py --env_name Overcooked --algorithm_name mappo \
+        python train/train_adaptive.py --env_name Overcooked --algorithm_name adaptive \
             --experiment_name "${EXP}" --layout_name $LAYOUT --num_agents 2 \
             --seed $i --n_training_threads $TRAINING_THREADS \
             --n_rollout_threads $BR_ROLLOUT_THREADS --dummy_batch_size 1 \
