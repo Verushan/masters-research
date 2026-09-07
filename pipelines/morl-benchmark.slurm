@@ -74,7 +74,11 @@ done
 cd ..
 for ARM in $ARMS; do
     case "$ARM" in
-        bench_morl|bench_morl_ad) METRIC=ep_morl_r ;;
+        # bench_morl_div ranks each run's checkpoints by that run's own
+        # ep_morl_r. The value is not comparable *across* members, since each
+        # optimises a different w, but checkpoint selection only ever compares
+        # a run against itself.
+        bench_morl|bench_morl_ad|bench_morl_div) METRIC=ep_morl_r ;;
         *)                        METRIC=ep_sparse_r ;;
     esac
     python extract_models/extract_sp_models.py $LAYOUT overcooked $ARM $METRIC
@@ -87,7 +91,7 @@ done
 # reached" from "where it ended up".
 PEAK_EXPS=""
 for ARM in $ARMS; do
-    case "$ARM" in bench_morl|bench_morl_ad) PEAK_EXPS="$PEAK_EXPS --exp $ARM" ;; esac
+    case "$ARM" in bench_morl|bench_morl_ad|bench_morl_div) PEAK_EXPS="$PEAK_EXPS --exp $ARM" ;; esac
 done
 [ -n "$PEAK_EXPS" ] && python extract_models/extract_peak_models.py \
     --layout $LAYOUT --env Overcooked $PEAK_EXPS --metric ep_sparse_r
