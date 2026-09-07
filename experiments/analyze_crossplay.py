@@ -46,6 +46,8 @@ GROUPS = [
     ("bench_morl", r"^bench_morl_s\d+(?:r\d+)?$", "MORL (fixed w, final)"),
     ("bench_morl_peak", r"^bench_morl_s\d+(?:r\d+)?_peak$", "MORL (fixed w, peak)"),
     ("bench_morl_ad", r"^bench_morl_ad_s\d+(?:r\d+)?$", "MORL (adaptive w, final)"),
+    ("bench_morl_div", r"^bench_morl_div_s\d+(?:r\d+)?$", "MORL (per-member w, final)"),
+    ("bench_morl_div_peak", r"^bench_morl_div_s\d+(?:r\d+)?_peak$", "MORL (per-member w, peak)"),
     ("bench_morl_ad_peak", r"^bench_morl_ad_s\d+(?:r\d+)?_peak$", "MORL (adaptive w, peak)"),
     ("s2_bench_sp", r"^s2_bench_sp_s\d+(?:r\d+)?$", "FCP S2 on SP population"),
     ("s2_bench_morl", r"^s2_bench_morl_s\d+(?:r\d+)?$", "FCP S2 on MORL (fixed w) population"),

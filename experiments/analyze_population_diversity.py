@@ -68,7 +68,16 @@ BEHAVIOUR_EVENTS = [
 
 # Stage-1 arms. `_peak` variants are the same seeds at a different checkpoint,
 # so including them would count each seed twice and shrink the spread.
-STAGE1_ARMS = ["bench_sp", "bench_sparse", "bench_morl", "bench_morl_ad"]
+STAGE1_ARMS = [
+    "bench_sp",
+    "bench_sparse",
+    "bench_morl",
+    "bench_morl_ad",
+    # The only arm whose members were given *different* objectives; every
+    # other MORL arm handed the same w to every seed, so its spread came
+    # from initialisation alone.
+    "bench_morl_div",
+]
 
 
 def load_json(path):
