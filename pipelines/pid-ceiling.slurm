@@ -49,7 +49,10 @@ conda activate zsceval
 
 LAYOUT=${1:-random0}
 ARM=${2:-bench_sp}
-SEEDS=${3:-"1 2 3"}
+# Seed *labels*, not seed numbers: rung1 and rung3 each have two finished
+# runs of seed 1, which --replicates keeps as `1` and `1r2`. A label with no
+# checkpoint is skipped, so the same list covers all three rungs.
+SEEDS=${3:-"1 1r2 2 3"}
 RUNGS=${4:-"rung1 rung2 rung3"}
 THREADS=9
 DUMMY=3
@@ -78,7 +81,7 @@ python prep/store_policy_config.py $LAYOUT --pid_obs_dim $POP || exit 1
 for RUNG in $RUNGS; do
     echo "########## extract ${ARM}-${RUNG} ##########"
     python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked \
-        --algorithm fcp --exp fcp-S2-${ARM}-${RUNG} --checkpoint final \
+        --algorithm fcp --exp fcp-S2-${ARM}-${RUNG} --checkpoint final --replicates \
         || echo "  extraction failed for ${RUNG}"
 done
 
