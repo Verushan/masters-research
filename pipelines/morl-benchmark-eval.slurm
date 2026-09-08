@@ -117,7 +117,11 @@ YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $ARM_SEEDS $S2_FLAG $
 echo "population yml: $YML"
 
 # Every policy in the pool plays every other, in both seats.
-AGENTS=$(grep -oP '^[A-Za-z0-9_]+(?=:)' $YML | tr '\n' ' ')
+# The class must include `-`: the anchored re-baseline's arms are named
+# bench_morl-anc, and without it those entries are written into the yml, loaded
+# into the pool, and then never named as an ego or a partner -- so they are
+# silently absent from the matrix while every log line looks healthy.
+AGENTS=$(grep -oP '^[A-Za-z0-9_-]+(?=:)' $YML | tr '\n' ' ')
 echo "agents: $AGENTS"
 
 mkdir -p $RESULTS
