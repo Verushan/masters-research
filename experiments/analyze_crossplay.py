@@ -53,6 +53,10 @@ GROUPS = [
     ("bench_morl_anc", r"^bench_morl-anc_s\d+(?:r\d+)?$", "MORL uniform w (anchored)"),
     ("bench_morl_ad_anc", r"^bench_morl_ad-anc_s\d+(?:r\d+)?$", "MORL adaptive w (anchored)"),
     ("bench_morl_div_anc", r"^bench_morl_div-anc_s\d+(?:r\d+)?$", "MORL per-member w (anchored)"),
+    # Multi-recipe arms, trained under the `recipe` objective set on the _m
+    # and _mx layouts.
+    ("bench_sp_rec", r"^bench_sp-rec_s\d+(?:r\d+)?$", "SP hand-shaped (multi-recipe)"),
+    ("bench_morl_rec", r"^bench_morl-rec_s\d+(?:r\d+)?$", "MORL uniform w (multi-recipe)"),
     ("bench_morl_div_peak", r"^bench_morl_div_s\d+(?:r\d+)?_peak$", "MORL (per-member w, peak)"),
     ("bench_morl_ad_peak", r"^bench_morl_ad_s\d+(?:r\d+)?_peak$", "MORL (adaptive w, peak)"),
     ("s2_bench_sp", r"^s2_bench_sp_s\d+(?:r\d+)?$", "FCP S2 on SP population"),

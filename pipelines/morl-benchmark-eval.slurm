@@ -82,6 +82,17 @@ DUMMY=2
 EPISODES_STOCHASTIC=5
 RESULTS=$PYTHONPATH/../experiments/results
 
+# The env package follows the layout name, exactly as every train script picks
+# it. This was hardcoded to `old`, so a multi-recipe layout would have been
+# cross-played through the single-recipe env -- the observation is a different
+# width there, so it would not even have loaded, and only after both passes were
+# paid for.
+case "$LAYOUT" in
+    random0|random0_medium|random1|random3|small_corridor|unident_s) VERSION=old ;;
+    *) VERSION=new ;;
+esac
+echo "env version: ${VERSION}"
+
 cd $PYTHONPATH/zsceval/scripts
 
 if [ -n "$S2_ARMS" ]; then
@@ -128,9 +139,9 @@ mkdir -p $RESULTS
 cd overcooked
 
 common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
-        --num_agents 2 --seed 1 --episode_length 400 --overcooked_version old
+        --num_agents 2 --seed 1 --episode_length 400 --overcooked_version $VERSION
         --n_eval_rollout_threads $THREADS --dummy_batch_size $DUMMY
-        --n_training_threads 2 --morl_objectives default
+        --n_training_threads 2 --morl_objectives ${EVAL_OBJECTIVES:-default}
         --population_yaml_path $YML
         --ego_policy_names $AGENTS --partner_policy_names $AGENTS)
 
