@@ -43,7 +43,17 @@ from pathlib import Path
 import numpy as np
 from scipy.stats import wilcoxon
 
-ARMS = ["s2_bench_sp", "s2_bench_morl", "s2_bench_morl_ad", "s2_mixed"]
+DEFAULT_ARMS = ["s2_bench_sp", "s2_bench_morl", "s2_bench_morl_ad", "s2_mixed"]
+# Stage-1 arms, for the anchored re-baseline. The unit of replication is the
+# same either way: one training run per seed.
+STAGE1_ARMS = [
+    "bench_sp",
+    "bench_sparse",
+    "bench_morl_anc",
+    "bench_morl_ad_anc",
+    "bench_morl_div_anc",
+]
+ARMS = DEFAULT_ARMS
 # Power for a two-sided two-sample test at alpha=.05, 80% power:
 #   n per group ~= 2 * (z_{.975} + z_{.80})^2 * sd^2 / delta^2
 POWER_CONST = 2 * (1.959964 + 0.841621) ** 2
@@ -135,6 +145,16 @@ def main():
     parser.add_argument("--metrics", required=True)
     parser.add_argument("--label", default=None)
     parser.add_argument(
+        "--stage1",
+        action="store_true",
+        help="Compare the stage-1 arms instead of the stage-2 ones.",
+    )
+    parser.add_argument(
+        "--base",
+        default=None,
+        help="Arm every other is compared against (default: the first present).",
+    )
+    parser.add_argument(
         "--exclude",
         nargs="*",
         default=[],
@@ -155,8 +175,9 @@ def main():
         print(f"excluded: {', '.join(sorted(excluded))}")
     print("=" * 78)
 
+    arm_list = STAGE1_ARMS if args.stage1 else ARMS
     values = {}
-    for arm in ARMS:
+    for arm in arm_list:
         vals = {k: v for k, v in seed_values(metrics, arm).items() if k not in excluded}
         if vals:
             values[arm] = vals
@@ -181,7 +202,7 @@ def main():
                 f"at 80% power: {np.ceil(POWER_CONST * pooled**2 / delta**2):.0f}"
             )
 
-    base = "s2_bench_sp"
+    base = args.base or ("bench_sp" if args.stage1 else "s2_bench_sp")
     if base not in values:
         return
     print(f"\nbetween-arm, against {base} (exact permutation on seed means)")

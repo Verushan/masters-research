@@ -43,9 +43,19 @@ LABEL = {
     "rung2": "actor sees the raw scalar id",
     "rung3": "actor sees a one-hot over the population",
 }
-PATTERN = re.compile(
-    r"pid_ceiling_(?P<layout>.+?)_(?P<arm>.+?)_(?P<rung>rung\d)_s(?P<seed>[0-9a-z]+)\.json"
-)
+# The layout and arm are both underscore-containing names, so a regex cannot
+# split `pid_ceiling_unident_s_bench_sp_rung1_s1` unaided -- a non-greedy layout
+# reads it as layout "unident", arm "s_bench_sp", and the records are then
+# silently filtered out. random0 hid this by having no underscore in its name.
+# The caller knows the layout and arm, so build the prefix instead of inferring.
+def parse_name(basename, layout, arm):
+    """(rung, seed) for this layout/arm, or None if the file is not one of them."""
+    prefix = f"pid_ceiling_{layout}_{arm}_"
+    if not basename.startswith(prefix) or not basename.endswith(".json"):
+        return None
+    rest = basename[len(prefix) : -len(".json")]
+    m = re.fullmatch(r"(rung\d)_s([0-9a-z]+)", rest)
+    return (m.group(1), m.group(2)) if m else None
 
 
 def load(path):
@@ -82,12 +92,15 @@ def main():
 
     by_rung = defaultdict(dict)
     for path in sorted(glob.glob(os.path.join(args.results, "pid_ceiling_*.json*"))):
-        m = PATTERN.match(os.path.basename(path).replace(".gz", ""))
-        if not m or m["layout"] != args.layout or m["arm"] != args.arm:
+        parsed = parse_name(
+            os.path.basename(path).replace(".gz", ""), args.layout, args.arm
+        )
+        if not parsed:
             continue
+        rung, seed = parsed
         rows = load(path)
         returns = [r.get("eval_ep_sparse_r", 0.0) for r in rows]
-        by_rung[m["rung"]][m["seed"]] = float(np.mean(returns)) if returns else float("nan")
+        by_rung[rung][seed] = float(np.mean(returns)) if returns else float("nan")
 
     if not by_rung:
         raise SystemExit(f"no pid_ceiling records for {args.layout}/{args.arm}")
