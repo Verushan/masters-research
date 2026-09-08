@@ -76,7 +76,12 @@ ARM_FLAGS=""
 for ARM in $ARMS; do
     ARM_FLAGS="$ARM_FLAGS --arm $ARM"
 done
-python prep/gen_arm_S2_yml.py $LAYOUT $ARM_FLAGS || exit 1
+# ARM_SEEDS picks which stage-1 seeds become the stage-2 population. The
+# default is 3 seeds (9 partners); the anchored arms have 6, and a larger
+# population is only comparable if every arm uses the same count.
+SEEDS_FLAG=""
+[ -n "$ARM_SEEDS" ] && SEEDS_FLAG="--arm_seeds $ARM_SEEDS"
+python prep/gen_arm_S2_yml.py $LAYOUT $ARM_FLAGS $SEEDS_FLAG || exit 1
 
 cd overcooked
 for ARM in $ARMS; do
