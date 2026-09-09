@@ -46,10 +46,21 @@ ANC_ARMS=${ANC_ARMS:-"bench_morl-anc bench_morl_ad-anc bench_morl_div-anc"}
 BASE_ARMS=${BASE_ARMS:-"bench_sp bench_sparse"}
 SEEDS=${SEEDS:-"1 2 3 4 5 6"}
 
+# train_sp.py sends a new-env run to `{env_name}-new`, so the multi-recipe
+# layouts are in a different W&B project and extracting them from `Overcooked`
+# silently finds nothing. That is what job 51384 did: extraction failed for both
+# arms, the pool came out empty, and the eval "completed" in fifteen seconds
+# with a blank agent list.
+case "$LAYOUT" in
+    random0|random0_medium|random1|random3|small_corridor|unident_s) WB_PROJECT=Overcooked ;;
+    *) WB_PROJECT=Overcooked-new ;;
+esac
+echo "extracting from W&B project ${WB_PROJECT}"
+
 cd $PYTHONPATH/zsceval/scripts
 for ARM in $ANC_ARMS; do
     echo "########## extract ${ARM} ##########"
-    python extract_models/extract_sp_models.py "$LAYOUT" overcooked "$ARM" ep_morl_r \
+    python extract_models/extract_sp_models.py "$LAYOUT" "$WB_PROJECT" "$ARM" ep_morl_r \
         || echo "  extraction failed for ${ARM}"
 done
 
