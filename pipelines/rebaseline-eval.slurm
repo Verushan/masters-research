@@ -64,6 +64,18 @@ for ARM in $ANC_ARMS; do
         || echo "  extraction failed for ${ARM}"
 done
 
+# The baseline arms rank on the sparse return -- they log no ep_morl_r -- and
+# on the original layouts were extracted long before this script existed.
+# On a new layout they are not, and the eval above silently ran without them
+# (54499/54500: bench_sp-rec "skipped", pool = MORL arm only).
+for ARM in $BASE_ARMS; do
+    D="$POLICY_POOL/${LAYOUT}/fcp/s1/${ARM}"
+    if [ "$(ls $D/*_final_actor.pt 2>/dev/null | wc -l)" -eq 0 ]; then
+        echo "########## extract ${ARM} (ep_sparse_r) ##########"
+        python extract_models/extract_sp_models.py "$LAYOUT" "$WB_PROJECT" "$ARM" ep_sparse_r \
+            || echo "  extraction failed for ${ARM}"
+    fi
+done
 echo "=========================================================="
 echo "stage-1 pool after extraction:"
 for ARM in $ANC_ARMS $BASE_ARMS; do
