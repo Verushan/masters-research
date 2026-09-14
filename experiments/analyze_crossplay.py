@@ -53,6 +53,12 @@ GROUPS = [
     ("bench_morl_anc", r"^bench_morl-anc_s\d+(?:r\d+)?$", "MORL uniform w (anchored)"),
     ("bench_morl_ad_anc", r"^bench_morl_ad-anc_s\d+(?:r\d+)?$", "MORL adaptive w (anchored)"),
     ("bench_morl_div_anc", r"^bench_morl_div-anc_s\d+(?:r\d+)?$", "MORL per-member w (anchored)"),
+    # Adaptive w with the live w appended to the observation -- the only arm in
+    # which the adapting agent can see what it is adapting. -obs on random0 is
+    # the anchored set; on unident_s it is anchored_live3.
+    ("bench_morl_ad_obs", r"^bench_morl_ad_obs-obs_s\d+(?:r\d+)?$", "MORL adaptive w, w observed"),
+    ("bench_morl_live3", r"^bench_morl-live3_s\d+(?:r\d+)?$", "MORL uniform w (live3: no dead objective)"),
+    ("bench_morl_ad_live3", r"^bench_morl_ad-live3_s\d+(?:r\d+)?$", "MORL adaptive w (live3: no dead objective)"),
     # Multi-recipe arms, trained under the `recipe` objective set on the _m
     # and _mx layouts.
     ("bench_sp_rec", r"^bench_sp-rec_s\d+(?:r\d+)?$", "SP hand-shaped (multi-recipe)"),
