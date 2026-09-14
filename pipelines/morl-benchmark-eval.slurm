@@ -117,6 +117,12 @@ else
     HELDOUT_FLAG="--heldout $HELDOUT --hsp_partners auto --hsp_exp $HSP_EXP"
     TAG="${TAG}_${HELDOUT}"
 fi
+# Extra suffix on every output path. The anchored stage-2 arms are scored
+# against the same partner set as the pre-anchoring ones, so without this the
+# second run would overwrite the first's records and metrics.
+#
+#   OUT_TAG=_anc ARMS="..." S2_ARM_SEEDS="1 2 3 4 5 6" HELDOUT=hsp sbatch morl-benchmark-eval.slurm random0 "1 2 3 4 5 6" "bench_sp bench_morl-anc bench_morl_ad-anc"
+TAG="${TAG}${OUT_TAG:-}"
 
 # One yml per (layout, pool shape): the default path is shared, so an hsp run
 # would otherwise overwrite the sp pool the earlier results were produced from.
