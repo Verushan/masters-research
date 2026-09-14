@@ -35,7 +35,17 @@ EXP=${EXP:-hsp-s1}
 
 cd $PYTHONPATH/zsceval/scripts
 echo "extracting ${EXP} partners for ${LAYOUT}"
-python extract_models/extract_bias_agents_models.py "$LAYOUT" overcooked "$EXP" || exit 1
+# train_sp.py sends new-env runs to `{env}-new`, so the multi-recipe layouts
+# live in a different W&B project. Extracting them from Overcooked finds
+# nothing (job 54488: "num of runs: 0", exit 0, empty pool).
+case "$LAYOUT" in
+    *_m|*_mx) WB_PROJECT=Overcooked-new ;;
+    *) WB_PROJECT=overcooked ;;
+esac
+python extract_models/extract_bias_agents_models.py "$LAYOUT" "$WB_PROJECT" "$EXP" || exit 1
 
 D="$POLICY_POOL/${LAYOUT}/hsp/s1/${EXP}"
-echo "pool now holds $(ls $D/*_final_w0_actor.pt 2>/dev/null | wc -l) final w0 partners for ${LAYOUT}"
+N=$(ls $D/*_final_w0_actor.pt 2>/dev/null | wc -l)
+echo "pool now holds ${N} final w0 partners for ${LAYOUT}"
+# An empty pool is a failure, whatever the extractor's exit code said.
+[ "$N" -gt 0 ] || exit 1

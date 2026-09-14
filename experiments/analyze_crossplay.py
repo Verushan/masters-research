@@ -63,6 +63,11 @@ GROUPS = [
     ("s2_bench_morl", r"^s2_bench_morl_s\d+(?:r\d+)?$", "FCP S2 on MORL (fixed w) population"),
     ("s2_bench_morl_ad", r"^s2_bench_morl_ad_s\d+(?:r\d+)?$", "FCP S2 on MORL (adaptive w) population"),
     ("s2_mixed", r"^s2_mixed_s\d+(?:r\d+)?$", "FCP S2 on mixed population"),
+    # Stage-2 agents trained on the anchored populations (job 50954): six seeds
+    # each over an 18-partner population. These are the first stage-2 results
+    # on a reward whose argmax is not a hack.
+    ("s2_bench_morl_anc", r"^s2_bench_morl-anc_s\d+(?:r\d+)?$", "FCP S2 on MORL population (anchored)"),
+    ("s2_bench_morl_ad_anc", r"^s2_bench_morl_ad-anc_s\d+(?:r\d+)?$", "FCP S2 on adaptive-MORL population (anchored)"),
     # pid-ladder.sh rungs. The arm name carries the rung ("bench_sp-rung1"), so
     # the pool entry is `s2_bench_sp-rung1_s{seed}` and the plain s2_bench_sp
     # pattern above -- anchored on `_s\d+(?:r\d+)?$` -- does not match it.

@@ -43,7 +43,14 @@ from pathlib import Path
 import numpy as np
 from scipy.stats import wilcoxon
 
-DEFAULT_ARMS = ["s2_bench_sp", "s2_bench_morl", "s2_bench_morl_ad", "s2_mixed"]
+DEFAULT_ARMS = [
+    "s2_bench_sp",
+    "s2_bench_morl",
+    "s2_bench_morl_ad",
+    "s2_mixed",
+    "s2_bench_morl_anc",
+    "s2_bench_morl_ad_anc",
+]
 # Stage-1 arms, for the anchored re-baseline. The unit of replication is the
 # same either way: one training run per seed.
 STAGE1_ARMS = [
