@@ -62,6 +62,8 @@ STAGE1_ARMS = [
     "bench_morl_ad_obs",
     "bench_morl_live3",
     "bench_morl_ad_live3",
+    "bench_sp_rec",
+    "bench_morl_rec",
 ]
 ARMS = DEFAULT_ARMS
 # Power for a two-sided two-sample test at alpha=.05, 80% power:
