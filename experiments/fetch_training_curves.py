@@ -40,6 +40,12 @@ KEYS = [
     "ep_morl_w_ingredient_prep",
     "ep_morl_w_plating",
     "ep_morl_w_coordination",
+    # The multi-recipe `recipe` set adds two objectives; absent keys are
+    # skipped per run, so listing them costs the single-recipe arms nothing.
+    "ep_obj_recipe_quality",
+    "ep_obj_recipe_value",
+    "ep_morl_w_recipe_quality",
+    "ep_morl_w_recipe_value",
     "eval_ep_sparse_r",
 ]
 
@@ -59,10 +65,19 @@ def main():
         help="Prefix the metrics carry in W&B, e.g. 'either-fcp_adaptive-' for "
         "stage-2 runs. Stripped from the series names in the output.",
     )
+    parser.add_argument(
+        "--project",
+        default=None,
+        help="W&B project (default $WANDB_PROJECT). New-env layouts (*_m, *_mx) "
+        "are logged to `{project}-new`; picked automatically from --layout.",
+    )
     args = parser.parse_args()
 
     entity = os.environ["WANDB_ENTITY"]
-    project = os.environ["WANDB_PROJECT"]
+    project = args.project or os.environ["WANDB_PROJECT"]
+    if args.project is None and args.layout.endswith(("_m", "_mx")):
+        project = f"{project}-new"
+    logger.info(f"project {entity}/{project}")
     api = wandb.Api(timeout=60)
 
     out = {}
