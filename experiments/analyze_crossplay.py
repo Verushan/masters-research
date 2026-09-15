@@ -59,6 +59,13 @@ GROUPS = [
     ("bench_morl_ad_obs", r"^bench_morl_ad_obs-obs_s\d+(?:r\d+)?$", "MORL adaptive w, w observed"),
     ("bench_morl_live3", r"^bench_morl-live3_s\d+(?:r\d+)?$", "MORL uniform w (live3: no dead objective)"),
     ("bench_morl_ad_live3", r"^bench_morl_ad-live3_s\d+(?:r\d+)?$", "MORL adaptive w (live3: no dead objective)"),
+    # The corrected arms (15 Sep): annealed dense objectives; the fill-in agent
+    # (anneal + partner shares + complement rule); the baseline reward given the
+    # partner state alone.
+    ("bench_morl_ann", r"^bench_morl_ann-\w+_s\d+(?:r\d+)?$", "MORL annealed dense objectives"),
+    ("bench_morl_fill", r"^bench_morl_fill-\w+_s\d+(?:r\d+)?$", "MORL fill-in (anneal + partner state + complement w)"),
+    ("bench_sp_shares", r"^bench_sp_shares-\w+_s\d+(?:r\d+)?$", "SP hand-shaped + partner state"),
+    ("bench_morl_ad_rec", r"^bench_morl_ad-rec_s\d+(?:r\d+)?$", "MORL adaptive w (multi-recipe)"),
     # Multi-recipe arms, trained under the `recipe` objective set on the _m
     # and _mx layouts.
     ("bench_sp_rec", r"^bench_sp-rec_s\d+(?:r\d+)?$", "SP hand-shaped (multi-recipe)"),

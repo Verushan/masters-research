@@ -33,6 +33,15 @@
 #   sbatch obs-weights-eval.slurm random0           # anchored set
 #   sbatch obs-weights-eval.slurm unident_s         # anchored_live3 set
 #   OBS_ARM=bench_morl_ad_obs-obs COMPARE_ARMS="bench_sp bench_morl_ad-anc" sbatch ...
+#
+# The partner-conditioned arms use the same mechanism with a different set of
+# widening flags. The channels are appended in a fixed order (w, then shares),
+# so a shares-only policy cannot be trimmed out of a w+shares observation: each
+# widened arm gets its own run. VARIANT picks the config suffix, the flags the
+# env is built with, and the output tag:
+#
+#   VARIANT=fill   sbatch obs-weights-eval.slurm unident_s   # w + shares, complement rule
+#   VARIANT=shares sbatch obs-weights-eval.slurm unident_s   # shares only, baseline reward
 
 cd /home-mscluster/vnaidoo/Coding/masters-research/pipelines
 
@@ -64,20 +73,55 @@ THREADS=12
 DUMMY=2
 EPISODES_STOCHASTIC=5
 RESULTS=$PYTHONPATH/../experiments/results
-TAG="_hsp_obs"
+VARIANT=${VARIANT:-weights}
+case "$VARIANT" in
+    weights)
+        TAG="_hsp_obs"
+        STORE_FLAGS=(--morl_obs_weights $OBJ)
+        MOW_CONFIG="mlp_policy_config_mow-${OBJ}.pkl"
+        ENV_FLAGS=(--use_morl --morl_objectives $OBJ --morl_weights "$UNIFORM_W"
+                   --morl_adaptive_weights --use_morl_obs_weights) ;;
+    fill)
+        TAG="_hsp_fill"
+        OBS_ARM=${OBS_ARM_OVERRIDE:-bench_morl_fill-live3}
+        STORE_FLAGS=(--morl_obs_weights $OBJ --morl_obs_shares $OBJ)
+        MOW_CONFIG="mlp_policy_config_mow-${OBJ}_mos.pkl"
+        # Exactly the flags train_morl_benchmark.sh gives bench_morl_fill, so the
+        # per-agent w moves against each stranger the way it did in training.
+        ENV_FLAGS=(--use_morl --morl_objectives $OBJ --morl_weights "${ANN_WEIGHTS:-20,3,3}"
+                   --morl_anneal_dense --morl_adaptive_weights --morl_adaptive_target complement
+                   --use_morl_obs_weights --use_morl_obs_shares) ;;
+    shares)
+        TAG="_hsp_shares"
+        OBS_ARM=${OBS_ARM_OVERRIDE:-bench_sp_shares-live3}
+        STORE_FLAGS=(--morl_obs_shares $OBJ)
+        MOW_CONFIG="mlp_policy_config_mos-${OBJ}.pkl"
+        ENV_FLAGS=(--morl_objectives $OBJ --use_morl_obs_shares) ;;
+    *) echo "unknown VARIANT ${VARIANT}"; exit 1 ;;
+esac
 echo "layout ${LAYOUT}  objectives ${OBJ}  obs arm ${OBS_ARM}  vs ${COMPARE_ARMS}"
 
 cd $PYTHONPATH/zsceval/scripts
 
 # 1. A policy config at the widened observation, e.g. random0 (5,5,24).
-python prep/store_policy_config.py $LAYOUT --morl_obs_weights $OBJ || exit 1
-MOW_CONFIG="mlp_policy_config_mow-${OBJ}.pkl"
+python prep/store_policy_config.py $LAYOUT "${STORE_FLAGS[@]}" || exit 1
 [ -f "$POLICY_POOL/$LAYOUT/policy_config/$MOW_CONFIG" ] || { echo "missing $MOW_CONFIG"; exit 1; }
 
-# 2. The arm's checkpoints, ranked by its own reward like every MORL arm.
-echo "########## extract ${OBS_ARM} ##########"
-python extract_models/extract_sp_models.py "$LAYOUT" "$WB_PROJECT" "$OBS_ARM" ep_morl_r \
+# 2. The arm's checkpoints, ranked by its own reward -- ep_morl_r for a MORL
+#    arm, ep_sparse_r for the baseline-reward shares arm, which logs no ep_morl_r.
+case "$OBS_ARM" in bench_sp*) RANK=ep_sparse_r ;; *) RANK=ep_morl_r ;; esac
+echo "########## extract ${OBS_ARM} (${RANK}) ##########"
+python extract_models/extract_sp_models.py "$LAYOUT" "$WB_PROJECT" "$OBS_ARM" $RANK \
     || echo "  extraction failed for ${OBS_ARM}"
+# Standard-width arms trained alongside (the annealed uniform-w arm) join the
+# pool of every variant; extracted here if not yet in the pool.
+for EXTRA in ${EXTRA_ARMS:-}; do
+    if [ "$(ls $POLICY_POOL/$LAYOUT/fcp/s1/$EXTRA/*_final_actor.pt 2>/dev/null | wc -l)" -eq 0 ]; then
+        python extract_models/extract_sp_models.py "$LAYOUT" "$WB_PROJECT" "$EXTRA" ep_morl_r \
+            || echo "  extraction failed for ${EXTRA}"
+    fi
+    COMPARE_ARMS="$COMPARE_ARMS $EXTRA"
+done
 N=$(ls $POLICY_POOL/$LAYOUT/fcp/s1/$OBS_ARM/*_final_actor.pt 2>/dev/null | wc -l)
 echo "${OBS_ARM}: ${N} final checkpoints"
 [ "$N" -gt 0 ] || exit 1
@@ -102,8 +146,7 @@ common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
         --num_agents 2 --seed 1 --episode_length 400 --overcooked_version $VERSION
         --n_eval_rollout_threads $THREADS --dummy_batch_size $DUMMY
         --n_training_threads 2
-        --use_morl --morl_objectives $OBJ --morl_weights "$UNIFORM_W"
-        --morl_adaptive_weights --use_morl_obs_weights
+        "${ENV_FLAGS[@]}"
         --population_yaml_path $YML
         --ego_policy_names $AGENTS --partner_policy_names $AGENTS)
 
