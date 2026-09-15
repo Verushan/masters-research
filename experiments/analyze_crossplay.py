@@ -62,8 +62,12 @@ GROUPS = [
     # The corrected arms (15 Sep): annealed dense objectives; the fill-in agent
     # (anneal + partner shares + complement rule); the baseline reward given the
     # partner state alone.
-    ("bench_morl_ann", r"^bench_morl_ann-\w+_s\d+(?:r\d+)?$", "MORL annealed dense objectives"),
-    ("bench_morl_fill", r"^bench_morl_fill-\w+_s\d+(?:r\d+)?$", "MORL fill-in (anneal + partner state + complement w)"),
+    # `-live3` arms credit deliveries per agent; `-live3t` credit them to the
+    # team, as the baseline does. Kept apart: the difference is a cause.
+    ("bench_morl_ann", r"^bench_morl_ann-(?:anc|live3)_s\d+(?:r\d+)?$", "MORL annealed dense (per-agent task credit)"),
+    ("bench_morl_ann_team", r"^bench_morl_ann-(?:anc|live3)t_s\d+(?:r\d+)?$", "MORL annealed dense (team task credit)"),
+    ("bench_morl_fill", r"^bench_morl_fill-(?:anc|live3)_s\d+(?:r\d+)?$", "MORL fill-in (per-agent task credit)"),
+    ("bench_morl_fill_team", r"^bench_morl_fill-(?:anc|live3)t_s\d+(?:r\d+)?$", "MORL fill-in (team task credit)"),
     ("bench_sp_shares", r"^bench_sp_shares-\w+_s\d+(?:r\d+)?$", "SP hand-shaped + partner state"),
     ("bench_morl_ad_rec", r"^bench_morl_ad-rec_s\d+(?:r\d+)?$", "MORL adaptive w (multi-recipe)"),
     # Multi-recipe arms, trained under the `recipe` objective set on the _m

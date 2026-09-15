@@ -67,6 +67,8 @@ STAGE1_ARMS = [
     "bench_morl_ad_rec",
     "bench_morl_ann",
     "bench_morl_fill",
+    "bench_morl_ann_team",
+    "bench_morl_fill_team",
     "bench_sp_shares",
 ]
 ARMS = DEFAULT_ARMS
