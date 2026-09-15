@@ -77,6 +77,16 @@ STAGE1_ARMS = [
     # other MORL arm handed the same w to every seed, so its spread came
     # from initialisation alone.
     "bench_morl_div",
+    # Anchored / live3 / multi-recipe arms; absent ones are skipped.
+    "bench_morl_anc",
+    "bench_morl_ad_anc",
+    "bench_morl_div_anc",
+    "bench_morl_ad_obs",
+    "bench_morl_live3",
+    "bench_morl_ad_live3",
+    "bench_sp_rec",
+    "bench_morl_rec",
+    "bench_morl_ad_rec",
 ]
 
 

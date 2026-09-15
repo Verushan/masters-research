@@ -1,0 +1,19 @@
+==============================================================================
+population diversity -- random0_anc
+partner group: heldout_hsp  (16 partners)
+==============================================================================
+
+arm               n  behavioural   outcome  ZSC mean   s2 ZSC
+------------------------------------------------------------------------------
+bench_sp          6       0.1526    5.8438      32.2     29.7
+bench_sparse      6       0.6402    0.1122       0.2      nan
+bench_morl_anc    6       0.1769    4.4864      41.1     19.4
+bench_morl_ad_anc  6       0.2178    5.8632      35.9     14.5
+bench_morl_div_anc  6       0.3248    0.9930       1.6      nan
+
+  over 3 arms with a stage-2 agent:
+    corr(behavioural diversity, stage-2 ZSC) = -0.940
+    corr(outcome diversity,     stage-2 ZSC) = +0.189
+    (descriptive only -- this is a correlation over a handful of arms,
+     reportable as a direction to check, never as evidence on its own)
+
