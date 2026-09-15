@@ -1,0 +1,1272 @@
+<title>Cooking With Strangers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+
+<style>
+  :root {
+    --paper:    #F6F7F9;
+    --surface:  #FFFFFF;
+    --sunken:   #EDEFF3;
+    --ink:      #14161C;
+    --ink-2:    #545A67;
+    --ink-3:    #7B8291;
+    --rule:     #DEE2E9;
+    --accent:   #7B2D4E;
+    --accent-soft: #F3E7EC;
+    --good:     #1F6B4A;
+    --good-soft:#E6F0EA;
+    --fixed:    #2B4C8C;
+    --fixed-soft:#E6ECF7;
+    --open:     #8A6D1F;
+    --open-soft:#F4EEDD;
+    --shadow:   0 1px 2px rgba(20,22,28,.05), 0 8px 24px -12px rgba(20,22,28,.12);
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --paper:   #101319;
+      --surface: #171B23;
+      --sunken:  #1D222B;
+      --ink:     #EDEFF3;
+      --ink-2:   #A7AEBC;
+      --ink-3:   #7B8291;
+      --rule:    #2A303B;
+      --accent:  #D98BA8;
+      --accent-soft: #2E1E26;
+      --good:    #6FC69C;
+      --good-soft:#16281F;
+      --fixed:   #8FB0EE;
+      --fixed-soft:#182234;
+      --open:    #D9BC6B;
+      --open-soft:#2A2416;
+      --shadow:  0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:   #101319;
+    --surface: #171B23;
+    --sunken:  #1D222B;
+    --ink:     #EDEFF3;
+    --ink-2:   #A7AEBC;
+    --ink-3:   #7B8291;
+    --rule:    #2A303B;
+    --accent:  #D98BA8;
+    --accent-soft: #2E1E26;
+    --good:    #6FC69C;
+    --good-soft:#16281F;
+    --fixed:   #8FB0EE;
+    --fixed-soft:#182234;
+    --open:    #D9BC6B;
+    --open-soft:#2A2416;
+    --shadow:  0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Sans 3", system-ui, -apple-system, sans-serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 28px 96px; }
+  .col  { max-width: 68ch; }
+
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.1rem, 5vw, 3.1rem); font-weight: 600; line-height: 1.08; letter-spacing: -.015em; }
+  h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); font-weight: 600; line-height: 1.2; }
+  h3 { font-size: 1.12rem; font-weight: 600; line-height: 1.35; }
+  p  { margin: 0 0 1em; }
+  a  { color: var(--accent); }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ink-3); margin: 0 0 .6rem;
+  }
+
+  header.masthead { padding: 72px 0 40px; border-bottom: 1px solid var(--rule); }
+  .masthead .lede { font-size: 1.2rem; color: var(--ink-2); margin-top: 1.1rem; }
+  .meta {
+    display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 26px;
+    font-family: "IBM Plex Mono", monospace; font-size: .78rem; color: var(--ink-3);
+  }
+
+  section { padding: 52px 0 8px; }
+  section + section { border-top: 1px solid var(--rule); }
+  .sec-head { margin-bottom: 26px; }
+  .sec-head p { color: var(--ink-2); margin-top: .5rem; }
+
+  /* ---- status chips ---------------------------------------------------- */
+  .chip {
+    display: inline-block; padding: 2px 9px; border-radius: 3px;
+    font-family: "IBM Plex Mono", monospace; font-size: .68rem;
+    letter-spacing: .06em; text-transform: uppercase; font-weight: 600;
+    white-space: nowrap;
+  }
+  .chip.est   { background: var(--good-soft);  color: var(--good); }
+  .chip.fix   { background: var(--fixed-soft); color: var(--fixed); }
+  .chip.open  { background: var(--open-soft);  color: var(--open); }
+  .chip.neg   { background: var(--accent-soft); color: var(--accent); }
+  .chip.run   { background: var(--sunken); color: var(--ink-2); }
+  .cause { display: grid; grid-template-columns: 56px 1fr; gap: 14px 18px; padding: 18px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+  .cause:last-child { border-bottom: 0; }
+  .cause .cno { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--accent); padding-top: .25rem; }
+  .cause h4 { margin: 0 0 .35rem; font-size: 1.05rem; }
+  .cause p { margin: 0 0 .5rem; font-size: .95rem; color: var(--ink-2); }
+  .cause p.fix { color: var(--ink); }
+  .cause p.fix b { color: var(--fixed); }
+
+  /* ---- glossary -------------------------------------------------------- */
+  .glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .term { background: var(--surface); padding: 18px 20px; }
+  .term dt { font-weight: 600; font-size: .95rem; margin-bottom: .3rem; }
+  .term dt span { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--ink-3); font-weight: 400; }
+  .term dd { margin: 0; font-size: .92rem; color: var(--ink-2); line-height: 1.55; }
+
+  /* ---- findings -------------------------------------------------------- */
+  .finding { padding: 30px 0; border-bottom: 1px solid var(--rule); }
+  .finding:last-child { border-bottom: 0; }
+  .finding-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px; }
+  .fno {
+    font-family: "IBM Plex Mono", monospace; font-size: .8rem; font-weight: 600;
+    color: var(--accent); background: var(--accent-soft);
+    padding: 3px 8px; border-radius: 3px;
+  }
+  .says {
+    margin-top: 18px; padding: 14px 18px; border-left: 3px solid var(--accent);
+    background: var(--sunken); border-radius: 0 4px 4px 0;
+  }
+  .says b {
+    display: block; font-family: "IBM Plex Mono", monospace; font-size: .7rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3);
+    margin-bottom: .4rem; font-weight: 600;
+  }
+  .says p { margin: 0; font-size: 1.03rem; }
+
+  /* ---- tables ---------------------------------------------------------- */
+  .tw { overflow-x: auto; margin: 22px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+  caption {
+    caption-side: top; text-align: left; color: var(--ink-3);
+    font-size: .82rem; padding-bottom: 8px;
+  }
+  th, td { padding: 9px 14px 9px 0; text-align: left; border-bottom: 1px solid var(--rule); }
+  th {
+    font-family: "IBM Plex Mono", monospace; font-size: .72rem;
+    letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); font-weight: 600;
+  }
+  td.num, th.num { text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; padding-right: 18px; }
+  tr.hi td { background: var(--accent-soft); }
+  tr.hi td:first-child { font-weight: 600; }
+
+  /* ---- farmability bars ------------------------------------------------ */
+  .bars { margin: 24px 0; display: grid; gap: 12px; }
+  .bar-row { display: grid; grid-template-columns: 190px 1fr 62px; align-items: center; gap: 14px; }
+  .bar-name { font-size: .9rem; }
+  .bar-track { position: relative; height: 22px; background: var(--sunken); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 3px; }
+  .bar-mark { position: absolute; top: -4px; bottom: -4px; width: 1px; background: var(--ink-3); }
+  .bar-val { font-family: "IBM Plex Mono", monospace; font-size: .85rem; text-align: right; font-variant-numeric: tabular-nums; }
+  .bar-key { font-size: .82rem; color: var(--ink-3); margin-top: 4px; }
+
+  /* ---- question map ---------------------------------------------------- */
+  .qrow { display: grid; grid-template-columns: 1fr auto; gap: 16px 20px; padding: 18px 0; border-bottom: 1px solid var(--rule); align-items: start; }
+  .qrow:last-child { border-bottom: 0; }
+  .qrow q { font-weight: 600; display: block; margin-bottom: .35rem; }
+  .qrow em { font-style: normal; color: var(--ink-2); font-size: .95rem; }
+
+  /* ---- kitchen diagrams ------------------------------------------------ */
+  .kitchens { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 26px; margin-top: 8px; }
+  .kitchen {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 20px 22px 22px; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .kitchen h3 { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .kitchen h3 code { font-size: .82rem; background: var(--sunken); }
+  .kitchen .role { font-family: "IBM Plex Mono", monospace; font-size: .68rem; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); }
+  .grid-wrap { display: flex; justify-content: center; }
+  .grid { display: grid; gap: 2px; }
+  .tile {
+    width: 30px; height: 30px; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: "IBM Plex Mono", monospace; font-size: .68rem; font-weight: 600;
+  }
+  .t-floor   { background: var(--sunken); }
+  .t-counter { background: var(--rule); }
+  .t-onion   { background: #C98B34; color: #2A1C08; }
+  .t-tomato  { background: #B24A3E; color: #fff; }
+  .t-dish    { background: #7C93AE; color: #10171F; }
+  .t-pot     { background: var(--ink); color: var(--paper); }
+  .t-serve   { background: var(--accent); color: #fff; }
+  .t-agent   { background: var(--fixed); color: #fff; border-radius: 50%; }
+  .kitchen p { margin: 0; font-size: .92rem; color: var(--ink-2); }
+  .kitchen .why { color: var(--ink); }
+  .kitchen .why b { color: var(--accent); }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 22px 0 30px; font-size: .84rem; color: var(--ink-2); }
+  .legend span { display: flex; align-items: center; gap: 7px; }
+  .swatch { width: 15px; height: 15px; border-radius: 3px; flex: none; }
+
+  /* ---- replay ---------------------------------------------------------- */
+  .replays { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin: 26px 0 10px; }
+  .replay { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 20px 22px; box-shadow: var(--shadow); }
+  .replay header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+  .replay h3 { font-size: 1.05rem; }
+  .replay .verdict { font-family: "IBM Plex Mono", monospace; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; }
+  .replay .bad  { color: var(--accent); }
+  .replay .ok   { color: var(--good); }
+  .replay .sub  { font-size: .88rem; color: var(--ink-2); margin: 0 0 14px; }
+  .stage { display: flex; justify-content: center; margin-bottom: 14px; }
+  .rgrid { display: grid; gap: 2px; position: relative; }
+  .rtile { width: 34px; height: 34px; border-radius: 3px; display: flex; align-items: center; justify-content: center;
+           font-family: "IBM Plex Mono", monospace; font-size: .62rem; font-weight: 600; }
+  .cook { position: absolute; width: 26px; height: 26px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          font-family: "IBM Plex Mono", monospace; font-size: .68rem; font-weight: 700;
+          color: #fff; transition: left .05s linear, top .05s linear; }
+  .cook.c0 { background: #2B4C8C; }
+  .cook.c1 { background: #6E3AA8; }
+  .carry { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--surface); right: -3px; top: -3px; }
+  .tick { position: absolute; width: 5px; height: 5px; background: #fff; border-radius: 1px; opacity: .9; }
+  .readout { display: flex; gap: 20px; font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--ink-2); }
+  .readout b { color: var(--ink); font-size: 1.5rem; font-weight: 600; display: block; line-height: 1.1; }
+  .readout .lbl { font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .controls { display: flex; align-items: center; gap: 14px; margin: 20px 0 4px; }
+  .controls button {
+    font: inherit; font-size: .88rem; padding: 7px 18px; border-radius: 4px;
+    border: 1px solid var(--rule); background: var(--surface); color: var(--ink); cursor: pointer;
+  }
+  .controls button:hover { border-color: var(--accent); color: var(--accent); }
+  .controls button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .controls input[type=range] { flex: 1; accent-color: var(--accent); }
+  .controls .stepno { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--ink-3); min-width: 74px; text-align: right; }
+
+  .callout {
+    background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+    padding: 22px 24px; box-shadow: var(--shadow); margin: 24px 0;
+  }
+  .callout h3 { margin-bottom: .5rem; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  ul.tight { margin: 0 0 1em; padding-left: 1.15rem; }
+  ul.tight li { margin-bottom: .45rem; }
+  code {
+    font-family: "IBM Plex Mono", monospace; font-size: .87em;
+    background: var(--sunken); padding: 1px 5px; border-radius: 3px;
+  }
+  .footnote { font-size: .88rem; color: var(--ink-3); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">Research status · 15 September 2026</p>
+  <h1>Cooking&nbsp;With Strangers</h1>
+  <p class="lede col">
+    We train agents to cook together in <em>Overcooked</em>, then test them with
+    partners they have never met. Last week we found the reward could be cheated and
+    fixed it. This week the full benchmark ran on the fixed reward, at six runs per
+    method, on every kitchen: <strong>our method does not beat the hand-tuned baseline</strong>.
+    We know why — two specific, mechanical causes — and the corrected versions are training now.
+  </p>
+  <div class="meta">
+    <span>Verushan Naidoo</span>
+    <span>MSc research · ZSC-Eval / Overcooked</span>
+    <span>9 findings established · 3 corrected arms training</span>
+  </div>
+</header>
+
+<!-- ============================= PLAIN ENGLISH ========================= -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">Start here</p>
+    <h2>The problem in one minute</h2>
+  </div>
+  <div class="col">
+    <p>
+      <em>Overcooked</em> is a two-player cooking game. Players fetch onions, put them
+      in a pot, wait for the soup, plate it, and deliver it. Doing that well needs
+      coordination — if both players fetch onions and nobody plates, nothing gets served.
+    </p>
+    <p>
+      Training two agents <strong>together</strong> is easy. They learn a private routine
+      that works beautifully with each other, and falls apart with anyone else, rather
+      like two people who have shared a kitchen for years and communicate in grunts.
+      The research problem is <strong>zero-shot coordination</strong>: building an agent
+      that works well with a partner it has never trained with.
+    </p>
+    <p>
+      Our proposed approach is <strong>multi-objective reinforcement learning</strong>.
+      Instead of giving the agent one score to maximise, we give it several — deliveries,
+      ingredient prep, plating, coordination — and a set of <em>weights</em> saying how much
+      each matters. The hope is that an agent which can shift its priorities will adapt
+      to whoever it is paired with.
+    </p>
+    <p>
+      The supervisors' concern, which motivated this work, was that hand-tuned rewards
+      were performing so close to our method that the method looked unnecessary. Last week
+      we showed that comparison was not measuring what we thought, because the reward could
+      be cheated. This week's update is the comparison done properly — and it comes out
+      against us. The rest of this report says where, by how much, why, and what we are
+      changing.
+    </p>
+  </div>
+</section>
+
+<!-- ============================== GLOSSARY ============================= -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">Reference</p>
+    <h2>The words we use</h2>
+    <p>Everything below is defined here first, so no term in this report is load-bearing and unexplained.</p>
+  </div>
+  <dl class="glossary">
+    <div class="term">
+      <dt>Zero-shot coordination <span>ZSC</span></dt>
+      <dd>Playing well with a partner you have never trained against. The whole point of the project — an agent that only works with itself has solved nothing.</dd>
+    </div>
+    <div class="term">
+      <dt>Self-play</dt>
+      <dd>Training an agent by pairing it with a copy of itself. Cheap and effective, but it produces private conventions that do not transfer.</dd>
+    </div>
+    <div class="term">
+      <dt>Cross-play</dt>
+      <dd>Evaluation where every agent is paired with every other. This is where zero-shot ability actually shows up, and it is the number that matters.</dd>
+    </div>
+    <div class="term">
+      <dt>Held-out partner</dt>
+      <dd>A partner agent kept aside and never trained against, used only for testing. We use sixteen of them per kitchen, each with deliberately different habits.</dd>
+    </div>
+    <div class="term">
+      <dt>Reward shaping</dt>
+      <dd>Hand-written bonuses ("+3 for putting an onion in a pot") added to guide learning. Effective, but tuned by hand per kitchen, and it bakes in the answer.</dd>
+    </div>
+    <div class="term">
+      <dt>Objective</dt>
+      <dd>One component of our reward vector — deliveries, ingredient prep, plating, or coordination. Each counts events the game already tracks.</dd>
+    </div>
+    <div class="term">
+      <dt>Preference weights <span>w</span></dt>
+      <dd>How much the agent cares about each objective. <em>Fixed</em> weights stay put; <em>adaptive</em> weights shift during play, which is the mechanism meant to produce adaptability.</dd>
+    </div>
+    <div class="term">
+      <dt>Seed</dt>
+      <dd>One training run. Runs differ by random chance, so a claim needs several seeds — a difference between two single runs usually means nothing.</dd>
+    </div>
+    <div class="term">
+      <dt>Best response <span>BR</span></dt>
+      <dd>An agent trained to work with one specific partner and nobody else. It shows the best score that partnership can reach, so it tells us how much a method is leaving on the table.</dd>
+    </div>
+    <div class="term">
+      <dt>Layout / kitchen</dt>
+      <dd>The map. <code>random0</code> has a counter dividing the two cooks, forcing handoffs. <code>unident_s</code> is more open. Different kitchens demand different teamwork.</dd>
+    </div>
+  </dl>
+</section>
+
+<!-- ============================== KITCHENS ============================= -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">The maps</p>
+    <h2>The kitchens, and why the layout decides everything</h2>
+    <p>
+      Every number in this report is tied to a specific kitchen, and the kitchens demand
+      genuinely different teamwork. These are drawn from the actual map files.
+    </p>
+  </div>
+
+  <div class="legend">
+    <span><i class="swatch t-counter"></i> Counter / wall</span>
+    <span><i class="swatch t-floor"></i> Walkable floor</span>
+    <span><i class="swatch t-onion"></i> Onion supply</span>
+    <span><i class="swatch t-tomato"></i> Tomato supply</span>
+    <span><i class="swatch t-dish"></i> Clean dishes</span>
+    <span><i class="swatch t-pot"></i> Cooking pot</span>
+    <span><i class="swatch t-serve"></i> Serving hatch</span>
+    <span><i class="swatch t-agent" style="border-radius:50%"></i> Cook start position</span>
+  </div>
+
+  <div class="kitchens" id="kitchens"></div>
+
+  <div class="col" style="margin-top:30px">
+    <p>
+      That last point is worth dwelling on, because it explains a result that looked like a bug.
+      Our <strong>coordination</strong> objective counts items passed across a counter. On
+      <code>unident_s</code> it scores <strong>exactly zero</strong> for every method we have ever
+      run — not because the agents fail to cooperate, but because the map has no dividing counter,
+      so there is never any need to hand anything over. The two cooks simply work around each other.
+    </p>
+    <p>
+      That matters for the adaptive-weights method specifically. Its weights drift toward whichever
+      objective is being under-served — and an objective that is <em>structurally impossible</em>
+      looks permanently under-served, so weight piles onto it and starves the objectives that can
+      actually be achieved. We have now removed it on that map, and one of the running experiments
+      tests whether that alone repairs the adaptive method.
+    </p>
+  </div>
+</section>
+
+<!-- =========================== HEADLINE FINDING ======================== -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">The main result</p>
+    <h2>The reward could be cheated, and the agents found out</h2>
+  </div>
+
+  <div class="col">
+    <p>
+      One of our four objectives, <strong>coordination</strong>, counted <em>handoffs</em>:
+      passing an item to your partner across a counter. It seemed like the obvious way to
+      measure teamwork.
+    </p>
+    <p>
+      It is also trivially cheatable. Putting an item down and picking it up again are
+      exact opposites, so two agents can pass one onion back and forth forever, scoring
+      "coordination" the entire time and never cooking anything. <strong>They did.</strong>
+      Six independent training runs discovered this on their own.
+    </p>
+  </div>
+
+  <div class="bars">
+    <div class="bar-row">
+      <span class="bar-name">coordination</span>
+      <span class="bar-track">
+        <span class="bar-fill" style="width:100%;background:var(--accent)"></span>
+        <span class="bar-mark" style="left:27.1%"></span>
+      </span>
+      <span class="bar-val">3.69&times;</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">ingredient prep</span>
+      <span class="bar-track">
+        <span class="bar-fill" style="width:4.9%;background:var(--good)"></span>
+        <span class="bar-mark" style="left:27.1%"></span>
+      </span>
+      <span class="bar-val">0.18&times;</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">plating</span>
+      <span class="bar-track">
+        <span class="bar-fill" style="width:0.8%;background:var(--good)"></span>
+        <span class="bar-mark" style="left:27.1%"></span>
+      </span>
+      <span class="bar-val">0.03&times;</span>
+    </div>
+    <div class="bar-row">
+      <span class="bar-name">deliveries</span>
+      <span class="bar-track">
+        <span class="bar-fill" style="width:0%;background:var(--good)"></span>
+        <span class="bar-mark" style="left:27.1%"></span>
+      </span>
+      <span class="bar-val">0.00&times;</span>
+    </div>
+    <p class="bar-key">
+      How much of each objective an agent can score <em>while delivering no food at all</em>,
+      relative to what agents earn when they do cook. The thin line marks 1.0 — above it,
+      the objective is better cheated than earned. Measured over 21 successful and
+      9 failed training runs on <code>random0</code>.
+    </p>
+  </div>
+
+  <div class="col">
+    <p>
+      The fix is not to delete the objective — coordination is the thing we care most
+      about. It is to <strong>anchor</strong> it: a handoff now scores only once the
+      receiving agent actually <em>uses</em> the item (puts the onion in a pot, delivers
+      the soup), and scores nothing if they just put it back down.
+    </p>
+  </div>
+
+  <div class="tw">
+    <table>
+      <caption>The same training run, same random seed, same settings — only the objective definition changed.</caption>
+      <thead>
+        <tr><th>Measure</th><th class="num">Cheatable version</th><th class="num">Anchored version</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hi"><td>Food delivered</td><td class="num">0</td><td class="num">196.7</td></tr>
+        <tr><td>"Coordination" scored</td><td class="num">317.8</td><td class="num">84.2</td></tr>
+        <tr><td>Onions potted</td><td class="num">0.0</td><td class="num">32.2</td></tr>
+        <tr><td>Soups plated</td><td class="num">0.0</td><td class="num">20.3</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col">
+    <p>
+      Coordination did not die — it settled at 84.2, right in the range agents reach
+      honestly. The objective still measures teamwork; it just can no longer be forged.
+    </p>
+  </div>
+
+  <div class="says col">
+    <b>How to say it</b>
+    <p>
+      "We were rewarding agents for passing items back and forth, and some of them figured
+      out they could do that forever without ever cooking. We changed it so a handoff only
+      counts once the item is actually used. The same run went from zero food delivered to
+      nearly two hundred."
+    </p>
+  </div>
+
+  <div class="callout col">
+    <h3>Why this generalises beyond our project</h3>
+    <p>
+      There is a rule here, and it predicted which objective would break <em>before</em> we
+      looked at any results: <strong>an objective is cheatable when the action that triggers
+      it can be undone at no cost.</strong> Putting an item down and picking it up cancel out.
+      Potting an onion consumes it. Delivering a soup ends it. The three anchored objectives
+      scored 0.18, 0.03 and 0.00; the reversible one scored 3.69.
+    </p>
+    <p>
+      That gives a way to design reward objectives that does not require knowing the answer
+      in advance — which is exactly what hand-tuned reward shaping cannot offer.
+    </p>
+  </div>
+</section>
+
+<!-- ============================== REPLAY =============================== -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">Watch it happen</p>
+    <h2>The same agent, before and after the fix</h2>
+    <p>
+      Two recorded episodes on <code>random0</code>. Same training seed, same settings,
+      same starting positions — the only difference is the objective definition. Both
+      play in step, so you can compare them directly.
+    </p>
+  </div>
+
+  <div class="replays" id="replays"></div>
+
+  <div class="controls col">
+    <button id="playpause" aria-label="Play or pause the replay">Pause</button>
+    <input id="scrub" type="range" min="0" max="399" value="0" aria-label="Step through the episode">
+    <span class="stepno" id="stepno">step 0</span>
+  </div>
+
+  <div class="col" style="margin-top:22px">
+    <p>
+      On the left, the two cooks shuttle a single onion back and forth across the counter.
+      Each pass scored our <strong>coordination</strong> objective, so from the reward's point
+      of view they were doing excellently. Nothing is ever cooked.
+    </p>
+    <p>
+      On the right, the identical agent under the anchored objective — where a handoff only
+      counts once the receiving cook actually uses the item — runs the full loop and delivers
+      ten soups.
+    </p>
+  </div>
+</section>
+
+<!-- ========================= THE FIVE QUESTIONS ======================== -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">Your questions</p>
+    <h2>The five questions, and where each now stands</h2>
+  </div>
+
+  <div class="qrow">
+    <div>
+      <q>At what level does coordination change based on who you're playing with?</q>
+      <em>Answered. Who your partner is, and the specific pairing, account for
+      <strong>88.5%</strong> of the variation in how well a team does on <code>unident_s</code>;
+      the agent's own identity accounts for 11.5%. Partner quality ranges from 42 to 270 points.
+      The partner matters far more than the method.</em>
+    </div>
+    <div><span class="chip est">Answered</span></div>
+  </div>
+
+  <div class="qrow">
+    <div>
+      <q>Does MORL adapt to the personality of your partner?</q>
+      <em>Not as built. Five independent checks now agree: behaviour barely shifts by partner;
+      when it shifts it does not shift <em>toward</em> what the partner needs; letting the
+      agent see its own priorities changes nothing; and the adaptive version is never better
+      than fixed weights on any kitchen. We have identified why — the agent has no state
+      describing what its partner is doing, and its update rule never looked at the partner —
+      and the corrected version is training (see <em>What we are changing</em>).</em>
+    </div>
+    <div><span class="chip neg">Negative as built</span></div>
+  </div>
+
+  <div class="qrow">
+    <div>
+      <q>Does the personality of your partner matter?</q>
+      <em>Yes, enormously — see the first row, now replicated on the multi-ingredient kitchen
+      (partner 34% and pairing 28% of the variance there). The most solid quantitative result
+      we have.</em>
+    </div>
+    <div><span class="chip est">Answered</span></div>
+  </div>
+
+  <div class="qrow">
+    <div>
+      <q>Cooperation is incentivised, but it's different with a different partner.</q>
+      <em>Quantified, and the measurement was badly wrong until last week — see Finding 4.</em>
+    </div>
+    <div><span class="chip fix">Corrected</span></div>
+  </div>
+
+  <div class="qrow">
+    <div>
+      <q>Does it matter if you know who you're playing with?</q>
+      <em>No — and this is a clean result on two separate kitchens. See Finding 3.</em>
+    </div>
+    <div><span class="chip est">Answered</span></div>
+  </div>
+</section>
+
+<!-- ============================== FINDINGS ============================= -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">Established results</p>
+    <h2>What we can defend</h2>
+    <p>Each of these has survived the checks we have been able to throw at it.</p>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F1</span><h3>The reward was cheatable; anchoring fixed it</h3>
+      <span class="chip est">Established</span>
+    </div>
+    <div class="col">
+      <p>Covered above. Verified three ways: the statistical audit across 30 runs, a synthetic
+      test (twenty rounds of item-passing score 80.0 under the old objective and <strong>0.0</strong>
+      under the new one, while a genuine pass scores the same under both), and a live retraining
+      of the worst-affected run.</p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F2</span><h3>With the reward fixed, MORL does not beat the hand-shaped baseline</h3>
+      <span class="chip neg">Negative</span>
+    </div>
+    <div class="col">
+      <p>
+        Every kitchen, six runs per method, the training run as the unit of replication (the
+        test that licenses a claim about the <em>method</em>, see F5). Zero-shot score is the
+        average against 16 held-out partners the agent never trained with.
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>Zero-shot score, fixed reward, 6 runs per method. Difference is MORL minus baseline; p from an exact permutation test over runs.</caption>
+        <thead><tr><th>Kitchen</th><th class="num">Baseline</th><th class="num">MORL fixed w</th><th class="num">MORL adaptive w</th><th class="num">Best difference</th><th class="num">p</th></tr></thead>
+        <tbody>
+          <tr><td><code>random0</code> (forced hand-off)</td><td class="num">32.2</td><td class="num">41.1</td><td class="num">35.9</td><td class="num">+9.0</td><td class="num">0.32</td></tr>
+          <tr class="hi"><td><code>unident_s</code> (free division)</td><td class="num">170.2</td><td class="num">135.3</td><td class="num">132.8</td><td class="num">−34.9</td><td class="num">0.048</td></tr>
+          <tr class="hi"><td><code>unident_s_m</code> (multi-ingredient)</td><td class="num">162.8</td><td class="num">96.5</td><td class="num">running</td><td class="num">−66.3</td><td class="num">0.019</td></tr>
+          <tr><td><code>unident_s_mx</code> (re-priced)</td><td class="num">7.2</td><td class="num">13.0</td><td class="num">—</td><td class="num">+5.8</td><td class="num">0.48</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        On the one kitchen where MORL is ahead (<code>random0</code>) the gap is within chance,
+        and every method is near the floor there — the layout forces a hand-off protocol that no
+        stranger shares. On the two kitchens where agents can actually cook, the baseline wins,
+        significantly. On <code>unident_s_m</code> MORL loses against <strong>all 16 of 16
+        partners</strong>. <code>unident_s_mx</code> floors for everything, including the partners
+        themselves (their own self-play averages 0.9), so it cannot separate methods at this budget.
+      </p>
+      <p>
+        Two things do survive from last week's version of this table: fixing the reward moved
+        MORL on <code>random0</code> from 4.0 to 41.1 (that <em>was</em> cheating, not method),
+        and MORL's run-to-run spread is consistently lower than the baseline's. Neither is a
+        performance claim.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "With the reward that can't be cheated, at six runs a method, the hand-tuned baseline
+        beats our method zero-shot on every kitchen where agents can cook — significantly on two.
+        Last week's 'slightly ahead' on random0 is real but within noise, and random0 is a floor
+        for everyone. So the method as built is not better. The rest of this report is about why,
+        because the why turned out to be specific and fixable."
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F3</span><h3>Knowing who your partner is does not help</h3>
+      <span class="chip est">Established</span>
+    </div>
+    <div class="col">
+      <p>
+        We ran a clean test of the adaptation idea. Three otherwise-identical agents: one told
+        nothing about its partner, one told the partner's identity as a number, one told it as a
+        proper category label. Then we scored each against the partners it trained with, so the
+        identity information was genuinely useful.
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>Score against training partners. Higher is better; the control is the agent told nothing.</caption>
+        <thead><tr><th>What the agent is told</th><th class="num">random0</th><th class="num">unident_s</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>Nothing (control)</td><td class="num">82.2</td><td class="num">205.5</td></tr>
+          <tr><td>Partner identity, as a category</td><td class="num">68.4</td><td class="num">213.2</td></tr>
+          <tr><td>Partner identity, as a number</td><td class="num">14.2</td><td class="num">51.7</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        Two conclusions. First, telling the agent who its partner is <strong>buys nothing</strong> —
+        the control wins on one kitchen and ties on the other. Since being <em>told</em> is worth
+        nothing, <em>inferring</em> it cannot be worth anything either. That puts a ceiling of
+        roughly zero on this whole line of attack.
+      </p>
+      <p>
+        Second, the <em>number</em> version is catastrophic on both kitchens. Identities are
+        categories, not quantities — labelling partners 1, 2, 3 falsely implies partner 2 is
+        "between" partners 1 and 3, and that misleading structure is much worse than no
+        information at all.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "We gave an agent its partner's identity outright, which is the best case any adaptation
+        method could hope for. It didn't help on either kitchen. So adaptation based on
+        <em>who</em> the partner is looks like a dead end — which pushes us toward reacting to
+        what the partner is <em>doing</em> instead."
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F4</span><h3>Our "how much are we leaving on the table" measure was badly wrong</h3>
+      <span class="chip fix">Corrected</span>
+    </div>
+    <div class="col">
+      <p>
+        To say how good a score is, you need to know what score was <em>achievable</em> with that
+        partner. We had been approximating that with "the best any agent in our collection
+        happened to manage" — but none of those agents were trying to suit that partner, so it
+        was an underestimate.
+      </p>
+      <p>
+        So we trained a genuine <strong>best response</strong> for each partner: 48 dedicated agents
+        across three kitchens, each trained against one partner and nobody else. The old estimate
+        turned out to be wildly off.
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>How much of the truly achievable score our old estimate captured.</caption>
+        <thead><tr><th>Kitchen</th><th class="num">Old estimate captured</th><th>What that means</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td><code>random3</code></td><td class="num">7%</td><td>13 of 15 partners looked impossible; a dedicated agent scores 95–203 with every one</td></tr>
+          <tr><td><code>unident_s</code></td><td class="num">88%</td><td>Roughly right on average, but uneven partner to partner</td></tr>
+          <tr><td><code>random0</code></td><td class="num">—</td><td>The dedicated agents failed to train here; excluded rather than reported</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        This <strong>reverses a conclusion I previously reported</strong>. I had written off
+        <code>random3</code> as a kitchen where no method can do anything. In fact there is a great
+        deal to be won there — every one of our methods is simply capturing almost none of it.
+        That is a far more interesting statement, and it makes <code>random3</code> our most
+        discriminating test rather than one to discard.
+      </p>
+      <p>
+        The error was also <em>uneven</em>, not a constant factor. That matters because it
+        scrambles which partners look hardest — and "performance against your worst partners"
+        is one of the headline robustness numbers.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "We were judging our scores against a bad yardstick. We built a proper one by training a
+        specialist agent for each partner. On one kitchen our old yardstick was capturing only
+        7% of what was actually achievable — so a layout I'd written off as hopeless is actually
+        one where everything we've tried is failing badly. That's a much more useful result."
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F5</span><h3>A statistical error was inflating our confidence</h3>
+      <span class="chip fix">Corrected</span>
+    </div>
+    <div class="col">
+      <p>
+        We had reported a result at <strong>p = 0.034</strong> — conventionally "significant".
+        That test compared methods across the <em>16 partners</em>, treating each partner as an
+        independent data point. But the partners are the same fixed test set for every method;
+        what actually varies between methods is the <em>training run</em>. We had three runs.
+      </p>
+      <p>
+        Re-tested properly, the same difference gives <strong>p = 0.200</strong> — not significant.
+        Worse, with only three runs per method the test <em>cannot mathematically produce</em> a
+        p-value below 0.10, so significance was unreachable in principle rather than merely
+        unattained. We now run six per method, which makes the test capable of a real answer.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "One of our earlier significance results was measured the wrong way — we treated test
+        partners as our sample size when the real sample size is the number of training runs.
+        Corrected, it isn't significant. We've doubled the runs so the test can actually decide."
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F6</span><h3>The multi-ingredient kitchens did not pose the problem we adopted them for</h3>
+      <span class="chip fix">Corrected</span>
+    </div>
+    <div class="col">
+      <p>
+        You suggested richer kitchens with multiple ingredients, where two cooks might genuinely
+        divide the work — one on onions, one on tomatoes. We checked the built-in multi-ingredient
+        maps before committing to them, and found the recipes are priced so that
+        <strong>an onions-only strategy already earns the maximum</strong>. Tomatoes are optional,
+        cost extra walking, and buy nothing.
+      </p>
+      <p>
+        So those maps posed exactly the same undivided task as the simple ones — which is
+        precisely the condition under which no division of labour is expected, and none was found.
+      </p>
+      <p>
+        We built re-priced versions (identical maps, only the recipe values changed) where mixed
+        recipes pay <strong>three times</strong> as much per unit of cooking time. Partner
+        training there did show agents using both ingredients, and one pair split into a prep
+        role and a delivery role. But the re-priced kitchen turned out to be <strong>too hard to
+        learn at all</strong> in our training budget: half the baseline runs, a third of the MORL
+        runs, and the partners themselves all score near zero. It cannot separate methods.
+      </p>
+      <p>
+        The original multi-ingredient kitchen produced the most instructive result of the week.
+        In training, MORL <em>out-cooks</em> the baseline by 60 points playing with itself
+        (254 vs 195). Zero-shot, it loses to the baseline against every one of the 16 strangers
+        (97 vs 163). That is the textbook zero-shot failure — a private routine that works
+        beautifully with its twin — and it is the strongest evidence yet that MORL's dense
+        objectives push agents toward <em>more</em> specialised protocols, not more adaptable ones.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "The multi-ingredient map is where MORL trains best and generalises worst — it
+        out-cooks the baseline with itself and loses to it with every stranger. That's a
+        private-protocol failure, and it tells us the dense objectives are teaching the agent a
+        routine, not a way of reading its partner. The re-priced map, which we hoped would force
+        role division, is simply too hard for anything to learn in the budget."
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F7</span><h3>Analysis code that cannot see the data looks exactly like missing data</h3>
+      <span class="chip est">Methods note</span>
+    </div>
+    <div class="col">
+      <p>
+        Four times last week, an analysis step silently discarded results while every log line
+        looked healthy: a naming pattern that excluded hyphens, a filter that dropped valid runs,
+        a file-name parser confused by an underscore in a map name, and an extraction step
+        pointed at the wrong database. Each produced a plausible-looking but wrong table.
+      </p>
+      <p>
+        One of these was materially damaging: a de-duplication step had been discarding half our
+        runs, and it happened to discard the <em>better</em> half of the baseline — putting a
+        biased comparison underneath our headline result. Recovering those runs changed the
+        headline number by 40%.
+      </p>
+      <p class="footnote">
+        Worth a paragraph in the methods chapter. The general lesson: verify that analysis code
+        sees the number of records you expect, because silently seeing fewer is indistinguishable
+        from there being fewer. This week added three more of the same family (a training run
+        that "completed" with an empty result, an evaluator that built the wrong game engine,
+        an extraction pointed at the wrong project), all now fixed at the pipeline level.
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F8</span><h3>Population training does not rescue it, and the diversity story fell away</h3>
+      <span class="chip neg">Negative</span>
+    </div>
+    <div class="col">
+      <p>
+        The original thesis proposed training an <em>adaptable</em> agent against a diverse
+        population of MORL partners (the two-stage pipeline). That question is now answered on
+        <code>random0</code> with the fixed reward, six runs per method, matched population sizes.
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>Stage-2 adaptable agent, zero-shot score by the population it was trained against. <code>random0</code>, 6 runs each.</caption>
+        <thead><tr><th>Population</th><th class="num">Score</th><th class="num">vs baseline</th><th class="num">p</th></tr></thead>
+        <tbody>
+          <tr class="hi"><td>Hand-shaped partners (baseline)</td><td class="num">29.7</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>MORL partners, fixed weights</td><td class="num">19.4</td><td class="num">−10.3</td><td class="num">0.11</td></tr>
+          <tr><td>MORL partners, adaptive weights</td><td class="num">14.5</td><td class="num">−15.2</td><td class="num">0.015</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        Two further observations. No stage-2 agent beats the best <em>stage-1</em> agent
+        (41.1) — on this kitchen the population pipeline adds nothing over a good single agent.
+        And the mechanism we proposed last week, that MORL populations are more <em>diverse</em>
+        and therefore a better curriculum, reversed: on the fixed reward, behavioural diversity
+        correlates <strong>−0.94</strong> with the stage-2 score. The earlier positive correlation
+        was between different ways of cheating. Every MORL run on <code>random0</code> now
+        converges to the <em>same</em> policy (self-play 200.0 ± 0.0 across six seeds), which is
+        the opposite of a diverse population.
+      </p>
+      <p class="footnote">
+        The same comparison on <code>unident_s</code> is running (all three populations retrained
+        at matched size this week) and lands this afternoon.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "Training the adaptable agent against MORL partners makes it worse, not better, and the
+        diversity explanation we floated last week doesn't hold on the clean reward. MORL agents
+        aren't diverse — six seeds converge to the identical policy."
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F9</span><h3>Letting the adaptive agent see its own priorities does not help</h3>
+      <span class="chip neg">Negative</span>
+    </div>
+    <div class="col">
+      <p>
+        Last week's most promising thread. The adaptive-weights agent had never been able to
+        observe its own shifting priorities, so its reward changed for reasons invisible to it;
+        we built the version that can see them and it trained better and more stably. The
+        zero-shot test — evaluated with the weights adapting live against each stranger — has
+        now run on both kitchens.
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>Adaptive-weights agent, zero-shot score, with and without its own weights in its observation. 6 runs each.</caption>
+        <thead><tr><th>Kitchen</th><th class="num">Weights hidden</th><th class="num">Weights visible</th><th class="num">Difference</th></tr></thead>
+        <tbody>
+          <tr><td><code>random0</code></td><td class="num">35.9</td><td class="num">37.0</td><td class="num">+1.1</td></tr>
+          <tr><td><code>unident_s</code></td><td class="num">132.4</td><td class="num">114.6</td><td class="num">−17.8</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        Neither difference is significant, and the self-play improvement did not carry over.
+        Together with the shuffled-partner control (the partner-effects analysis behind the second question above), this closes the question of
+        <em>whether the existing adaptation rule works</em>: it does not, and the reason is not
+        that the agent could not see it. The rule itself never looked at the partner — it
+        steered the team's mix toward a fixed target — so there was nothing partner-specific for
+        the agent to see. Cause 2 below.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== OPEN ================================= -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">Why, and what we are changing</p>
+    <h2>Two causes, three corrected versions</h2>
+    <p>The goal is still an agent that is better in these kitchens. The negative results above are specific enough to say what was wrong.</p>
+  </div>
+
+  <div class="cause">
+    <div class="cno">Cause 1</div>
+    <div>
+      <h4>At the end of training, the MORL agent is being paid for the wrong thing</h4>
+      <p>
+        The hand-shaped baseline gets its dense hints (onion in pot, dish picked up) with a
+        multiplier that is <strong>annealed to zero</strong> over training, so what it optimises
+        at the end is deliveries alone. Our objective vector is never annealed: the agent is paid
+        for prep and plating events forever. At convergence, deliveries are <strong>17% of the MORL
+        reward</strong> on <code>unident_s</code> and <strong>6.5%</strong> on <code>random0</code>.
+        The agent that "trains better" in self-play on the multi-ingredient map is optimising
+        event counts, and a stranger does not need its event counts.
+      </p>
+      <p class="fix">
+        <b>Fix:</b> anneal every non-task objective the same way the baseline's shaping is annealed,
+        so the dense objectives act as a curriculum and the terminal reward is the task. Arm
+        <code>bench_morl_ann</code>. This alone should bring MORL to parity; it keeps the denser
+        early signal and removes the late-training handicap.
+      </p>
+    </div>
+  </div>
+
+  <div class="cause">
+    <div class="cno">Cause 2</div>
+    <div>
+      <h4>The agent has no representation of what its partner is doing</h4>
+      <p>
+        The agent's input is the current grid: where the partner stands and what it holds.
+        Nothing in it says what the partner has <em>been</em> doing this episode. A partner that
+        has never plated looks identical to one that plates constantly. "My partner never plates,
+        so I should" is not computable from the state we gave it — which is why every
+        partner-adaptation check came back negative regardless of the reward. The adaptive-weights
+        rule compounded this: it read the team's event mix and steered it toward a fixed uniform
+        target, so it balanced the <em>team</em> rather than complementing the <em>partner</em>.
+      </p>
+      <p class="fix">
+        <b>Fix:</b> append each agent's own and its partner's episode-to-date objective mix to the
+        observation (six extra input channels), and change the adaptation rule so each agent's
+        weights are steered toward <strong>what its partner is doing least of</strong> — a fill-in
+        rule. Arm <code>bench_morl_fill</code> (which also carries the anneal). As a control,
+        <code>bench_sp_shares</code> gives the baseline reward the same partner state and nothing
+        else, so "does seeing the partner help" is separated from everything MORL.
+      </p>
+    </div>
+  </div>
+
+  <div class="col" style="margin-top:28px">
+    <p>
+      All three arms are training on <code>unident_s</code> now, six runs each, evaluated
+      zero-shot against the same 16 strangers as everything above. What would count as success:
+      <code>bench_morl_ann</code> at or above the baseline's 170 (parity — the handicap was the
+      reward, not the idea); <code>bench_morl_fill</code> above that (the partner state and the
+      fill-in rule buy adaptability); <code>bench_sp_shares</code> above the baseline on its own
+      (the state was the missing piece regardless of method). Any of the three is a positive
+      result; the combination tells us which part mattered.
+    </p>
+    <div class="says">
+      <b>How to say it</b>
+      <p>
+        "Two things were wrong with the method as built. It was paid for prepping and plating right
+        to the end of training, where the baseline is paid for deliveries — so it learned to do
+        things, not to cook. And it had no input describing what its partner had been doing, so
+        there was nothing to adapt to. We've fixed both: the extra objectives now fade out like
+        the baseline's hints do, the agent sees its own and its partner's work so far, and its
+        priorities are steered toward whatever the partner is neglecting. That is running now."
+      </p>
+    </div>
+  </div>
+
+  <div class="col" style="margin-top:34px">
+    <h3 style="margin-bottom:.5rem">Also in flight</h3>
+    <ul class="tight">
+      <li><strong>The stage-2 comparison on <code>unident_s</code></strong> (F8's second kitchen),
+      all three populations retrained at matched size. Lands today.</li>
+      <li><strong>The adaptive-weights arm on the multi-ingredient kitchen</strong>, completing
+      F2's table.</li>
+      <li><strong>Specialist best-response agents on the multi-ingredient kitchen</strong>, which
+      calibrate how much division of labour was available there to be found. (Moved from the
+      re-priced kitchen, where nothing learns.)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================== POSITION ============================= -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">Where this leaves the thesis</p>
+    <h2>An honest position</h2>
+  </div>
+  <div class="col">
+    <p>
+      The performance claim as originally stated — that multi-objective training with adaptive
+      weights produces a better zero-shot partner — is <strong>not supported</strong> by the
+      method as built. On the clean reward, at six runs per method, the hand-tuned baseline is
+      better on every kitchen where agents can cook, the population pipeline makes it worse, and
+      neither adaptive weights nor visibility of those weights helps. Those are clean negatives,
+      and they are worth stating plainly.
+    </p>
+    <p>
+      What makes this a productive week rather than a bad one is that the negatives are
+      <strong>specific</strong>. The method was optimising event counts at the end of training
+      where the baseline optimises deliveries; and it was asked to adapt to a partner it had no
+      state describing. Both are mechanical, both are fixed, and both fixes are in training.
+      The multi-ingredient result — MORL out-cooks the baseline with itself and loses to it with
+      every stranger — is the clearest statement of the first cause we could have asked for.
+    </p>
+    <p>
+      The <strong>methodological contribution</strong> stands regardless: a reward that could be
+      forged and a rule for spotting that class of problem in advance; a calibration that was
+      capturing 7% of the truth; a significance test against the wrong sample; the partner-identity
+      result on two kitchens; and now the diagnosis that separates "the objectives were wrong at
+      convergence" from "the agent could not see its partner". If the corrected arms come back at
+      parity, the thesis is about how to design and measure multi-objective rewards for
+      coordination. If they come back ahead, it is the thesis we set out to write, with the
+      reasons it took this long documented.
+    </p>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  const KITCHENS = [
+    {
+      name: "random0", role: "Forced handoffs",
+      grid: ["XXXPX", "O X1P", "O2X X", "D X X", "XXXSX"],
+      note: "A counter runs top to bottom through the middle. Cook 2 is stuck on the supply side with the onions and dishes; cook 1 is on the cooking side with the pots and the hatch.",
+      why: "Nothing can be cooked unless items are physically handed across. <b>Teamwork is compulsory</b>, which is why self-play agents here invent private routines that collapse with a stranger."
+    },
+    {
+      name: "unident_s", role: "Open plan",
+      grid: ["XXXXXXXXX", "O XSXOX S", "X   P 1 X", "X2  P   X", "XXXDXDXXX"],
+      note: "Two pots in the centre, supplies around the edge, and no wall between the cooks. Both can reach everything themselves.",
+      why: "Handoffs are never necessary, so our coordination objective scores <b>exactly zero here for every method</b>. The map, not the agent, decides that."
+    },
+    {
+      name: "random3", role: "Separated corridors",
+      grid: ["XXXPPXXX", "X  2   X", "D XXXX S", "X  1   X", "XXXOOXXX"],
+      note: "A horizontal wall splits the room. Cook 2 patrols the top by the pots; cook 1 patrols the bottom by the onions.",
+      why: "The hardest of the three. This is the map where <b>every method captures almost none</b> of what a dedicated specialist can achieve."
+    },
+    {
+      name: "unident_s_mx", role: "Re-priced, two ingredients",
+      grid: ["XTXXXXXTX", "O XSXOX S", "X   P 1 X", "X2  P   X", "XXXDXDXXX"],
+      note: "The open-plan map plus tomato supplies in the top corners. Identical in every other respect — only the recipe prices changed.",
+      why: "Mixed recipes now pay <b>three times</b> as much per unit of cooking time, so ignoring tomatoes is finally costly. This is where we expect cooks to split the work."
+    }
+  ];
+
+  const CLASS = {
+    "X": "t-counter", " ": "t-floor", "O": "t-onion", "T": "t-tomato",
+    "D": "t-dish", "P": "t-pot", "S": "t-serve", "1": "t-agent", "2": "t-agent"
+  };
+  const GLYPH = { "O": "O", "T": "T", "D": "D", "P": "P", "S": "S", "1": "1", "2": "2" };
+
+  const host = document.getElementById("kitchens");
+  for (const k of KITCHENS) {
+    const cols = Math.max(...k.grid.map(r => r.length));
+    const card = document.createElement("div");
+    card.className = "kitchen";
+    card.innerHTML =
+      `<h3>${k.role} <code>${k.name}</code></h3>` +
+      `<div class="grid-wrap"><div class="grid" role="img" aria-label="Map of the ${k.name} kitchen" ` +
+      `style="grid-template-columns:repeat(${cols},30px)"></div></div>` +
+      `<p>${k.note}</p><p class="why">${k.why}</p>`;
+    const grid = card.querySelector(".grid");
+    for (const row of k.grid) {
+      for (let x = 0; x < cols; x++) {
+        const ch = row[x] ?? " ";
+        const tile = document.createElement("div");
+        tile.className = "tile " + (CLASS[ch] || "t-floor");
+        tile.textContent = GLYPH[ch] || "";
+        grid.appendChild(tile);
+      }
+    }
+    host.appendChild(card);
+  }
+})();
+</script>
+
+<script>
+(function () {
+  const REPLAY = {"farming":{"grid":["XXXPX","O X P","O X X","D X X","XXXSX"],"frames":[{"c":[[3,1,0,-1,0],[1,2,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,2,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,1],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,1,0,0],[1,2,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,2,-1,0,0],[1,2,1,0,0]],"p":[[0,0],[0,0]]}],"events":[],"total":0},"anchored":{"grid":["XXXPX","O X P","O X X","D X X","XXXSX"],"frames":[{"c":[[3,1,0,-1,0],[1,2,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,0,-1,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,1,0,0],[1,1,1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,2],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,2],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,1,3],[1,1,0,-1,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,3],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,3,0,1,0],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,2,0,-1,0],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,1,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,1,-1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,1,1,0,1]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,1,1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,1],[1,2,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,1],[1,3,0,1,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,0]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,0,-1,0],[1,3,0,1,2]],"p":[[0,0],[0,0]]},{"c":[[3,1,-1,0,0],[1,3,-1,0,2]],"p":[[0,0],[0,0]]}],"events":[46,83,120,157,194,231,268,305,342,379],"total":10}};
+  const RCLASS = { "X": "t-counter", " ": "t-floor", "O": "t-onion", "T": "t-tomato",
+                   "D": "t-dish", "P": "t-pot", "S": "t-serve" };
+  const RGLYPH = { "O": "O", "T": "T", "D": "D", "P": "P", "S": "S" };
+  const CARRY  = { 1: "#C98B34", 2: "#7C93AE", 3: "#B24A3E" };
+  const TILE = 34, GAP = 2;
+
+  const PANELS = [
+    { key: "farming",  title: "Cheatable objective", verdict: "0 delivered", cls: "bad",
+      sub: "Scored 317.8 on \u201ccoordination\u201d \u2014 the highest of any run." },
+    { key: "anchored", title: "Anchored objective",  verdict: "10 delivered", cls: "ok",
+      sub: "Same seed, same budget. Coordination settles at a normal 84.2." }
+  ];
+
+  const host = document.getElementById("replays");
+  const built = [];
+
+  for (const panel of PANELS) {
+    const d = REPLAY[panel.key];
+    const cols = Math.max(...d.grid.map(r => r.length));
+    const card = document.createElement("div");
+    card.className = "replay";
+    card.innerHTML =
+      `<header><h3>${panel.title}</h3><span class="verdict ${panel.cls}">${panel.verdict}</span></header>` +
+      `<p class="sub">${panel.sub}</p>` +
+      `<div class="stage"><div class="rgrid" role="img" aria-label="${panel.title} replay" ` +
+      `style="grid-template-columns:repeat(${cols},${TILE}px)"></div></div>` +
+      `<div class="readout"><span><span class="lbl">Soups delivered</span><b class="ct">0</b></span>` +
+      `<span><span class="lbl">Onions potted</span><b class="pt">0</b></span></div>`;
+    const grid = card.querySelector(".rgrid");
+    for (const row of d.grid) {
+      for (let x = 0; x < cols; x++) {
+        const ch = row[x] ?? " ";
+        const tile = document.createElement("div");
+        tile.className = "rtile " + (RCLASS[ch] || "t-floor");
+        tile.textContent = RGLYPH[ch] || "";
+        grid.appendChild(tile);
+      }
+    }
+    const cooks = [0, 1].map(i => {
+      const el = document.createElement("div");
+      el.className = "cook c" + i;
+      el.textContent = i + 1;
+      el.innerHTML += '<span class="carry" hidden></span>';
+      grid.appendChild(el);
+      return el;
+    });
+    host.appendChild(card);
+    built.push({ d, cooks, ct: card.querySelector(".ct"), pt: card.querySelector(".pt") });
+  }
+
+  function draw(step) {
+    for (const b of built) {
+      const f = b.d.frames[Math.min(step, b.d.frames.length - 1)];
+      f.c.forEach((c, i) => {
+        // Overcooked positions are (x, y) with y counting down from the top.
+        const el = b.cooks[i];
+        el.style.left = (c[0] * (TILE + GAP) + 4) + "px";
+        el.style.top  = (c[1] * (TILE + GAP) + 4) + "px";
+        const carry = el.querySelector(".carry");
+        if (c[4]) { carry.hidden = false; carry.style.background = CARRY[c[4]]; }
+        else { carry.hidden = true; }
+      });
+      b.ct.textContent = b.d.events.filter(t => t <= step).length;
+      b.pt.textContent = f.p.reduce((a, p) => a + p[0], 0);
+    }
+  }
+
+  const LEN = Math.max(...built.map(b => b.d.frames.length));
+  const scrub = document.getElementById("scrub");
+  const stepno = document.getElementById("stepno");
+  const btn = document.getElementById("playpause");
+  scrub.max = LEN - 1;
+  let step = 0, playing = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function show(s) {
+    step = s;
+    draw(step);
+    scrub.value = step;
+    stepno.textContent = "step " + step;
+  }
+  show(0);
+
+  btn.textContent = playing ? "Pause" : "Play";
+  btn.addEventListener("click", () => {
+    playing = !playing;
+    btn.textContent = playing ? "Pause" : "Play";
+  });
+  scrub.addEventListener("input", () => { playing = false; btn.textContent = "Play"; show(+scrub.value); });
+  setInterval(() => { if (playing) show((step + 1) % LEN); }, 50);
+})();
+</script>
+
