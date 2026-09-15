@@ -1,0 +1,38 @@
+==========================================================================
+partner specialisation -- unident_s_m
+==========================================================================
+
+best-response spread over 15 partners: 0.008
+  this is how much the optimal response itself changes with the partner,
+  so it is the most an adaptive policy could usefully vary.
+
+group                       n  adaptation  % of ceiling
+--------------------------------------------------------------------------
+bench_morl_ad_rec           6       0.252        3225%
+bench_morl_rec              6       0.192        2456%
+bench_sp_rec                6       0.181        2318%
+
+Over 100% does NOT mean over-adapting. It means behaviour moves more across
+partners than the optimal response does, which is what being pushed around by
+the partner looks like: a competent best response imposes a stable joint
+policy, an incompetent agent gets dragged. Magnitude cannot tell those apart,
+which is what the next measure is for.
+
+==========================================================================
+is the variation in the right direction?
+==========================================================================
+
+group                       n  alignment
+--------------------------------------------------------------------------
+bench_morl_rec              6     +0.000  
+bench_morl_ad_rec           6     +0.000  
+bench_sp_rec                6     -0.000  
+
+shuffled-partner null: mean +0.000, 95% range [-0.001, +0.001] over 3600 draws
+* marks a group above the null's 97.5th percentile.
+
+> 0 the ego sits nearer the best response to its actual partner than to the
+    best responses to other partners -- the variation is adaptive.
+~ 0 the ego is no nearer the right response than to any other; whatever it is
+    doing differently with this partner, it is not moving toward the response
+    that partner calls for.

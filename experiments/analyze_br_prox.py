@@ -40,6 +40,7 @@ METRICS_FOR = {
     "random0": "experiments/results/recovered/metrics_random0_s2_hsp.json",
     "unident_s": "experiments/results/recovered/metrics_unident_s_s2_hsp.json",
     "random3": "experiments/results/metrics_random3_hsp.json",
+    "unident_s_m": "experiments/results/metrics_unident_s_m_hsp_v2.json",
 }
 
 
@@ -94,7 +95,9 @@ def main():
     ent, proj = os.environ["WANDB_ENTITY"], os.environ["WANDB_PROJECT"]
 
     for layout in args.layouts:
-        trained = trained_br(api, ent, proj, layout)
+        # New-env layouts are logged to `{project}-new`.
+        layout_proj = f"{proj}-new" if layout.endswith(("_m", "_mx")) else proj
+        trained = trained_br(api, ent, layout_proj, layout)
         proxy = proxy_br(METRICS_FOR.get(layout, ""))
         shared = sorted(set(trained) & set(proxy))
 

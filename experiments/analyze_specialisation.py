@@ -95,6 +95,8 @@ def br_profiles(layout):
 
     api = wandb.Api(timeout=60)
     ent, proj = os.environ["WANDB_ENTITY"], os.environ["WANDB_PROJECT"]
+    if layout.endswith(("_m", "_mx")):
+        proj = f"{proj}-new"  # new-env runs are logged to their own project
     best = {}
     for r in api.runs(f"{ent}/{proj}", {"config.layout_name": layout}, per_page=400):
         if r.config.get("experiment_name") != "br" or r.state != "finished":
