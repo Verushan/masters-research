@@ -50,6 +50,8 @@ DEFAULT_ARMS = [
     "s2_mixed",
     "s2_bench_morl_anc",
     "s2_bench_morl_ad_anc",
+    "s2_bench_morl_live3",
+    "s2_bench_morl_ad_live3",
 ]
 # Stage-1 arms, for the anchored re-baseline. The unit of replication is the
 # same either way: one training run per seed.

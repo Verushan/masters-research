@@ -85,6 +85,8 @@ GROUPS = [
     # on a reward whose argmax is not a hack.
     ("s2_bench_morl_anc", r"^s2_bench_morl-anc_s\d+(?:r\d+)?$", "FCP S2 on MORL population (anchored)"),
     ("s2_bench_morl_ad_anc", r"^s2_bench_morl_ad-anc_s\d+(?:r\d+)?$", "FCP S2 on adaptive-MORL population (anchored)"),
+    ("s2_bench_morl_live3", r"^s2_bench_morl-live3_s\d+(?:r\d+)?$", "FCP S2 on MORL population (live3)"),
+    ("s2_bench_morl_ad_live3", r"^s2_bench_morl_ad-live3_s\d+(?:r\d+)?$", "FCP S2 on adaptive-MORL population (live3)"),
     # pid-ladder.sh rungs. The arm name carries the rung ("bench_sp-rung1"), so
     # the pool entry is `s2_bench_sp-rung1_s{seed}` and the plain s2_bench_sp
     # pattern above -- anchored on `_s\d+(?:r\d+)?$` -- does not match it.
