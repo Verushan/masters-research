@@ -264,19 +264,20 @@
 <div class="wrap">
 
 <header class="masthead">
-  <p class="eyebrow">Research status · 15 September 2026</p>
+  <p class="eyebrow">Research status · 16 September 2026</p>
   <h1>Cooking&nbsp;With Strangers</h1>
   <p class="lede col">
     We train agents to cook together in <em>Overcooked</em>, then test them with
     partners they have never met. Last week we found the reward could be cheated and
     fixed it. This week the full benchmark ran on the fixed reward, at six runs per
     method, on every kitchen: <strong>our method does not beat the hand-tuned baseline</strong>.
-    We know why — two specific, mechanical causes — and the corrected versions are training now.
+    We found three specific, mechanical causes; the corrected versions now train to the
+    baseline's level, and their zero-shot test is running.
   </p>
   <div class="meta">
     <span>Verushan Naidoo</span>
     <span>MSc research · ZSC-Eval / Overcooked</span>
-    <span>9 findings established · 3 corrected arms training</span>
+    <span>10 findings established · 3 corrected arms under zero-shot test</span>
   </div>
 </header>
 
@@ -661,7 +662,7 @@
         <tbody>
           <tr><td><code>random0</code> (forced hand-off)</td><td class="num">32.2</td><td class="num">41.1</td><td class="num">35.9</td><td class="num">+9.0</td><td class="num">0.32</td></tr>
           <tr class="hi"><td><code>unident_s</code> (free division)</td><td class="num">170.2</td><td class="num">135.3</td><td class="num">132.8</td><td class="num">−34.9</td><td class="num">0.048</td></tr>
-          <tr class="hi"><td><code>unident_s_m</code> (multi-ingredient)</td><td class="num">162.8</td><td class="num">96.5</td><td class="num">running</td><td class="num">−66.3</td><td class="num">0.019</td></tr>
+          <tr class="hi"><td><code>unident_s_m</code> (multi-ingredient)</td><td class="num">162.8</td><td class="num">96.5</td><td class="num">41.7</td><td class="num">−66.3</td><td class="num">0.019</td></tr>
           <tr><td><code>unident_s_mx</code> (re-priced)</td><td class="num">7.2</td><td class="num">13.0</td><td class="num">—</td><td class="num">+5.8</td><td class="num">0.48</td></tr>
         </tbody>
       </table>
@@ -674,6 +675,13 @@
         significantly. On <code>unident_s_m</code> MORL loses against <strong>all 16 of 16
         partners</strong>. <code>unident_s_mx</code> floors for everything, including the partners
         themselves (their own self-play averages 0.9), so it cannot separate methods at this budget.
+      </p>
+      <p>
+        The adaptive-weights arm on the multi-ingredient kitchen (41.7, p = 0.002) is the weight
+        sink described under the kitchens, in its purest form: that map has no dividing counter,
+        so the coordination objective can never score, and the update rule ended with
+        <strong>93% of the weight on it</strong> and every other objective pinned at the floor.
+        The agent barely learned to cook at all (self-play 24–56).
       </p>
       <p>
         Two things do survive from last week's version of this table: fixing the reward moved
@@ -934,9 +942,13 @@
         converges to the <em>same</em> policy (self-play 200.0 ± 0.0 across six seeds), which is
         the opposite of a diverse population.
       </p>
-      <p class="footnote">
-        The same comparison on <code>unident_s</code> is running (all three populations retrained
-        at matched size this week) and lands this afternoon.
+      <p>
+        The same comparison on <code>unident_s</code>, all three populations retrained at matched
+        size: hand-shaped population <strong>141.9</strong>, MORL population <strong>158.3</strong>
+        (+16.5, p = 0.50), adaptive-MORL population <strong>111.5</strong> (−30.4, p = 0.22).
+        Across the two kitchens the population effect is a wash (+16 here, −10 there); the
+        adaptive-weights populations are worse on both; and again no stage-2 agent beats the best
+        stage-1 agent (170). The pipeline is not where the method's value lies, if it has one.
       </p>
     </div>
     <div class="says col">
@@ -984,14 +996,46 @@
       </p>
     </div>
   </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F10</span><h3>On the multi-ingredient kitchen there is no partner-specific optimum to adapt to</h3>
+      <span class="chip est">Established</span>
+    </div>
+    <div class="col">
+      <p>
+        We trained a dedicated best-response agent for 15 of the 16 held-out partners on
+        <code>unident_s_m</code> (F4's calibration, moved from the re-priced map where nothing
+        learns). Two results. The old "best any agent happened to manage" yardstick captures 91%
+        of the true best response on average there — but with a 50%–130% range that reorders
+        which partners are hard (rank correlation +0.10), the same lesson as before.
+      </p>
+      <p>
+        More important: the fifteen best responses are, behaviourally, <strong>the same policy</strong>
+        (their event profiles differ by 0.008 on a scale where our agents' partner-to-partner
+        variation is 0.18–0.25). The optimal way to play with any of these partners is one fixed
+        routine. That is F3's "knowing your partner doesn't help" arriving from the other side:
+        on this kitchen, adapting to the partner has <em>no ceiling to reach</em>. With the proper
+        denominator, the baseline captures about 72% of what is achievable here and MORL 43%.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "We trained a specialist for each partner on the multi-ingredient map and they all play
+        the same way. So on that kitchen there is nothing partner-specific to adapt to — the
+        question is just who cooks better, and the baseline does."
+      </p>
+    </div>
+  </div>
 </section>
 
 <!-- ============================== OPEN ================================= -->
 <section>
   <div class="sec-head col">
     <p class="eyebrow">Why, and what we are changing</p>
-    <h2>Two causes, three corrected versions</h2>
-    <p>The goal is still an agent that is better in these kitchens. The negative results above are specific enough to say what was wrong.</p>
+    <h2>Three causes, three corrected versions</h2>
+    <p>The goal is still an agent that is better in these kitchens. The negative results above are specific enough to say what was wrong — and the first corrected run found a third cause the analysis had missed.</p>
   </div>
 
   <div class="cause">
@@ -1040,25 +1084,64 @@
     </div>
   </div>
 
-  <div class="col" style="margin-top:28px">
+  <div class="cause">
+    <div class="cno">Cause 3</div>
+    <div>
+      <h4>A delivery was paid to one cook; the baseline pays both</h4>
+      <p>
+        Found by the first corrected run, which converged at <strong>195</strong> — exactly the
+        level of the "sparse reward only" control, and far below the baseline's 470 — even though
+        its reward had, by then, become the task alone. The difference is who gets paid. The
+        baseline's delivery reward is the <em>team's</em>: both cooks receive it. Our task objective
+        credited a delivery only to the cook who carried it to the hatch. Once the dense objectives
+        annealed away, the cook doing the prep was paid nothing for the soups it made possible, so
+        each cook learned to run the whole loop alone. (This also means our "sparse-only" control
+        was never the baseline's reward; it was a different, less cooperative one.)
+      </p>
+      <p class="fix">
+        <b>Fix:</b> credit the task to the team, exactly as the baseline does; the dense objectives
+        stay per-cook, as the baseline's hints do. This one change moved the annealed arm from
+        <strong>182 to 467</strong> in self-play (baseline 470). It is also a hypothesis about the
+        zero-shot gap in its own right: an agent trained to be paid only for its own deliveries has
+        every reason to deliver rather than to enable a stranger's deliveries.
+      </p>
+    </div>
+  </div>
+
+  <div class="tw">
+    <table>
+      <caption>Self-play score of the corrected arms, <code>unident_s</code>, 6 runs each. Zero-shot is the test that counts and is running.</caption>
+      <thead><tr><th>Arm</th><th class="num">Self-play</th><th class="num">Spread</th></tr></thead>
+      <tbody>
+        <tr><td>Hand-shaped baseline</td><td class="num">470</td><td class="num">4</td></tr>
+        <tr><td>MORL annealed, per-cook delivery credit (cause 3 unfixed)</td><td class="num">182</td><td class="num">18</td></tr>
+        <tr class="hi"><td>MORL annealed, team delivery credit</td><td class="num">467</td><td class="num">8</td></tr>
+        <tr class="hi"><td>MORL fill-in (anneal + partner state + complement rule), team credit</td><td class="num">458</td><td class="num">8</td></tr>
+        <tr><td>Baseline reward + partner state</td><td class="num">453</td><td class="num">9</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col" style="margin-top:12px">
     <p>
-      All three arms are training on <code>unident_s</code> now, six runs each, evaluated
-      zero-shot against the same 16 strangers as everything above. What would count as success:
+      With all three causes fixed, every MORL arm trains to the baseline's level for the first
+      time in the project, with tighter run-to-run spread. The zero-shot evaluation against the
+      same 16 strangers as everything above is running. What would count as success:
       <code>bench_morl_ann</code> at or above the baseline's 170 (parity — the handicap was the
       reward, not the idea); <code>bench_morl_fill</code> above that (the partner state and the
       fill-in rule buy adaptability); <code>bench_sp_shares</code> above the baseline on its own
-      (the state was the missing piece regardless of method). Any of the three is a positive
-      result; the combination tells us which part mattered.
+      (the state was the missing piece regardless of method). The combination tells us which part
+      mattered.
     </p>
     <div class="says">
       <b>How to say it</b>
       <p>
-        "Two things were wrong with the method as built. It was paid for prepping and plating right
-        to the end of training, where the baseline is paid for deliveries — so it learned to do
-        things, not to cook. And it had no input describing what its partner had been doing, so
-        there was nothing to adapt to. We've fixed both: the extra objectives now fade out like
-        the baseline's hints do, the agent sees its own and its partner's work so far, and its
-        priorities are steered toward whatever the partner is neglecting. That is running now."
+        "Three things were wrong with the method as built, and none of them is the idea. It was
+        paid for prepping and plating right to the end of training, where the baseline is paid for
+        deliveries. It paid a delivery to one cook where the baseline pays both, so once the hints
+        faded, nobody was paid to help. And it had no input describing what its partner had been
+        doing, so there was nothing to adapt to. All three are fixed; the corrected agents now
+        train as well as the baseline, and the zero-shot test is running."
       </p>
     </div>
   </div>
@@ -1066,13 +1149,11 @@
   <div class="col" style="margin-top:34px">
     <h3 style="margin-bottom:.5rem">Also in flight</h3>
     <ul class="tight">
-      <li><strong>The stage-2 comparison on <code>unident_s</code></strong> (F8's second kitchen),
-      all three populations retrained at matched size. Lands today.</li>
-      <li><strong>The adaptive-weights arm on the multi-ingredient kitchen</strong>, completing
-      F2's table.</li>
-      <li><strong>Specialist best-response agents on the multi-ingredient kitchen</strong>, which
-      calibrate how much division of labour was available there to be found. (Moved from the
-      re-priced kitchen, where nothing learns.)</li>
+      <li><strong>Zero-shot evaluation of the three corrected arms</strong> against the 16
+      held-out partners on <code>unident_s</code>, six runs each. This is the result next week's
+      update turns on.</li>
+      <li><strong>If it holds, the same three arms on <code>random0</code> and the multi-ingredient
+      kitchen</strong>, and the stage-2 pipeline re-run on the corrected populations.</li>
     </ul>
   </div>
 </section>
@@ -1095,20 +1176,24 @@
     <p>
       What makes this a productive week rather than a bad one is that the negatives are
       <strong>specific</strong>. The method was optimising event counts at the end of training
-      where the baseline optimises deliveries; and it was asked to adapt to a partner it had no
-      state describing. Both are mechanical, both are fixed, and both fixes are in training.
-      The multi-ingredient result — MORL out-cooks the baseline with itself and loses to it with
-      every stranger — is the clearest statement of the first cause we could have asked for.
+      where the baseline optimises deliveries; it paid a delivery to one cook where the baseline
+      pays both; and it was asked to adapt to a partner it had no state describing. All three are
+      mechanical, all three are fixed, and the corrected agents train to the baseline's level —
+      the first time any MORL arm has. Their zero-shot test is running. The multi-ingredient result
+      — MORL out-cooks the baseline with itself and loses to it with every stranger — is the
+      clearest statement of the first cause we could have asked for.
     </p>
     <p>
       The <strong>methodological contribution</strong> stands regardless: a reward that could be
       forged and a rule for spotting that class of problem in advance; a calibration that was
       capturing 7% of the truth; a significance test against the wrong sample; the partner-identity
-      result on two kitchens; and now the diagnosis that separates "the objectives were wrong at
-      convergence" from "the agent could not see its partner". If the corrected arms come back at
-      parity, the thesis is about how to design and measure multi-objective rewards for
-      coordination. If they come back ahead, it is the thesis we set out to write, with the
-      reasons it took this long documented.
+      result on two kitchens; the best-response calibration showing that on one kitchen there is
+      no partner-specific optimum at all; and now a three-part diagnosis — objectives wrong at
+      convergence, delivery credited to the wrong cook, no partner state — each isolated by an
+      ablation. If the corrected arms come back at parity zero-shot, the thesis is about how to
+      design and measure multi-objective rewards for coordination, with the failure modes named.
+      If they come back ahead, it is the thesis we set out to write, with the reasons it took this
+      long documented.
     </p>
   </div>
 </section>
