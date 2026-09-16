@@ -42,6 +42,13 @@
 #
 #   VARIANT=fill   sbatch obs-weights-eval.slurm unident_s   # w + shares, complement rule
 #   VARIANT=shares sbatch obs-weights-eval.slurm unident_s   # shares only, baseline reward
+#
+# S2_ARMS adds stage-2 trainees to the pool. A MORL ego trained with the fill
+# flags has the widened observation and needs the rnn config at that width;
+# S2_WIDE_ARMS names which of them do. OUT_TAG keeps the outputs apart.
+#
+#   VARIANT=fill S2_ARMS="bench_sp-annego bench_sp-fillego" S2_WIDE_ARMS="bench_sp-fillego" \
+#     OUT_TAG=_s2ego sbatch obs-weights-eval.slurm unident_s
 
 cd /home-mscluster/vnaidoo/Coding/masters-research/pipelines
 
@@ -99,7 +106,8 @@ case "$VARIANT" in
         ENV_FLAGS=(--morl_objectives $OBJ --use_morl_obs_shares) ;;
     *) echo "unknown VARIANT ${VARIANT}"; exit 1 ;;
 esac
-echo "layout ${LAYOUT}  objectives ${OBJ}  obs arm ${OBS_ARM}  vs ${COMPARE_ARMS}"
+TAG="${TAG}${OUT_TAG:-}"
+echo "layout ${LAYOUT}  objectives ${OBJ}  obs arm ${OBS_ARM}  vs ${COMPARE_ARMS}  s2 ${S2_ARMS:-none}"
 
 cd $PYTHONPATH/zsceval/scripts
 
@@ -126,12 +134,28 @@ N=$(ls $POLICY_POOL/$LAYOUT/fcp/s1/$OBS_ARM/*_final_actor.pt 2>/dev/null | wc -l
 echo "${OBS_ARM}: ${N} final checkpoints"
 [ "$N" -gt 0 ] || exit 1
 
+# 2b. Stage-2 trainees, if any: extract them and point the widened ones at the
+#     rnn config store_policy_config wrote alongside the mlp one.
+S2_FLAGS=()
+if [ -n "${S2_ARMS:-}" ]; then
+    for A in $S2_ARMS; do
+        python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked \
+            --algorithm fcp --exp fcp-S2-${A} --checkpoint final \
+            || echo "  stage-2 extraction failed for ${A}"
+    done
+    S2_FLAGS=(--s2_arms $S2_ARMS --s2_arm_seeds $SEEDS)
+    RNN_CONFIG=${MOW_CONFIG/mlp_/rnn_}
+    for A in ${S2_WIDE_ARMS:-}; do
+        S2_FLAGS+=(--s2_arm_config "${A}=${RNN_CONFIG}")
+    done
+fi
+
 # 3. The pool. --skip_missing drops a comparison arm that does not exist on this
 #    layout rather than failing; the obs arm itself was checked above.
 YML_OUT=$POLICY_POOL/$LAYOUT/morl_benchmark/cross_play${TAG}.yml
 YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arm_seeds $SEEDS \
     --arms $COMPARE_ARMS $OBS_ARM --peak_arms \
-    --arm_config "${OBS_ARM}=${MOW_CONFIG}" \
+    --arm_config "${OBS_ARM}=${MOW_CONFIG}" "${S2_FLAGS[@]}" \
     --heldout hsp --hsp_partners auto --out $YML_OUT --skip_missing | tail -1)
 echo "population yml: $YML"
 AGENTS=$(grep -oP '^[A-Za-z0-9_-]+(?=:)' $YML | tr '\n' ' ')

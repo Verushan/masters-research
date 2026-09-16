@@ -86,6 +86,9 @@ GROUPS = [
     ("s2_bench_morl_anc", r"^s2_bench_morl-anc_s\d+(?:r\d+)?$", "FCP S2 on MORL population (anchored)"),
     ("s2_bench_morl_ad_anc", r"^s2_bench_morl_ad-anc_s\d+(?:r\d+)?$", "FCP S2 on adaptive-MORL population (anchored)"),
     ("s2_bench_morl_live3", r"^s2_bench_morl-live3_s\d+(?:r\d+)?$", "FCP S2 on MORL population (live3)"),
+    # The MORL ego: same hand-shaped population as s2_bench_sp, trainee differs.
+    ("s2_bench_sp_annego", r"^s2_bench_sp-annego_s\d+(?:r\d+)?$", "S2 annealed team-credit MORL ego on SP population"),
+    ("s2_bench_sp_fillego", r"^s2_bench_sp-fillego_s\d+(?:r\d+)?$", "S2 fill-in MORL ego on SP population"),
     ("s2_bench_morl_ad_live3", r"^s2_bench_morl_ad-live3_s\d+(?:r\d+)?$", "FCP S2 on adaptive-MORL population (live3)"),
     # pid-ladder.sh rungs. The arm name carries the rung ("bench_sp-rung1"), so
     # the pool entry is `s2_bench_sp-rung1_s{seed}` and the plain s2_bench_sp
