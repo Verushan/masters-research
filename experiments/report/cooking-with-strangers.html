@@ -271,13 +271,14 @@
     partners they have never met. Last week we found the reward could be cheated and
     fixed it. This week the full benchmark ran on the fixed reward, at six runs per
     method, on every kitchen: <strong>our method does not beat the hand-tuned baseline</strong>.
-    We found three specific, mechanical causes; the corrected versions now train to the
-    baseline's level, and their zero-shot test is running.
+    We found three specific, mechanical causes and fixed them. The corrected agents close
+    about half the zero-shot gap and are the most consistent we have trained — but they do not
+    reach the baseline, and the residual gap has a specific owner too.
   </p>
   <div class="meta">
     <span>Verushan Naidoo</span>
     <span>MSc research · ZSC-Eval / Overcooked</span>
-    <span>10 findings established · 3 corrected arms under zero-shot test</span>
+    <span>11 findings established · corrected arms scored zero-shot</span>
   </div>
 </header>
 
@@ -588,9 +589,11 @@
       <em>Not as built. Five independent checks now agree: behaviour barely shifts by partner;
       when it shifts it does not shift <em>toward</em> what the partner needs; letting the
       agent see its own priorities changes nothing; and the adaptive version is never better
-      than fixed weights on any kitchen. We have identified why — the agent has no state
-      describing what its partner is doing, and its update rule never looked at the partner —
-      and the corrected version is training (see <em>What we are changing</em>).</em>
+      than fixed weights on any kitchen. We identified why — no state describing what the
+      partner is doing, an update rule that never looked at the partner — and built the
+      corrected version. It is the best MORL agent we have (F11), but the partner state hurts
+      rather than helps when the agent is trained against a copy of itself, for a reason that
+      says where it has to go next (see <em>What we are changing</em>).</em>
     </div>
     <div><span class="chip neg">Negative as built</span></div>
   </div>
@@ -1028,6 +1031,66 @@
       </p>
     </div>
   </div>
+
+  <div class="finding">
+    <div class="finding-head">
+      <span class="fno">F11</span><h3>The corrected agents close half the gap; the partner state owns the rest</h3>
+      <span class="chip fix">Corrected, not yet parity</span>
+    </div>
+    <div class="col">
+      <p>
+        The three corrected arms, zero-shot against the same 16 strangers on <code>unident_s</code>,
+        six runs each, with the per-cook-credit version kept as the ablation for cause 3.
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>Zero-shot score, <code>unident_s</code>, seed-level exact permutation test against the baseline.</caption>
+        <thead><tr><th>Arm</th><th class="num">Zero-shot</th><th class="num">Spread</th><th class="num">vs baseline</th><th class="num">p</th></tr></thead>
+        <tbody>
+          <tr><td>Hand-shaped baseline</td><td class="num">170.2</td><td class="num">8.8</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr><td>MORL as originally built</td><td class="num">133.6</td><td class="num">38.5</td><td class="num">−36.6</td><td class="num">0.050</td></tr>
+          <tr><td>Annealed, per-cook delivery credit (cause 3 unfixed)</td><td class="num">89.7</td><td class="num">31.6</td><td class="num">−80.5</td><td class="num">0.005</td></tr>
+          <tr><td>Annealed, team credit</td><td class="num">147.1</td><td class="num">33.8</td><td class="num">−23.1</td><td class="num">0.054</td></tr>
+          <tr class="hi"><td>Fill-in agent (anneal + team credit + partner state + complement rule)</td><td class="num">151.6</td><td class="num">11.0</td><td class="num">−18.6</td><td class="num">0.011</td></tr>
+          <tr><td>Baseline reward + partner state only</td><td class="num">130.1</td><td class="num">45.9</td><td class="num">−40.1</td><td class="num">0.002</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        Three things the table settles. <strong>Cause 3 matters zero-shot, not just in self-play</strong>:
+        crediting a delivery to one cook rather than both costs 57 points against strangers
+        (89.7 vs 147.1) — an agent paid only for its own deliveries learns to deliver, not to
+        enable. <strong>The reward fixes reach parity-with-noise</strong>: the annealed, team-credited
+        MORL reward is now the baseline's reward with the same three events (one weight differs),
+        and it scores 147 with one collapsed seed at 80 and the other five averaging 160.
+        <strong>The fill-in agent is the best MORL agent we have</strong> — 151.6, and its spread
+        (11.0) matches the baseline's for the first time — but it is still 19 points short, and
+        that is significant.
+      </p>
+      <p>
+        The last row says where those 19 points are. Give the <em>baseline</em> the partner state
+        and nothing else, and it drops to 130 (five seeds at 141–156 plus one collapse). Give the
+        MORL agent the same state and it lands at 152. The partner-state channels cost about 20
+        points wherever they appear. The reason is mechanical: an agent trained against a copy of
+        itself only ever sees <em>its twin's</em> share of the work in those channels, so with a
+        stranger the channels carry values it has never seen, and a policy conditioned on them
+        misfires. The complement rule neither helps nor hurts on top of that.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "Fixing the reward closed about half the gap and gave us the most consistent MORL agent
+        we've trained. The other half is the partner-state channels: they cost twenty points
+        whether the reward is ours or the baseline's, because an agent trained with itself has
+        only ever seen its own twin in those channels. That's not an argument against partner
+        state — it's an argument that it can only be learned against varied partners, which is
+        exactly what the second training stage provides and the first does not."
+      </p>
+    </div>
+  </div>
 </section>
 
 <!-- ============================== OPEN ================================= -->
@@ -1125,13 +1188,9 @@
   <div class="col" style="margin-top:12px">
     <p>
       With all three causes fixed, every MORL arm trains to the baseline's level for the first
-      time in the project, with tighter run-to-run spread. The zero-shot evaluation against the
-      same 16 strangers as everything above is running. What would count as success:
-      <code>bench_morl_ann</code> at or above the baseline's 170 (parity — the handicap was the
-      reward, not the idea); <code>bench_morl_fill</code> above that (the partner state and the
-      fill-in rule buy adaptability); <code>bench_sp_shares</code> above the baseline on its own
-      (the state was the missing piece regardless of method). The combination tells us which part
-      mattered.
+      time in the project. Zero-shot (F11), the reward fixes reach parity-with-noise and the
+      fill-in agent is the best and most consistent MORL agent we have — but it stops 19 points
+      short of the baseline, and the ablation says the partner-state channels are why.
     </p>
     <div class="says">
       <b>How to say it</b>
@@ -1140,8 +1199,31 @@
         paid for prepping and plating right to the end of training, where the baseline is paid for
         deliveries. It paid a delivery to one cook where the baseline pays both, so once the hints
         faded, nobody was paid to help. And it had no input describing what its partner had been
-        doing, so there was nothing to adapt to. All three are fixed; the corrected agents now
-        train as well as the baseline, and the zero-shot test is running."
+        doing. Fixing the reward gets us to parity; adding the partner state costs twenty points
+        because in self-play the partner is always yourself. So the partner state has to be
+        learned in the stage where the partners vary."
+      </p>
+    </div>
+  </div>
+
+  <div class="cause" style="margin-top:22px">
+    <div class="cno">Next</div>
+    <div>
+      <h4>Put the fill-in agent where the partners vary</h4>
+      <p>
+        Every result above trains the agent against a copy of itself and asks it to generalise.
+        The partner-state channels cannot be learned that way — they only ever show the twin.
+        The second training stage exists precisely to train one agent against a <em>population</em>
+        of different partners, and until now its trainee has always optimised the plain task
+        reward while MORL shaped only the population (F8). The experiment the results point to is
+        the reverse: the fill-in agent as the stage-2 trainee, its partner-state channels seeing
+        18 different partners, its complement rule steering against each. That is also the
+        experiment the thesis proposal actually describes.
+      </p>
+      <p class="fix">
+        <b>Cost:</b> one stage-2 run per seed (~10 h each, six seeds, in parallel), then the same
+        cross-play. The corrected arms are also finishing on <code>random0</code> for a second
+        kitchen on F11.
       </p>
     </div>
   </div>
@@ -1149,11 +1231,10 @@
   <div class="col" style="margin-top:34px">
     <h3 style="margin-bottom:.5rem">Also in flight</h3>
     <ul class="tight">
-      <li><strong>Zero-shot evaluation of the three corrected arms</strong> against the 16
-      held-out partners on <code>unident_s</code>, six runs each. This is the result next week's
-      update turns on.</li>
-      <li><strong>If it holds, the same three arms on <code>random0</code> and the multi-ingredient
-      kitchen</strong>, and the stage-2 pipeline re-run on the corrected populations.</li>
+      <li><strong>The corrected arms on <code>random0</code></strong> (trained; zero-shot
+      evaluation running), for a second kitchen on F11.</li>
+      <li><strong>The fill-in agent as the stage-2 trainee</strong> on <code>unident_s</code>,
+      described above — the experiment F11 points to.</li>
     </ul>
   </div>
 </section>
@@ -1178,10 +1259,11 @@
       <strong>specific</strong>. The method was optimising event counts at the end of training
       where the baseline optimises deliveries; it paid a delivery to one cook where the baseline
       pays both; and it was asked to adapt to a partner it had no state describing. All three are
-      mechanical, all three are fixed, and the corrected agents train to the baseline's level —
-      the first time any MORL arm has. Their zero-shot test is running. The multi-ingredient result
-      — MORL out-cooks the baseline with itself and loses to it with every stranger — is the
-      clearest statement of the first cause we could have asked for.
+      mechanical and fixed. The corrected agents train to the baseline's level and, zero-shot,
+      close half the gap with baseline-level consistency; the half that remains is owned by the
+      partner state, which cannot be learned against a copy of oneself. The multi-ingredient
+      result — MORL out-cooks the baseline with itself and loses to it with every stranger — is
+      the clearest statement of the first cause we could have asked for.
     </p>
     <p>
       The <strong>methodological contribution</strong> stands regardless: a reward that could be
@@ -1190,10 +1272,12 @@
       result on two kitchens; the best-response calibration showing that on one kitchen there is
       no partner-specific optimum at all; and now a three-part diagnosis — objectives wrong at
       convergence, delivery credited to the wrong cook, no partner state — each isolated by an
-      ablation. If the corrected arms come back at parity zero-shot, the thesis is about how to
-      design and measure multi-objective rewards for coordination, with the failure modes named.
-      If they come back ahead, it is the thesis we set out to write, with the reasons it took this
-      long documented.
+      ablation, with the last one's failure mode (self-play cannot teach partner state) named
+      and testable. As it stands, the thesis is about how to design and measure multi-objective
+      rewards for coordination, with the failure modes named and the fixes measured. One
+      experiment remains that could change its shape: the fill-in agent trained where the
+      partners vary. It is the experiment the proposal described, and we now know exactly why it
+      has to be run that way.
     </p>
   </div>
 </section>
