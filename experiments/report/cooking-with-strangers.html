@@ -264,21 +264,22 @@
 <div class="wrap">
 
 <header class="masthead">
-  <p class="eyebrow">Research status · 16 September 2026</p>
+  <p class="eyebrow">Research status · 23 September 2026</p>
   <h1>Cooking&nbsp;With Strangers</h1>
   <p class="lede col">
     We train agents to cook together in <em>Overcooked</em>, then test them with
     partners they have never met. Last week we found the reward could be cheated and
     fixed it. This week the full benchmark ran on the fixed reward, at six runs per
     method, on every kitchen: <strong>our method does not beat the hand-tuned baseline</strong>.
-    We found three specific, mechanical causes and fixed them. The corrected agents close
-    about half the zero-shot gap and are the most consistent we have trained — but they do not
-    reach the baseline, and the residual gap has a specific owner too.
+    We found three specific, mechanical causes and fixed them. The corrected agents close about
+    half the gap at stage one, and at stage two the MORL agent is the best of its kind we have
+    trained — its mean is not significantly ahead, but its worst run is seventy points better
+    than the baseline's. No single agent we have trained beats the plain hand-shaped one.
   </p>
   <div class="meta">
     <span>Verushan Naidoo</span>
     <span>MSc research · ZSC-Eval / Overcooked</span>
-    <span>11 findings established · corrected arms scored zero-shot</span>
+    <span>12 findings established · every planned experiment run</span>
   </div>
 </header>
 
@@ -591,9 +592,10 @@
       agent see its own priorities changes nothing; and the adaptive version is never better
       than fixed weights on any kitchen. We identified why — no state describing what the
       partner is doing, an update rule that never looked at the partner — and built the
-      corrected version. It is the best MORL agent we have (F11), but the partner state hurts
-      rather than helps when the agent is trained against a copy of itself, for a reason that
-      says where it has to go next (see <em>What we are changing</em>).</em>
+      corrected version. Across six ablations — two rewards, two kitchens, and both training stages including the one
+      where partners genuinely vary — the partner-state channels are never positive beyond noise
+      (F11, F12). This line is closed. What the corrected MORL agent does buy is
+      <em>reliability</em>, not adaptation (F12).</em>
     </div>
     <div><span class="chip neg">Negative as built</span></div>
   </div>
@@ -1034,6 +1036,75 @@
 
   <div class="finding">
     <div class="finding-head">
+      <span class="fno">F12</span><h3>As the stage-two trainee, MORL is the most reliable agent we have — and partner state still does not pay</h3>
+      <span class="chip fix">Directional, underpowered</span>
+    </div>
+    <div class="col">
+      <p>
+        The last experiment, and the one the proposal actually described. Until now the second
+        stage always trained a plain task-reward agent against a population, and MORL only shaped
+        the population (F8). Here the <em>trainee</em> is the corrected MORL agent, against the
+        same 18-partner hand-shaped population in every arm — so the three rows differ only in
+        what the trainee optimises and sees.
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>Stage-2 agent, zero-shot on <code>unident_s</code>, 6 runs each, same population throughout.</caption>
+        <thead><tr><th>What the trainee optimises and sees</th><th class="num">Zero-shot</th><th class="num">Spread</th><th class="num">Worst run</th><th class="num">vs plain</th><th class="num">p</th></tr></thead>
+        <tbody>
+          <tr><td>Plain task reward (what the pipeline has always done)</td><td class="num">141.7</td><td class="num">47.1</td><td class="num">68.8</td><td class="num">—</td><td class="num">—</td></tr>
+          <tr class="hi"><td>Annealed, team-credited MORL reward</td><td class="num">158.4</td><td class="num">14.3</td><td class="num">139.4</td><td class="num">+16.8</td><td class="num">0.45</td></tr>
+          <tr><td>…plus partner state and the fill-in rule</td><td class="num">155.0</td><td class="num">23.9</td><td class="num">116.2</td><td class="num">+13.3</td><td class="num">0.57</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        Two answers here, and the honest reading of each.
+      </p>
+      <p>
+        <strong>The partner-state hypothesis is not confirmed.</strong> F11 predicted those
+        channels would pay once the partners varied, since stage two is the only place they can be
+        learned from anything but a twin. They do not: the fill-in trainee scores 3.4 points
+        <em>below</em> the trainee without them (p = 0.79). Combined with the stage-one ablation
+        above, partner state is never positive beyond noise anywhere we have put it. That line is
+        closed.
+      </p>
+      <p>
+        <strong>The MORL trainee is directionally the best stage-2 agent, and much more reliable.</strong>
+        Its mean is 17 points higher, which is not significant at six runs (p = 0.45). But its
+        worst run scores <strong>139 against 68.8</strong>, its two worst average 144 against 85,
+        and its spread is 3.3× tighter. I want to be careful here, because I nearly overclaimed
+        it: an F-test on the variances gives p = 0.02, but that test assumes normality, and at six
+        runs it is doing the work rather than the data. Distribution-free tests on the same numbers
+        give p = 0.12 (permutation on the spread ratio), 0.098 (Levene) and 0.15 (Ansari–Bradley).
+        So: a large, consistent direction across mean, spread and worst case — and not significant
+        on any of them at this sample size.
+      </p>
+      <p class="footnote">
+        Worth noting what this does not overturn: the best single agent on this kitchen remains the
+        plain hand-shaped stage-1 agent at 170.2. No stage-2 agent in any arm, ours or the
+        pipeline's, has beaten it. That is a finding about the benchmark's own pipeline as much as
+        about our method.
+      </p>
+    </div>
+    <div class="says col">
+      <b>How to say it</b>
+      <p>
+        "The last experiment put our corrected agent where the proposal always said it should go —
+        training against many different partners rather than a copy of itself. It comes out the
+        best stage-two agent we have: seventeen points above the standard one on average, and its
+        worst run is seventy points better. Neither gap is statistically significant at six runs,
+        and I checked that carefully because one test said it was and it turned out to be leaning
+        on an assumption the data can't support. The partner-state idea, though, is dead — it
+        didn't help even here, which was its best chance."
+      </p>
+    </div>
+  </div>
+
+  <div class="finding">
+    <div class="finding-head">
       <span class="fno">F11</span><h3>The corrected agents close half the gap; the partner state owns the rest</h3>
       <span class="chip fix">Corrected, not yet parity</span>
     </div>
@@ -1070,24 +1141,43 @@
         that is significant.
       </p>
       <p>
-        The last row says where those 19 points are. Give the <em>baseline</em> the partner state
-        and nothing else, and it drops to 130 (five seeds at 141–156 plus one collapse). Give the
-        MORL agent the same state and it lands at 152. The partner-state channels cost about 20
-        points wherever they appear. The reason is mechanical: an agent trained against a copy of
-        itself only ever sees <em>its twin's</em> share of the work in those channels, so with a
-        stranger the channels carry values it has never seen, and a policy conditioned on them
-        misfires. The complement rule neither helps nor hurts on top of that.
+        <strong>Correction to an earlier version of this report.</strong> I first wrote that the
+        partner-state channels "cost about 20 points wherever they appear", and attributed the
+        remaining 19-point gap to them. That was wrong, and the arithmetic behind it was sloppy:
+        it compared the fill-in agent against the <em>baseline</em> rather than against the arm it
+        actually differs from. Comparing only pairs that differ in the channels and nothing else:
+      </p>
+    </div>
+    <div class="tw">
+      <table>
+        <caption>Effect of adding the partner-state channels, across every pair that isolates them.</caption>
+        <thead><tr><th>Pair</th><th class="num">Without</th><th class="num">With</th><th class="num">Effect</th></tr></thead>
+        <tbody>
+          <tr><td><code>unident_s</code>, hand-shaped reward</td><td class="num">170.2</td><td class="num">130.1</td><td class="num">−40.1</td></tr>
+          <tr><td><code>unident_s</code>, hand-shaped, excluding one collapsed seed</td><td class="num">170.2</td><td class="num">148.7</td><td class="num">−21.5</td></tr>
+          <tr><td><code>unident_s</code>, MORL reward</td><td class="num">147.1</td><td class="num">151.6</td><td class="num">+4.5</td></tr>
+          <tr><td><code>random0</code>, hand-shaped reward</td><td class="num">32.2</td><td class="num">32.0</td><td class="num">−0.2</td></tr>
+          <tr><td><code>random0</code>, MORL reward</td><td class="num">41.4</td><td class="num">32.2</td><td class="num">−9.2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <p>
+        So the channels are clearly harmful on the hand-shaped reward and roughly neutral on the
+        MORL reward — never helpful, but not the owner of the gap either. What actually keeps MORL
+        below the baseline at stage one is simply that its reward, even corrected, trains a
+        slightly weaker cook: 147–152 against 170.
       </p>
     </div>
     <div class="says col">
       <b>How to say it</b>
       <p>
         "Fixing the reward closed about half the gap and gave us the most consistent MORL agent
-        we've trained. The other half is the partner-state channels: they cost twenty points
-        whether the reward is ours or the baseline's, because an agent trained with itself has
-        only ever seen its own twin in those channels. That's not an argument against partner
-        state — it's an argument that it can only be learned against varied partners, which is
-        exactly what the second training stage provides and the first does not."
+        we'd trained at that point. I initially blamed the rest on the partner-state channels;
+        checking the ablation properly, that's not right — those channels are neutral on our
+        reward and harmful on the baseline's, but they aren't what keeps us behind. What keeps us
+        behind at stage one is that the corrected MORL reward simply trains a slightly weaker cook
+        than the hand-tuned one."
       </p>
     </div>
   </div>
@@ -1209,33 +1299,26 @@
   <div class="cause" style="margin-top:22px">
     <div class="cno">Next</div>
     <div>
-      <h4>Put the fill-in agent where the partners vary</h4>
+      <h4>Power, not more mechanisms</h4>
       <p>
-        Every result above trains the agent against a copy of itself and asks it to generalise.
-        The partner-state channels cannot be learned that way — they only ever show the twin.
-        The second training stage exists precisely to train one agent against a <em>population</em>
-        of different partners, and until now its trainee has always optimised the plain task
-        reward while MORL shaped only the population (F8). The experiment the results point to is
-        the reverse: the fill-in agent as the stage-2 trainee, its partner-state channels seeing
-        18 different partners, its complement rule steering against each. That is also the
-        experiment the thesis proposal actually describes.
+        Every mechanism we set out to test has now been tested. What is left is not another idea
+        but a sample size: the stage-2 result (F12) is a 17-point mean gap and a 70-point
+        worst-case gap at six runs per arm, where the power analysis says ~18 runs are needed to
+        resolve a 30-point difference. Six more seeds per arm is about three days of cluster time
+        and would either establish the reliability claim or close it honestly.
       </p>
       <p class="fix">
-        <b>Cost:</b> one stage-2 run per seed (~10 h each, six seeds, in parallel), then the same
-        cross-play. The corrected arms are also finishing on <code>random0</code> for a second
-        kitchen on F11.
+        <b>The alternative</b> is to stop experimenting and write, treating the reliability result
+        as the directional finding it is. Both are defensible; the choice depends on how much of
+        the remaining time belongs to the thesis document rather than to the cluster.
       </p>
     </div>
   </div>
 
   <div class="col" style="margin-top:34px">
     <h3 style="margin-bottom:.5rem">Also in flight</h3>
-    <ul class="tight">
-      <li><strong>The corrected arms on <code>random0</code></strong> (trained; zero-shot
-      evaluation running), for a second kitchen on F11.</li>
-      <li><strong>The fill-in agent as the stage-2 trainee</strong> on <code>unident_s</code>,
-      described above — the experiment F11 points to.</li>
-    </ul>
+    <p>Nothing. Every experiment described in previous versions of this report has now run and is
+    reported above.</p>
   </div>
 </section>
 
@@ -1258,26 +1341,37 @@
       What makes this a productive week rather than a bad one is that the negatives are
       <strong>specific</strong>. The method was optimising event counts at the end of training
       where the baseline optimises deliveries; it paid a delivery to one cook where the baseline
-      pays both; and it was asked to adapt to a partner it had no state describing. All three are
-      mechanical and fixed. The corrected agents train to the baseline's level and, zero-shot,
-      close half the gap with baseline-level consistency; the half that remains is owned by the
-      partner state, which cannot be learned against a copy of oneself. The multi-ingredient
-      result — MORL out-cooks the baseline with itself and loses to it with every stranger — is
-      the clearest statement of the first cause we could have asked for.
+      pays both; and it was asked to adapt to a partner it had no state describing. The first two
+      were real and fixing them moved the numbers. The third turned out not to be: the partner
+      state is neutral at best, in six separate ablations, including the one where the partners
+      actually vary. The multi-ingredient result — MORL out-cooks the baseline with itself and
+      loses to it with every stranger — remains the clearest statement of the first cause we
+      could have asked for.
     </p>
     <p>
       The <strong>methodological contribution</strong> stands regardless: a reward that could be
       forged and a rule for spotting that class of problem in advance; a calibration that was
       capturing 7% of the truth; a significance test against the wrong sample; the partner-identity
       result on two kitchens; the best-response calibration showing that on one kitchen there is
-      no partner-specific optimum at all; and now a three-part diagnosis — objectives wrong at
-      convergence, delivery credited to the wrong cook, no partner state — each isolated by an
-      ablation, with the last one's failure mode (self-play cannot teach partner state) named
-      and testable. As it stands, the thesis is about how to design and measure multi-objective
-      rewards for coordination, with the failure modes named and the fixes measured. One
-      experiment remains that could change its shape: the fill-in agent trained where the
-      partners vary. It is the experiment the proposal described, and we now know exactly why it
-      has to be run that way.
+      no partner-specific optimum at all; and a two-part reward diagnosis — objectives wrong at
+      convergence, delivery credited to the wrong cook — each isolated by an ablation and each
+      worth real points.
+    </p>
+    <p>
+      There is also one positive performance result, stated at the strength the data supports.
+      Put where the proposal always said it belonged — as the trainee against a varied population —
+      the corrected MORL agent is the best stage-2 agent we have trained, by 17 points on the mean
+      and 70 on the worst run. Neither gap clears significance at six runs, and I would rather say
+      that plainly than lean on the one test that reported otherwise. The recurring shape of every
+      MORL result in this project is the same: not a higher ceiling, a higher floor.
+    </p>
+    <p>
+      So the thesis is about how to design and measure multi-objective rewards for coordination —
+      an objective that could be forged and the rule that catches that class in advance, three
+      credit-assignment failures and what each cost, a measurement apparatus that was wrong four
+      separate ways, and a method whose honest claim is reliability rather than performance. That
+      is a contribution that stands whether or not six more seeds move the reliability result over
+      the line.
     </p>
   </div>
 </section>
