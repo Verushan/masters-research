@@ -119,6 +119,36 @@
   .cause p.fix { color: var(--ink); }
   .cause p.fix b { color: var(--fixed); }
 
+  /* ---- the walkthrough: a spoken script, numbered by beat -------------- */
+  .beats { counter-reset: beat; display: grid; gap: 0; }
+  .beat {
+    counter-increment: beat;
+    display: grid; grid-template-columns: 2.2rem 1fr; gap: 6px 18px;
+    padding: 20px 0; border-bottom: 1px solid var(--rule);
+  }
+  .beat:last-child { border-bottom: 0; }
+  .beat::before {
+    content: counter(beat);
+    font-family: "IBM Plex Mono", monospace; font-size: .95rem; font-weight: 600;
+    color: var(--accent); line-height: 1.5;
+  }
+  .beat h3 { margin-bottom: .3rem; }
+  .beat p { margin: 0 0 .55rem; }
+  .beat p:last-child { margin-bottom: 0; }
+  .beat .line {
+    border-left: 3px solid var(--accent); background: var(--sunken);
+    padding: 12px 16px; border-radius: 0 4px 4px 0; font-size: 1.03rem;
+  }
+  .beat .ref { font-family: "IBM Plex Mono", monospace; font-size: .74rem;
+               letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* ---- anticipated questions ------------------------------------------ */
+  .qa { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+        border-radius: 6px; overflow: hidden; margin-top: 8px; }
+  .qa > div { background: var(--surface); padding: 18px 20px; }
+  .qa dt { font-weight: 600; margin-bottom: .4rem; }
+  .qa dd { margin: 0; color: var(--ink-2); font-size: .95rem; }
+
   /* ---- glossary -------------------------------------------------------- */
   .glossary { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
   .term { background: var(--surface); padding: 18px 20px; }
@@ -279,9 +309,220 @@
   <div class="meta">
     <span>Verushan Naidoo</span>
     <span>MSc research · ZSC-Eval / Overcooked</span>
-    <span>12 findings established · every planned experiment run</span>
+    <span>12 findings · every planned experiment run</span>
+    <span>Start at "The whole story" below</span>
   </div>
 </header>
+
+<!-- ============================= WALKTHROUGH =========================== -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">If you have ten minutes</p>
+    <h2>The whole story, in the order it happened</h2>
+    <p>
+      Seven beats. Each has the finding, then a line you can say more or less as written.
+      Everything after this section is the evidence for these seven things.
+    </p>
+  </div>
+
+  <div class="beats">
+    <div class="beat">
+      <div>
+        <h3>We were measuring the wrong thing, and the agents noticed before we did</h3>
+        <p>
+          One of our four objectives rewarded passing items to your partner. Passing an item
+          back and forth is free and repeatable, so agents learned to do that forever and cook
+          nothing. Six separate training runs found this by themselves.
+        </p>
+        <p class="line">
+          "Our coordination reward could be farmed. Agents shuttled one onion back and forth
+          and scored beautifully while delivering no food at all. We found it, fixed it by only
+          paying for a handoff once the item is actually used, and re-ran everything."
+        </p>
+        <p class="ref">Evidence: the main result section, F1</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <div>
+        <h3>Every earlier comparison was therefore meaningless — so we redid all of it</h3>
+        <p>
+          Every MORL number before mid-September was measured on the cheatable reward. We re-ran
+          the full benchmark on the fixed one: four kitchens, six training runs per method,
+          testing against sixteen partners each agent had never met.
+        </p>
+        <p class="line">
+          "Everything I showed you before was measuring reward hacking rather than the method. So
+          I threw the comparison away and re-ran it properly — four maps, six runs per method,
+          and a significance test that uses the training run as the sample rather than the test
+          partner, which was a second thing I'd been doing wrong."
+        </p>
+        <p class="ref">Evidence: F2, F5</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <div>
+        <h3>Done properly, our method loses</h3>
+        <p>
+          The hand-tuned baseline beats MORL on every kitchen where agents can cook — by 35 and
+          66 points on the two that discriminate, both statistically significant. This is the
+          headline and it goes against us.
+        </p>
+        <p class="line">
+          "The honest headline is that with a reward that can't be cheated, the hand-tuned
+          baseline beats our method on every map where the agents can actually cook. I'd rather
+          lead with that than bury it."
+        </p>
+        <p class="ref">Evidence: F2</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <div>
+        <h3>The reason was three specific bookkeeping errors in our reward — not the idea</h3>
+        <p>
+          Our reward paid for prep and plating right to the end of training, where the baseline's
+          hints fade out and leave only deliveries. It paid a delivery to whichever cook carried
+          it, where the baseline pays both. And the agent had no input describing what its
+          partner had been doing.
+        </p>
+        <p class="line">
+          "We found three concrete faults. Ours kept paying for chopping and plating forever,
+          where the baseline stops and leaves just 'serve food'. Ours paid the cook who carried
+          the plate, where the baseline pays both — so once the hints faded, nobody was paid to
+          help their partner. And the agent had nothing in its input saying what the partner had
+          been doing. Fixing the second one alone was worth fifty-seven points."
+        </p>
+        <p class="ref">Evidence: the three causes section, F11</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <div>
+        <h3>Two of the three fixes worked; the third idea turned out to be dead</h3>
+        <p>
+          The reward fixes closed about half the gap. Giving the agent a description of its
+          partner's work never helped — in six separate tests, across two rewards, two kitchens
+          and both training stages.
+        </p>
+        <p class="line">
+          "The two reward fixes closed about half the gap. The partner-awareness idea simply
+          doesn't work — I tested it six different ways, including the one setup where it had
+          every reason to, and it was never better than not having it. I'd call that line closed."
+        </p>
+        <p class="ref">Evidence: F11's correction table, F12</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <div>
+        <h3>In the setting the proposal actually described, our method comes out best — but underpowered</h3>
+        <p>
+          Trained against a population of eighteen different partners rather than a copy of
+          itself, the corrected MORL agent beats the standard one by 17 points on average, and
+          its worst run is 70 points better. At six runs per method, neither gap is statistically
+          significant.
+        </p>
+        <p class="line">
+          "In the two-stage setup — where the agent trains against many different partners, which
+          is what the proposal always described — our corrected agent is the best one we've
+          trained. Seventeen points above the standard version on average, and its worst run is
+          seventy points better. I want to be careful: at six runs neither of those is
+          significant. One test said the consistency result was, but it relies on an assumption
+          six runs can't support, so I'm not claiming it."
+        </p>
+        <p class="ref">Evidence: F12</p>
+      </div>
+    </div>
+
+    <div class="beat">
+      <div>
+        <h3>The pattern across everything: MORL doesn't raise the ceiling, it raises the floor</h3>
+        <p>
+          In every comparison in this project, MORL's average is level or behind and its
+          worst-case and run-to-run spread are better. That is the claim the evidence supports,
+          and it is a different claim from the one we set out to make.
+        </p>
+        <p class="line">
+          "If there's a thesis-level claim here it's about reliability rather than peak
+          performance — our method's worst runs are consistently much better, its best runs
+          aren't. For something you'd eventually pair with a human, the worst case is arguably
+          what matters, but I'd want more runs before leaning on it."
+        </p>
+        <p class="ref">Evidence: F2, F8, F12</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= ANTICIPATED ========================== -->
+<section>
+  <div class="sec-head col">
+    <p class="eyebrow">If they push</p>
+    <h2>Questions they are likely to ask</h2>
+    <p>The honest answer to each, including where the answer is "we don't know".</p>
+  </div>
+  <dl class="qa">
+    <div>
+      <dt>"So has this been six months of negative results?"</dt>
+      <dd>
+        No — it has been the discovery that the previous results weren't measuring the method
+        at all. Four things were broken in the measurement apparatus (a forgeable objective, a
+        yardstick capturing 7% of the truth, a significance test on the wrong sample, and
+        analysis code silently dropping half the runs). All four are fixed and documented, and
+        each is a methods contribution in its own right. The performance question only became
+        answerable once they were.
+      </dd>
+    </div>
+    <div>
+      <dt>"Why should we believe the reliability claim if it isn't significant?"</dt>
+      <dd>
+        You shouldn't, yet — that is why it is labelled directional. What supports it is the
+        consistency of the direction rather than any single test: MORL's spread is lower than
+        the baseline's in essentially every arm across the whole project, and at stage two the
+        worst run differs by 70 points. Six more runs per arm would settle it, and that is
+        running now.
+      </dd>
+    </div>
+    <div>
+      <dt>"Isn't the fix just making your reward identical to the hand-tuned one?"</dt>
+      <dd>
+        Fair challenge, and partly yes: annealing the dense terms and crediting deliveries to
+        the team are both things the hand-tuned reward already did. The difference is that we
+        arrived at them from a stated principle rather than by tuning — and the objective-design
+        rule (an objective is forgeable when its trigger is reversible at no cost) predicts
+        which objectives break before any training is run. That rule is the transferable part.
+      </dd>
+    </div>
+    <div>
+      <dt>"Why not just use the hand-tuned reward, then?"</dt>
+      <dd>
+        On these maps you could. The argument for the objective-vector approach was never that
+        it beats a well-tuned reward on a map someone has already tuned — it is that it can be
+        specified without that tuning. Our results neither confirm nor refute that, because we
+        only tested maps where a tuned reward already exists.
+      </dd>
+    </div>
+    <div>
+      <dt>"Does any of this say something about the benchmark itself?"</dt>
+      <dd>
+        Yes, and it may be the most reusable finding. The best single agent on our main map is
+        the plain hand-shaped stage-one agent. No stage-two agent — ours or ZSC-Eval's own
+        pipeline — has beaten it in any arm we have run. The population pipeline is not
+        obviously buying what it is assumed to buy.
+      </dd>
+    </div>
+    <div>
+      <dt>"What would you do with another three months?"</dt>
+      <dd>
+        Power the reliability result properly, and test the objective-vector claim where it is
+        actually supposed to pay: a map with no hand-tuned reward available. Everything in this
+        report tests our method on ZSC-Eval's home turf, which is the hardest place for it to win.
+      </dd>
+    </div>
+  </dl>
+</section>
 
 <!-- ============================= PLAIN ENGLISH ========================= -->
 <section>
@@ -1308,9 +1549,9 @@
         and would either establish the reliability claim or close it honestly.
       </p>
       <p class="fix">
-        <b>The alternative</b> is to stop experimenting and write, treating the reliability result
-        as the directional finding it is. Both are defensible; the choice depends on how much of
-        the remaining time belongs to the thesis document rather than to the cluster.
+        <b>Running now.</b> Six more runs per arm on the main kitchen, doubling the stage-2
+        comparison to twelve, plus the same experiment repeated on a second kitchen to check the
+        result is not specific to one map. Both land within a day and neither blocks writing up.
       </p>
     </div>
   </div>
