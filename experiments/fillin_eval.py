@@ -93,6 +93,10 @@ SCHEDULES = {
     "potter>server": [(0, "potter"), (200, "server")],
     "server>potter": [(0, "server"), (200, "potter")],
     "potter>server>idle": [(0, "potter"), (133, "server"), (266, "idle")],
+    # Step 8 held-out sequences: swap steps the Step 7 arms never saw, one with
+    # their own partners in a new order, one with partners they never met.
+    "server>idle>potter": [(0, "server"), (133, "idle"), (266, "potter")],
+    "dial5>clutter>generalist": [(0, "dial5"), (133, "clutter"), (266, "generalist")],
 }
 
 

@@ -9,6 +9,8 @@ kinds of loading:
     fill-in         (…fill…)     the config with preference weights and partner
                     picture, plus the MORL settings it trained under, so its
                     priorities move against each scripted partner as in training
+    neglect         (Step 7)     the config with the task weights, plus the
+                    neglect settings, for the same reason
 
 Scanning the pool rather than listing seeds means an arm that lost a seed is
 scored on what exists instead of failing on what doesn't.
@@ -37,7 +39,13 @@ S2_EXPS = [
     "fcp-S2-bench_sp-fillego",
     "fcp-S2-bench_morl-live3",
     "fcp-S2-bench_morl_ad-live3",
+    # Step 7: trained against the scripted specialists, with swaps.
+    "fcp-S2-scripted-hand",
+    "fcp-S2-scripted-neglect",
+    "fcp-S2-scripted-noann",
 ]
+# Step 7 neglect arms: the task reward and its weights, which the agent sees.
+NEGLECT_FLAGS = "morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect"
 
 
 def objective_set(layout):
@@ -87,7 +95,10 @@ def main():
         arm = "s2_" + exp[len("fcp-S2-"):]
         for s in seeds:
             actor = f"{args.layout}/fcp/s2/{exp}/{s}.pt"
-            if "fillego" in exp:
+            if exp.startswith("fcp-S2-scripted-") and exp != "fcp-S2-scripted-hand":
+                anneal = " morl_anneal_dense=true" if exp.endswith("-neglect") else ""
+                emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-tasks.pkl", NEGLECT_FLAGS + anneal)
+            elif "fillego" in exp:
                 emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-{obj}_mos.pkl", fill_flags)
             else:
                 emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config.pkl")

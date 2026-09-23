@@ -23,6 +23,9 @@ seat share      How much of the variation in the agent's pot-filling share is
 entropy         Mean entropy of the agent's action distribution (nats; the
                 maximum over six actions is 1.79), per partner.
 stay / blocked  Fraction of steps the agent stood still / walked into its partner.
+held-out        Step 8. Soups and coverage restricted to what the Step 7 arms
+                never trained with: partners dial 5, clutter and generalist,
+                and swaps at any step other than 200.
 
 Arms are compared on seed-level values with the exact permutation test from
 compare_arms.py, the training run being the unit of replication.
@@ -47,6 +50,11 @@ from compare_arms import permutation_test  # noqa: E402
 NEGLECT_PARTNERS = ("potter", "server", "idle", "clutter")
 PREFERENCE_PARTNERS = ("generalist", "dial2", "dial5", "dial8")
 RATE_THRESHOLD = 1.0  # completions per 100 steps that count as "does this task"
+# Step 8: what the Step 7 arms never trained with. Their partners were potter,
+# server, idle, dial 2 and dial 8, swapped at step 200 only; so a held-out
+# segment is one against any other partner, or one that began at another step.
+HELD_OUT_PARTNERS = ("dial5", "clutter", "generalist")
+TRAIN_SWAP_STEP = 200
 
 
 def arm_of(agent_name):
@@ -77,6 +85,7 @@ def segment_metrics(ep, partner, start, end, idx, tasks, covers):
     m = {
         "partner": partner,
         "segment": idx,
+        "start": start,
         "steps": steps,
         "soups_per_100": float(done[:, :, 3].sum() / steps * 100),
         "agent_tasks": agent.tolist(),
@@ -114,6 +123,7 @@ def agent_summary(payload):
 
     whole = lambda s: s["schedule"] == s["partner"]  # noqa: E731  single-partner episodes
     swapped = lambda s: s["segment"] > 0  # noqa: E731
+    unseen_swap = lambda s: swapped(s) and s["start"] != TRAIN_SWAP_STEP  # noqa: E731
 
     out = {
         "agent": payload["agent"],
@@ -123,6 +133,9 @@ def agent_summary(payload):
         "soups_after_swap": mean("soups_per_100", swapped),
         "coverage": mean("coverage", lambda s: whole(s)),
         "duplication": mean("duplication", lambda s: whole(s) and s["partner"] in ("potter", "server")),
+        "heldout_soups": mean("soups_per_100", lambda s: whole(s) and s["partner"] in HELD_OUT_PARTNERS),
+        "heldout_soups_after_swap": mean("soups_per_100", unseen_swap),
+        "heldout_coverage_after_swap": mean("coverage", unseen_swap),
         "latency": mean("latency", swapped),
         "latency_censored": mean("latency_censored", swapped),
         "entropy": mean("entropy", lambda s: True),
@@ -174,6 +187,9 @@ KEYS = [
     ("soups_vs_preference", "soups/100 vs preference"),
     ("soups_after_swap", "soups/100 after a swap"),
     ("coverage", "coverage of neglected"),
+    ("heldout_soups", "held-out partners soups/100"),
+    ("heldout_soups_after_swap", "held-out swaps soups/100"),
+    ("heldout_coverage_after_swap", "held-out swaps coverage"),
     ("duplication", "duplication"),
     ("latency", "switch latency (steps)"),
     ("seat_share", "role set by seat"),
@@ -267,7 +283,15 @@ def main():
             if arm == args.base:
                 continue
             comparisons[arm] = {}
-            for key in ("soups_vs_neglect", "soups_after_swap", "coverage", "seat_share"):
+            for key in (
+                "soups_vs_neglect",
+                "soups_after_swap",
+                "coverage",
+                "seat_share",
+                "heldout_soups",
+                "heldout_soups_after_swap",
+                "heldout_coverage_after_swap",
+            ):
                 a, b = arms[arm][key]["values"], arms[args.base][key]["values"]
                 if len(a) < 2 or len(b) < 2:
                     continue

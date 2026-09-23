@@ -16,6 +16,14 @@
 #
 # FILLIN_POOL overrides POLICY_POOL: .env exports POLICY_POOL and is loaded
 # first, so a plain POLICY_POOL=... on the command line would be overwritten.
+#
+# Step 8 scores only the Step 7 arms, in a directory of its own, against the
+# hand-shaped arm, with the scripted ceiling re-run on the same schedules:
+#
+#   OUT=../experiments/results/fillin/unident_s-step8 \
+#   MANIFEST_ARGS="--s1_arms --s2_exps fcp-S2-scripted-hand fcp-S2-scripted-neglect fcp-S2-scripted-noann" \
+#   BASE=s2_scripted-hand METRICS=fillin_metrics_unident_s_step8.json REFERENCE_SEEDS="1 2 3 4 5 6" \
+#   bash fillin-suite.sh unident_s
 
 HERE="${SLURM_SUBMIT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)}"
 cd "$HERE" || exit 1
@@ -38,7 +46,7 @@ OUT=${OUT:-../experiments/results/fillin/${LAYOUT}}
 mkdir -p "$OUT"
 
 MANIFEST="$OUT/manifest.tsv"
-$PY ../experiments/fillin_manifest.py "$LAYOUT" > "$MANIFEST" || exit 1
+$PY ../experiments/fillin_manifest.py "$LAYOUT" ${MANIFEST_ARGS} > "$MANIFEST" || exit 1
 echo "$(wc -l < "$MANIFEST") agents on ${LAYOUT}, ${EPISODES} episodes per schedule per seat, ${JOBS} in parallel"
 
 # One process per agent; each writes its own file, so a failure loses one agent.
@@ -54,7 +62,17 @@ export -f run_one
 export PY LAYOUT EPISODES OUT
 tr '\n' '\0' < "$MANIFEST" | xargs -0 -P "$JOBS" -I{} bash -c 'run_one "$@"' _ {}
 
+# The scripted ceiling (Step 6), on whatever schedules the harness now has.
+for s in ${REFERENCE_SEEDS}; do
+    for mode in oracle generalist; do
+        f="$OUT/ref_${mode}_s${s}.json.gz"
+        [ -f "$f" ] || $PY ../experiments/fillin_reference.py --layout "$LAYOUT" --mode $mode \
+            --seed $((s - 1)) --episodes "$EPISODES" --out "$f" > "$OUT/ref_${mode}_s${s}.log" 2>&1 \
+            || echo "  FAILED ref_${mode}_s${s}"
+    done
+done
+
 N=$(ls "$OUT"/*.json.gz 2>/dev/null | wc -l)
 echo "${N} of $(wc -l < "$MANIFEST") agents recorded"
-$PY ../experiments/analyze_fillin.py "$OUT"/*.json.gz \
-    --out "../experiments/results/fillin_metrics_${LAYOUT}.json"
+$PY ../experiments/analyze_fillin.py "$OUT"/*.json.gz --base "${BASE:-bench_sp}" \
+    --out "../experiments/results/${METRICS:-fillin_metrics_${LAYOUT}.json}"
