@@ -40,7 +40,9 @@ import numpy as np
 import torch
 from loguru import logger
 
-sys.path.append(osp.join(osp.dirname(osp.abspath(__file__)), "..", "zsc-eval"))
+# insert, not append: .env exports PYTHONPATH, which may point at a different
+# checkout of zsc-eval, and the harness must run the code that sits beside it.
+sys.path.insert(0, osp.join(osp.dirname(osp.abspath(__file__)), "..", "zsc-eval"))
 
 from zsceval.envs.morl.tasks import TASKS, task_completions, task_demand  # noqa: E402
 from zsceval.envs.overcooked.Overcooked_Env import Overcooked  # noqa: E402
