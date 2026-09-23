@@ -1,0 +1,88 @@
+bench_sp_s1	unident_s/fcp/s1/bench_sp/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sp_s2	unident_s/fcp/s1/bench_sp/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sp_s3	unident_s/fcp/s1/bench_sp/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sp_s4	unident_s/fcp/s1/bench_sp/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sp_s5	unident_s/fcp/s1/bench_sp/sp5_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sp_s6	unident_s/fcp/s1/bench_sp/sp6_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sparse_s1	unident_s/fcp/s1/bench_sparse/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sparse_s2	unident_s/fcp/s1/bench_sparse/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sparse_s3	unident_s/fcp/s1/bench_sparse/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sparse_s4	unident_s/fcp/s1/bench_sparse/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sparse_s5	unident_s/fcp/s1/bench_sparse/sp5_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_sparse_s6	unident_s/fcp/s1/bench_sparse/sp6_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl-live3_s1	unident_s/fcp/s1/bench_morl-live3/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl-live3_s2	unident_s/fcp/s1/bench_morl-live3/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl-live3_s3	unident_s/fcp/s1/bench_morl-live3/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl-live3_s4	unident_s/fcp/s1/bench_morl-live3/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl-live3_s5	unident_s/fcp/s1/bench_morl-live3/sp5_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl-live3_s6	unident_s/fcp/s1/bench_morl-live3/sp6_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ad-live3_s1	unident_s/fcp/s1/bench_morl_ad-live3/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ad-live3_s2	unident_s/fcp/s1/bench_morl_ad-live3/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ad-live3_s3	unident_s/fcp/s1/bench_morl_ad-live3/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ad-live3_s4	unident_s/fcp/s1/bench_morl_ad-live3/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ad-live3_s5	unident_s/fcp/s1/bench_morl_ad-live3/sp5_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ad-live3_s6	unident_s/fcp/s1/bench_morl_ad-live3/sp6_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3_s1	unident_s/fcp/s1/bench_morl_ann-live3/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3_s2	unident_s/fcp/s1/bench_morl_ann-live3/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3_s3	unident_s/fcp/s1/bench_morl_ann-live3/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3_s4	unident_s/fcp/s1/bench_morl_ann-live3/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3t_s1	unident_s/fcp/s1/bench_morl_ann-live3t/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3t_s2	unident_s/fcp/s1/bench_morl_ann-live3t/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3t_s3	unident_s/fcp/s1/bench_morl_ann-live3t/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3t_s4	unident_s/fcp/s1/bench_morl_ann-live3t/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3t_s5	unident_s/fcp/s1/bench_morl_ann-live3t/sp5_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_ann-live3t_s6	unident_s/fcp/s1/bench_morl_ann-live3t/sp6_final_actor.pt	unident_s/policy_config/mlp_policy_config.pkl	
+bench_morl_fill-live3t_s1	unident_s/fcp/s1/bench_morl_fill-live3t/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+bench_morl_fill-live3t_s2	unident_s/fcp/s1/bench_morl_fill-live3t/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+bench_morl_fill-live3t_s3	unident_s/fcp/s1/bench_morl_fill-live3t/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+bench_morl_fill-live3t_s4	unident_s/fcp/s1/bench_morl_fill-live3t/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+bench_morl_fill-live3t_s5	unident_s/fcp/s1/bench_morl_fill-live3t/sp5_final_actor.pt	unident_s/policy_config/mlp_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+bench_morl_fill-live3t_s6	unident_s/fcp/s1/bench_morl_fill-live3t/sp6_final_actor.pt	unident_s/policy_config/mlp_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+bench_sp_shares-live3_s1	unident_s/fcp/s1/bench_sp_shares-live3/sp1_final_actor.pt	unident_s/policy_config/mlp_policy_config_mos-anchored_live3.pkl	
+bench_sp_shares-live3_s2	unident_s/fcp/s1/bench_sp_shares-live3/sp2_final_actor.pt	unident_s/policy_config/mlp_policy_config_mos-anchored_live3.pkl	
+bench_sp_shares-live3_s3	unident_s/fcp/s1/bench_sp_shares-live3/sp3_final_actor.pt	unident_s/policy_config/mlp_policy_config_mos-anchored_live3.pkl	
+bench_sp_shares-live3_s4	unident_s/fcp/s1/bench_sp_shares-live3/sp4_final_actor.pt	unident_s/policy_config/mlp_policy_config_mos-anchored_live3.pkl	
+bench_sp_shares-live3_s5	unident_s/fcp/s1/bench_sp_shares-live3/sp5_final_actor.pt	unident_s/policy_config/mlp_policy_config_mos-anchored_live3.pkl	
+bench_sp_shares-live3_s6	unident_s/fcp/s1/bench_sp_shares-live3/sp6_final_actor.pt	unident_s/policy_config/mlp_policy_config_mos-anchored_live3.pkl	
+s2_bench_sp_s1	unident_s/fcp/s2/fcp-S2-bench_sp/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s2	unident_s/fcp/s2/fcp-S2-bench_sp/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s3	unident_s/fcp/s2/fcp-S2-bench_sp/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s4	unident_s/fcp/s2/fcp-S2-bench_sp/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s5	unident_s/fcp/s2/fcp-S2-bench_sp/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s6	unident_s/fcp/s2/fcp-S2-bench_sp/6.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s7	unident_s/fcp/s2/fcp-S2-bench_sp/7.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s8	unident_s/fcp/s2/fcp-S2-bench_sp/8.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s9	unident_s/fcp/s2/fcp-S2-bench_sp/9.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s10	unident_s/fcp/s2/fcp-S2-bench_sp/10.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s11	unident_s/fcp/s2/fcp-S2-bench_sp/11.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s12	unident_s/fcp/s2/fcp-S2-bench_sp/12.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s1	unident_s/fcp/s2/fcp-S2-bench_sp-annego/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s2	unident_s/fcp/s2/fcp-S2-bench_sp-annego/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s3	unident_s/fcp/s2/fcp-S2-bench_sp-annego/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s4	unident_s/fcp/s2/fcp-S2-bench_sp-annego/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s5	unident_s/fcp/s2/fcp-S2-bench_sp-annego/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s6	unident_s/fcp/s2/fcp-S2-bench_sp-annego/6.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s7	unident_s/fcp/s2/fcp-S2-bench_sp-annego/7.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s8	unident_s/fcp/s2/fcp-S2-bench_sp-annego/8.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s9	unident_s/fcp/s2/fcp-S2-bench_sp-annego/9.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s10	unident_s/fcp/s2/fcp-S2-bench_sp-annego/10.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s11	unident_s/fcp/s2/fcp-S2-bench_sp-annego/11.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s12	unident_s/fcp/s2/fcp-S2-bench_sp-annego/12.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-fillego_s1	unident_s/fcp/s2/fcp-S2-bench_sp-fillego/1.pt	unident_s/policy_config/rnn_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+s2_bench_sp-fillego_s2	unident_s/fcp/s2/fcp-S2-bench_sp-fillego/2.pt	unident_s/policy_config/rnn_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+s2_bench_sp-fillego_s3	unident_s/fcp/s2/fcp-S2-bench_sp-fillego/3.pt	unident_s/policy_config/rnn_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+s2_bench_sp-fillego_s4	unident_s/fcp/s2/fcp-S2-bench_sp-fillego/4.pt	unident_s/policy_config/rnn_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+s2_bench_sp-fillego_s5	unident_s/fcp/s2/fcp-S2-bench_sp-fillego/5.pt	unident_s/policy_config/rnn_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+s2_bench_sp-fillego_s6	unident_s/fcp/s2/fcp-S2-bench_sp-fillego/6.pt	unident_s/policy_config/rnn_policy_config_mow-anchored_live3_mos.pkl	morl_weights=20,3,3 morl_anneal_dense=true morl_team_task=true morl_adaptive_weights=true morl_adaptive_target=complement
+s2_bench_morl-live3_s1	unident_s/fcp/s2/fcp-S2-bench_morl-live3/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl-live3_s2	unident_s/fcp/s2/fcp-S2-bench_morl-live3/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl-live3_s3	unident_s/fcp/s2/fcp-S2-bench_morl-live3/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl-live3_s4	unident_s/fcp/s2/fcp-S2-bench_morl-live3/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl-live3_s5	unident_s/fcp/s2/fcp-S2-bench_morl-live3/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl-live3_s6	unident_s/fcp/s2/fcp-S2-bench_morl-live3/6.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl_ad-live3_s1	unident_s/fcp/s2/fcp-S2-bench_morl_ad-live3/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl_ad-live3_s2	unident_s/fcp/s2/fcp-S2-bench_morl_ad-live3/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl_ad-live3_s3	unident_s/fcp/s2/fcp-S2-bench_morl_ad-live3/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl_ad-live3_s4	unident_s/fcp/s2/fcp-S2-bench_morl_ad-live3/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl_ad-live3_s5	unident_s/fcp/s2/fcp-S2-bench_morl_ad-live3/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_bench_morl_ad-live3_s6	unident_s/fcp/s2/fcp-S2-bench_morl_ad-live3/6.pt	unident_s/policy_config/rnn_policy_config.pkl	

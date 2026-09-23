@@ -26,6 +26,7 @@ S1_ARMS = [
     "bench_sparse",
     "bench_morl-live3",
     "bench_morl_ad-live3",
+    "bench_morl_ann-live3",
     "bench_morl_ann-live3t",
     "bench_morl_fill-live3t",
     "bench_sp_shares-live3",
