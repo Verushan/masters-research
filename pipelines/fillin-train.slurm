@@ -24,6 +24,12 @@
 #            with the shaping horizon, deliveries credited to the team.
 #   noann    neglect without the anneal: the dense task terms stay on for the
 #            whole run. Isolates whether annealing throws the mechanism away.
+#   neglect2 / noann2   the same two with the corrected weight rule (post hoc,
+#            exploratory). Step 8 found the original rule never relaxes: after
+#            a swap the agent keeps being paid nothing for any task the old
+#            partner did. A prior pseudo-count (--morl_neglect_prior 0.5) and a
+#            10-step half-life let the weights return to even within ~20 steps.
+#            Run with SPEC="neglect2:1-5 neglect2:6-10 noann2:1-5 noann2:6-10".
 #
 # There is no fixed-weight task arm: `tasks` at 20,3,3,5 with team credit and
 # annealing is the hand-shaped reward exactly, step for step
@@ -59,7 +65,7 @@ LAYOUT=${LAYOUT:-unident_s}
 STEPS=${STEPS:-2e6}
 POP=scripted
 SPEC=${SPEC:-"hand:1-5 hand:6-10 neglect:1-5 neglect:6-10 noann:1-5 noann:6-10"}
-ARMS="hand neglect noann"
+ARMS=${ARMS:-"hand neglect noann"}
 
 cd $PYTHONPATH/zsceval/scripts
 
@@ -96,10 +102,13 @@ SWAPS="--script_swap_steps 200 --script_swap_pool ${SWAP_POOL} --script_swap_pro
 
 NEGLECT="--use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_task \
 --morl_adaptive_target neglect --use_morl_obs_weights"
+RELAX="--morl_neglect_prior 0.5 --morl_neglect_halflife 10"
 case $ARM in
     hand)    REWARD="--morl_objectives tasks" ;;
     neglect) REWARD="${NEGLECT} --morl_anneal_dense" ;;
     noann)   REWARD="${NEGLECT}" ;;
+    neglect2) REWARD="${NEGLECT} ${RELAX} --morl_anneal_dense" ;;
+    noann2)   REWARD="${NEGLECT} ${RELAX}" ;;
     *) echo "unknown arm '${ARM}' (expected one of: ${ARMS})"; exit 1 ;;
 esac
 export EGO_FLAGS="${REWARD} ${SWAPS}"

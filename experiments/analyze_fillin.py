@@ -89,6 +89,7 @@ def segment_metrics(ep, partner, start, end, idx, tasks, covers):
         "steps": steps,
         "soups_per_100": float(done[:, :, 3].sum() / steps * 100),
         "agent_tasks": agent.tolist(),
+        "agent_rate": (agent / steps * 100).tolist(),
         "partner_tasks": part.tolist(),
         "demand_present": (demand > 0).mean(0).tolist(),
         "entropy": float(np.mean(ep["entropy"][start:end])),
@@ -156,6 +157,12 @@ def agent_summary(payload):
         # Where the game stalls: the fraction of steps each task sat needed.
         # A soup-plating value near 1 means finished soups waited in the pot
         # most of the episode because nobody came to plate them.
+        rates = [s["agent_rate"] for s in segs if sel(s)]
+        out["by_partner"][p]["agent_rate"] = np.mean(rates, 0).tolist() if rates else None
+        # Behavioural variability against one partner: the SD, across episodes
+        # and seats, of how often the agent does each task. Near 0 = the same
+        # game every time; large = it plays this partner differently each time.
+        out["by_partner"][p]["agent_rate_sd"] = np.std(rates, 0, ddof=1).tolist() if len(rates) > 1 else None
         dem = [s["demand_present"] for s in segs if sel(s)]
         out["by_partner"][p]["waiting"] = np.mean(dem, 0).tolist() if dem else None
 
@@ -267,6 +274,33 @@ def main():
             a, b = d["by_partner"][p]["pot_share_seat0"], d["by_partner"][p]["pot_share_seat1"]
             pairs.append(f"{p}:{a:.2f}/{b:.2f}" if a is not None and b is not None else f"{p}:-")
         print(f"{arm:{width}s} " + "  ".join(pairs))
+
+    print("\naction entropy by partner (nats; max 1.79): how random the agent's moves are with each personality")
+    print(f"{'arm':{width}s} " + "".join(f"{p:>11s}" for p in ps))
+    for arm, d in arms.items():
+        print(
+            f"{arm:{width}s} "
+            + "".join(
+                f"{d['by_partner'][p]['entropy']:11.2f}" if d["by_partner"][p]["entropy"] is not None else f"{'-':>11s}"
+                for p in ps
+            )
+        )
+
+    print("\nwhat the agent does with each partner: tasks per 100 steps (fill / dish / plate / deliver)")
+    for arm, d in arms.items():
+        parts = []
+        for p in ps:
+            r = d["by_partner"][p].get("agent_rate")
+            parts.append(f"{p}:" + "/".join(f"{x:.1f}" for x in r) if r else f"{p}:-")
+        print(f"{arm:{width}s} " + "  ".join(parts))
+
+    print("\nhow much that varies from game to game against one partner: SD of the rates above")
+    for arm, d in arms.items():
+        parts = []
+        for p in ps:
+            r = d["by_partner"][p].get("agent_rate_sd")
+            parts.append(f"{p}:" + "/".join(f"{x:.1f}" for x in r) if r else f"{p}:-")
+        print(f"{arm:{width}s} " + "  ".join(parts))
 
     print("\nwhere games stall: fraction of steps each task sat needed (fill / dish / plate / deliver)")
     for arm, d in arms.items():

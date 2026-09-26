@@ -1,0 +1,25 @@
+s2_scripted-hand_s1	unident_s/fcp/s2/fcp-S2-scripted-hand/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s2	unident_s/fcp/s2/fcp-S2-scripted-hand/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s3	unident_s/fcp/s2/fcp-S2-scripted-hand/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s4	unident_s/fcp/s2/fcp-S2-scripted-hand/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s5	unident_s/fcp/s2/fcp-S2-scripted-hand/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s6	unident_s/fcp/s2/fcp-S2-scripted-hand/6.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s7	unident_s/fcp/s2/fcp-S2-scripted-hand/7.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s8	unident_s/fcp/s2/fcp-S2-scripted-hand/8.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s9	unident_s/fcp/s2/fcp-S2-scripted-hand/9.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s10	unident_s/fcp/s2/fcp-S2-scripted-hand/10.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-neglect_s6	unident_s/fcp/s2/fcp-S2-scripted-neglect/6.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_anneal_dense=true
+s2_scripted-neglect_s7	unident_s/fcp/s2/fcp-S2-scripted-neglect/7.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_anneal_dense=true
+s2_scripted-neglect_s8	unident_s/fcp/s2/fcp-S2-scripted-neglect/8.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_anneal_dense=true
+s2_scripted-neglect_s9	unident_s/fcp/s2/fcp-S2-scripted-neglect/9.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_anneal_dense=true
+s2_scripted-neglect_s10	unident_s/fcp/s2/fcp-S2-scripted-neglect/10.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_anneal_dense=true
+s2_scripted-noann_s1	unident_s/fcp/s2/fcp-S2-scripted-noann/1.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s2	unident_s/fcp/s2/fcp-S2-scripted-noann/2.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s3	unident_s/fcp/s2/fcp-S2-scripted-noann/3.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s4	unident_s/fcp/s2/fcp-S2-scripted-noann/4.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s5	unident_s/fcp/s2/fcp-S2-scripted-noann/5.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s6	unident_s/fcp/s2/fcp-S2-scripted-noann/6.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s7	unident_s/fcp/s2/fcp-S2-scripted-noann/7.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s8	unident_s/fcp/s2/fcp-S2-scripted-noann/8.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s9	unident_s/fcp/s2/fcp-S2-scripted-noann/9.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect
+s2_scripted-noann_s10	unident_s/fcp/s2/fcp-S2-scripted-noann/10.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect

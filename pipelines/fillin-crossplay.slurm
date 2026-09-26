@@ -36,13 +36,18 @@ conda activate zsceval
 
 LAYOUT=${LAYOUT:-unident_s}
 SEEDS=${SEEDS:-"1 2 3 4 5 6 7 8 9 10"}
-ARMS="scripted-hand scripted-neglect scripted-noann"
+# The corrected-rule arms run as a separate matrix, because the neglect rule is
+# an env setting and every agent in one matrix shares the env:
+#   ARMS="scripted-hand scripted-neglect2 scripted-noann2" TAG=_hsp_scripted2 \
+#   NEGLECT_EXTRA="--morl_neglect_prior 0.5 --morl_neglect_halflife 10" sbatch fillin-crossplay.slurm
+ARMS=${ARMS:-"scripted-hand scripted-neglect scripted-noann"}
+NEGLECT_EXTRA=${NEGLECT_EXTRA:-}
 REF_S2=${REF_S2:-bench_sp}
 TASK_CONFIG=rnn_policy_config_mow-tasks.pkl
 THREADS=12
 DUMMY=2
 EPISODES_STOCHASTIC=5
-TAG=_hsp_scripted
+TAG=${TAG:-_hsp_scripted}
 RESULTS=$PYTHONPATH/../experiments/results
 
 cd $PYTHONPATH/zsceval/scripts
@@ -57,10 +62,14 @@ done
 
 # The stage-1 slot is required by the generator; one bench_sp seed keeps the
 # default stage-1 arms from being pulled in.
+CFG_FLAGS=()
+for A in $ARMS; do
+    [ "$A" = scripted-hand ] || CFG_FLAGS+=("${A}=${TASK_CONFIG}")
+done
 YML_OUT=$POLICY_POOL/$LAYOUT/morl_benchmark/cross_play${TAG}.yml
 YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arms bench_sp --arm_seeds 1 --peak_arms \
     --s2_arms $ARMS $REF_S2 --s2_arm_seeds $SEEDS \
-    --s2_arm_config "scripted-neglect=${TASK_CONFIG}" "scripted-noann=${TASK_CONFIG}" \
+    --s2_arm_config "${CFG_FLAGS[@]}" \
     --heldout hsp --hsp_partners auto --out $YML_OUT --skip_missing | tail -1)
 echo "population yml: $YML"
 AGENTS=$(grep -oP '^[A-Za-z0-9_-]+(?=:)' $YML | tr '\n' ' ')
@@ -75,7 +84,7 @@ common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
         --n_eval_rollout_threads $THREADS --dummy_batch_size $DUMMY
         --n_training_threads 2
         --use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_task
-        --morl_adaptive_target neglect --use_morl_obs_weights
+        --morl_adaptive_target neglect --use_morl_obs_weights $NEGLECT_EXTRA
         --population_yaml_path $YML
         --ego_policy_names $AGENTS --partner_policy_names $AGENTS)
 python eval/cross_play.py "${common[@]}" \

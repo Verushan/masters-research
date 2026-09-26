@@ -43,9 +43,13 @@ S2_EXPS = [
     "fcp-S2-scripted-hand",
     "fcp-S2-scripted-neglect",
     "fcp-S2-scripted-noann",
+    # Post hoc: the same with the corrected (relaxing) neglect rule.
+    "fcp-S2-scripted-neglect2",
+    "fcp-S2-scripted-noann2",
 ]
 # Step 7 neglect arms: the task reward and its weights, which the agent sees.
 NEGLECT_FLAGS = "morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect"
+RELAX_FLAGS = " morl_neglect_prior=0.5 morl_neglect_halflife=10"
 
 
 def objective_set(layout):
@@ -96,8 +100,9 @@ def main():
         for s in seeds:
             actor = f"{args.layout}/fcp/s2/{exp}/{s}.pt"
             if exp.startswith("fcp-S2-scripted-") and exp != "fcp-S2-scripted-hand":
-                anneal = " morl_anneal_dense=true" if exp.endswith("-neglect") else ""
-                emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-tasks.pkl", NEGLECT_FLAGS + anneal)
+                anneal = " morl_anneal_dense=true" if "-neglect" in exp else ""
+                relax = RELAX_FLAGS if exp.endswith("2") else ""
+                emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-tasks.pkl", NEGLECT_FLAGS + anneal + relax)
             elif "fillego" in exp:
                 emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-{obj}_mos.pkl", fill_flags)
             else:
