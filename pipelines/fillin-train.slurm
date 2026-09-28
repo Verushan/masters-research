@@ -113,6 +113,11 @@ case $ARM in
 esac
 export EGO_FLAGS="${REWARD} ${SWAPS}"
 
+# Stagger the array: two tasks of one arm share a run directory, and starting
+# together they raced first on creating it (fixed with exist_ok) and then inside
+# wandb.init on its wandb/ subdirectory (job 60603, task 1: FileNotFoundError).
+sleep $((IDX * 60))
+
 echo "fill-in task ${IDX}: layout ${LAYOUT}, arm ${ARM}, seeds ${SEED_BEGIN}-${SEED_MAX}, steps ${STEPS}"
 echo "rollout_threads=${ROLLOUT_THREADS}"
 
