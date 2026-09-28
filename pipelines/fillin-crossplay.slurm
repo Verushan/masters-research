@@ -40,7 +40,15 @@ SEEDS=${SEEDS:-"1 2 3 4 5 6 7 8 9 10"}
 # an env setting and every agent in one matrix shares the env:
 #   ARMS="scripted-hand scripted-neglect2 scripted-noann2" TAG=_hsp_scripted2 \
 #   NEGLECT_EXTRA="--morl_neglect_prior 0.5 --morl_neglect_halflife 10" sbatch fillin-crossplay.slurm
+#
+# The no-swap ablation and the second kitchen reuse it:
+#   ARMS="scripted-hand scripted-handns" TAG=_hsp_scripted_ns sbatch fillin-crossplay.slurm
+#   LAYOUT=random3 ARMS="scripted-hand scripted-noann2" S1_SEEDS="1 2 3" TAG=_hsp_scripted \
+#   NEGLECT_EXTRA="--morl_neglect_prior 0.5 --morl_neglect_halflife 10" sbatch fillin-crossplay.slurm
+# SKIP_EXTRACT=1 scores what is already in the pool (fillin-train.slurm MODE=extract
+# wrote it), so the fill-in suite can read the same files while this runs.
 ARMS=${ARMS:-"scripted-hand scripted-neglect scripted-noann"}
+S1_SEEDS=${S1_SEEDS:-1}
 NEGLECT_EXTRA=${NEGLECT_EXTRA:-}
 REF_S2=${REF_S2:-bench_sp}
 TASK_CONFIG=rnn_policy_config_mow-tasks.pkl
@@ -54,20 +62,21 @@ cd $PYTHONPATH/zsceval/scripts
 python prep/store_policy_config.py $LAYOUT --morl_obs_weights tasks || exit 1
 
 for A in $ARMS; do
-    python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked \
+    [ -n "$SKIP_EXTRACT" ] || python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked \
         --algorithm fcp --exp fcp-S2-${A} --checkpoint final \
         || echo "  stage-2 extraction failed for ${A}"
     echo "${A}: $(ls $POLICY_POOL/$LAYOUT/fcp/s2/fcp-S2-${A}/ 2>/dev/null | tr '\n' ' ')"
 done
 
-# The stage-1 slot is required by the generator; one bench_sp seed keeps the
-# default stage-1 arms from being pulled in.
+# The stage-1 slot is required by the generator; naming bench_sp keeps the
+# default stage-1 arms from being pulled in. One seed on unident_s, where the
+# reference is already scored; all of them on a kitchen scored for the first time.
 CFG_FLAGS=()
 for A in $ARMS; do
-    [ "$A" = scripted-hand ] || CFG_FLAGS+=("${A}=${TASK_CONFIG}")
+    [[ "$A" == scripted-hand* ]] || CFG_FLAGS+=("${A}=${TASK_CONFIG}")
 done
 YML_OUT=$POLICY_POOL/$LAYOUT/morl_benchmark/cross_play${TAG}.yml
-YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arms bench_sp --arm_seeds 1 --peak_arms \
+YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arms bench_sp --arm_seeds $S1_SEEDS --peak_arms \
     --s2_arms $ARMS $REF_S2 --s2_arm_seeds $SEEDS \
     --s2_arm_config "${CFG_FLAGS[@]}" \
     --heldout hsp --hsp_partners auto --out $YML_OUT --skip_missing | tail -1)
@@ -75,7 +84,9 @@ echo "population yml: $YML"
 AGENTS=$(grep -oP '^[A-Za-z0-9_-]+(?=:)' $YML | tr '\n' ' ')
 echo "agents ($(echo $AGENTS | wc -w)): $AGENTS"
 echo "entries on the task-weights config: $(grep -c "$TASK_CONFIG" $YML)"
-[ "$(grep -c "$TASK_CONFIG" $YML)" -gt 0 ] || { echo "no neglect-arm agents in the pool"; exit 1; }
+if [ ${#CFG_FLAGS[@]} -gt 0 ] && [ "$(grep -c "$TASK_CONFIG" $YML)" -eq 0 ]; then
+    echo "no neglect-arm agents in the pool"; exit 1
+fi
 
 mkdir -p $RESULTS
 cd overcooked

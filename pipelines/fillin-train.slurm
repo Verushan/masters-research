@@ -30,6 +30,10 @@
 #            partner did. A prior pseudo-count (--morl_neglect_prior 0.5) and a
 #            10-step half-life let the weights return to even within ~20 steps.
 #            Run with SPEC="neglect2:1-5 neglect2:6-10 noann2:1-5 noann2:6-10".
+#   handns   hand without the swaps: the same five specialists, one per game.
+#            Arm `hand` changed two things at once -- who it trains with, and
+#            swaps during training -- and this separates them.
+#            Run with SPEC="handns:1-5 handns:6-10" ARMS="handns".
 #
 # There is no fixed-weight task arm: `tasks` at 20,3,3,5 with team credit and
 # annealing is the hand-shaped reward exactly, step for step
@@ -74,8 +78,15 @@ if [ "${MODE}" = "extract" ]; then
     for ARM in $ARMS; do
         EXP_FLAGS="$EXP_FLAGS --exp fcp-S2-${POP}-${ARM}"
     done
-    python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked -a fcp $EXP_FLAGS || exit 1
-    ls $POLICY_POOL/$LAYOUT/fcp/s2/fcp-S2-${POP}-*/ 2>/dev/null
+    # The final checkpoint, as fillin-crossplay.slurm takes it, so the fill-in
+    # suite and the zero-shot matrix score the same file. The task-weights
+    # config is what both load the neglect arms through.
+    python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked -a fcp $EXP_FLAGS \
+        --checkpoint final || exit 1
+    python prep/store_policy_config.py $LAYOUT --morl_obs_weights tasks || exit 1
+    for ARM in $ARMS; do
+        echo "fcp-S2-${POP}-${ARM}: $(ls $POLICY_POOL/$LAYOUT/fcp/s2/fcp-S2-${POP}-${ARM}/ 2>/dev/null | wc -l) checkpoints"
+    done
     exit 0
 fi
 
@@ -105,6 +116,7 @@ NEGLECT="--use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_
 RELAX="--morl_neglect_prior 0.5 --morl_neglect_halflife 10"
 case $ARM in
     hand)    REWARD="--morl_objectives tasks" ;;
+    handns)  REWARD="--morl_objectives tasks"; SWAPS="" ;;
     neglect) REWARD="${NEGLECT} --morl_anneal_dense" ;;
     noann)   REWARD="${NEGLECT}" ;;
     neglect2) REWARD="${NEGLECT} ${RELAX} --morl_anneal_dense" ;;

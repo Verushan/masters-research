@@ -46,6 +46,8 @@ S2_EXPS = [
     # Post hoc: the same with the corrected (relaxing) neglect rule.
     "fcp-S2-scripted-neglect2",
     "fcp-S2-scripted-noann2",
+    # Ablation: the hand-shaped arm against the same specialists, no swaps.
+    "fcp-S2-scripted-handns",
 ]
 # Step 7 neglect arms: the task reward and its weights, which the agent sees.
 NEGLECT_FLAGS = "morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect"
@@ -99,7 +101,7 @@ def main():
         arm = "s2_" + exp[len("fcp-S2-"):]
         for s in seeds:
             actor = f"{args.layout}/fcp/s2/{exp}/{s}.pt"
-            if exp.startswith("fcp-S2-scripted-") and exp != "fcp-S2-scripted-hand":
+            if exp.startswith("fcp-S2-scripted-") and not exp.startswith("fcp-S2-scripted-hand"):
                 anneal = " morl_anneal_dense=true" if "-neglect" in exp else ""
                 relax = RELAX_FLAGS if exp.endswith("2") else ""
                 emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-tasks.pkl", NEGLECT_FLAGS + anneal + relax)
