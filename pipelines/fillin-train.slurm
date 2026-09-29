@@ -45,6 +45,13 @@
 # Usage: sbatch --array=0-5 fillin-train.slurm
 #        SPEC="neglect:11-12" sbatch --array=0 --export=ALL fillin-train.slurm
 #        MODE=extract sbatch fillin-train.slurm        # after all tasks finish
+#
+# EXP_TAG is appended to the experiment name (fcp-S2-scripted-{arm}{EXP_TAG}),
+# so a run at a different budget cannot share a name -- and so a seed number --
+# with the 2e6 runs: extract_S2_models.py writes {seed}.pt and raises on
+# duplicate seeds. Pass the same EXP_TAG to MODE=extract.
+#        LAYOUT=random3 STEPS=1e7 EXP_TAG=-1e7 SPEC="hand:1-1 hand:2-2" ARMS=hand \
+#            sbatch --array=0-1 --export=ALL fillin-train.slurm
 
 cd /home-mscluster/vnaidoo/Coding/masters-research/pipelines
 
@@ -70,13 +77,14 @@ STEPS=${STEPS:-2e6}
 POP=scripted
 SPEC=${SPEC:-"hand:1-5 hand:6-10 neglect:1-5 neglect:6-10 noann:1-5 noann:6-10"}
 ARMS=${ARMS:-"hand neglect noann"}
+EXP_TAG=${EXP_TAG:-""}
 
 cd $PYTHONPATH/zsceval/scripts
 
 if [ "${MODE}" = "extract" ]; then
     EXP_FLAGS=""
     for ARM in $ARMS; do
-        EXP_FLAGS="$EXP_FLAGS --exp fcp-S2-${POP}-${ARM}"
+        EXP_FLAGS="$EXP_FLAGS --exp fcp-S2-${POP}-${ARM}${EXP_TAG}"
     done
     # The final checkpoint, as fillin-crossplay.slurm takes it, so the fill-in
     # suite and the zero-shot matrix score the same file. The task-weights
@@ -85,7 +93,7 @@ if [ "${MODE}" = "extract" ]; then
         --checkpoint final || exit 1
     python prep/store_policy_config.py $LAYOUT --morl_obs_weights tasks || exit 1
     for ARM in $ARMS; do
-        echo "fcp-S2-${POP}-${ARM}: $(ls $POLICY_POOL/$LAYOUT/fcp/s2/fcp-S2-${POP}-${ARM}/ 2>/dev/null | wc -l) checkpoints"
+        echo "fcp-S2-${POP}-${ARM}${EXP_TAG}: $(ls $POLICY_POOL/$LAYOUT/fcp/s2/fcp-S2-${POP}-${ARM}${EXP_TAG}/ 2>/dev/null | wc -l) checkpoints"
     done
     exit 0
 fi
@@ -130,8 +138,8 @@ export EGO_FLAGS="${REWARD} ${SWAPS}"
 # wandb.init on its wandb/ subdirectory (job 60603, task 1: FileNotFoundError).
 sleep $((IDX * 60))
 
-echo "fill-in task ${IDX}: layout ${LAYOUT}, arm ${ARM}, seeds ${SEED_BEGIN}-${SEED_MAX}, steps ${STEPS}"
+echo "fill-in task ${IDX}: layout ${LAYOUT}, arm ${ARM}, seeds ${SEED_BEGIN}-${SEED_MAX}, steps ${STEPS}, exp fcp-S2-${POP}-${ARM}${EXP_TAG}"
 echo "rollout_threads=${ROLLOUT_THREADS}"
 
 cd overcooked
-bash shell/train_morl_stage_2.sh $LAYOUT $POP $SEED_BEGIN $SEED_MAX $STEPS "-${ARM}"
+bash shell/train_morl_stage_2.sh $LAYOUT $POP $SEED_BEGIN $SEED_MAX $STEPS "-${ARM}${EXP_TAG}"
