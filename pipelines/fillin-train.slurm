@@ -50,6 +50,11 @@
 # so a run at a different budget cannot share a name -- and so a seed number --
 # with the 2e6 runs: extract_S2_models.py writes {seed}.pt and raises on
 # duplicate seeds. Pass the same EXP_TAG to MODE=extract.
+#
+# Partner-removal experiment (arm@K = train against K of the 5 specialists):
+#        SPEC="hand@1:1-5 hand@2:1-5 hand@3:1-5 hand@4:1-5 noann2@1:1-5 noann2@2:1-5 noann2@3:1-5 noann2@4:1-5" \
+#            sbatch --array=0-7 --export=ALL fillin-train.slurm
+#        MODE=extract ARMS="hand noann2" EXP_TAG=-k2 sbatch --export=ALL fillin-train.slurm
 #        LAYOUT=random3 STEPS=1e7 EXP_TAG=-1e7 SPEC="hand:1-1 hand:2-2" ARMS=hand \
 #            sbatch --array=0-1 --export=ALL fillin-train.slurm
 
@@ -107,6 +112,13 @@ fi
 TASK=${TASKS[$IDX]}
 ARM=${TASK%%:*}
 SEEDS=${TASK##*:}
+# arm@K: the partner-removal experiment -- train against K of the five
+# specialists instead of all of them (see the pool block below).
+K=""
+if [[ "$ARM" == *@* ]]; then
+    K=${ARM#*@}
+    ARM=${ARM%@*}
+fi
 SEED_BEGIN=${SEEDS%%-*}
 SEED_MAX=${SEEDS##*-}
 
@@ -137,6 +149,41 @@ export EGO_FLAGS="${REWARD} ${SWAPS}"
 # together they raced first on creating it (fixed with exist_ok) and then inside
 # wandb.init on its wandb/ subdirectory (job 60603, task 1: FileNotFoundError).
 sleep $((IDX * 60))
+
+# Partner-removal experiment (SPEC entries arm@K:seeds, e.g. "hand@2:1-5").
+# Each seed trains against K of the five specialists, chosen cyclically: seed s
+# takes TRAIN_PARTNERS s, s+1, ..., s+K-1 (mod 5). Over seeds 1-5 every partner
+# is used exactly K times, so no single partner's absence drives a K's result,
+# and both arms see the same subset for the same seed -- the comparison is
+# paired. With K=1 there is no other partner to swap to, so no swaps. The
+# experiment is fcp-S2-scripted-{arm}-k{K}; extract with EXP_TAG=-k{K}.
+if [ -n "$K" ]; then
+    PARTNERS=(potter server idle dial2 dial8)
+    if [ "$K" -lt 1 ] || [ "$K" -gt 5 ]; then
+        echo "pool size K=${K} must be 1-5"
+        exit 1
+    fi
+    for SEED in $(seq $SEED_BEGIN $SEED_MAX); do
+        SUB=""
+        for j in $(seq 0 $((K - 1))); do
+            SUB="$SUB ${PARTNERS[$(( (SEED - 1 + j) % 5 ))]}"
+        done
+        NAME="${POP}-k${K}s${SEED}"
+        SUB_POOL=$(python prep/gen_script_population_yml.py $LAYOUT --partners $SUB --name $NAME | sed -n 's/^swap pool: //p')
+        if [ -z "$SUB_POOL" ]; then
+            echo "gen_script_population_yml.py did not report a swap pool for${SUB}"
+            exit 1
+        fi
+        SW=""
+        if [ "$K" -gt 1 ] && [ "$ARM" != "handns" ]; then
+            SW="--script_swap_steps 200 --script_swap_pool ${SUB_POOL} --script_swap_prob 0.5"
+        fi
+        echo "pool task ${IDX}: layout ${LAYOUT}, arm ${ARM}, K=${K}, seed ${SEED}, partners${SUB}, exp fcp-S2-${POP}-${ARM}-k${K}"
+        (cd overcooked && EGO_FLAGS="${REWARD} ${SW}" S2_YML="$POLICY_POOL/$LAYOUT/fcp/s2/train-${NAME}.yml" \
+            bash shell/train_morl_stage_2.sh $LAYOUT $POP $SEED $SEED $STEPS "-${ARM}-k${K}") || exit 1
+    done
+    exit 0
+fi
 
 echo "fill-in task ${IDX}: layout ${LAYOUT}, arm ${ARM}, seeds ${SEED_BEGIN}-${SEED_MAX}, steps ${STEPS}, exp fcp-S2-${POP}-${ARM}${EXP_TAG}"
 echo "rollout_threads=${ROLLOUT_THREADS}"
