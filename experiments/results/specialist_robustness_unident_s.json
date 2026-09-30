@@ -1,0 +1,167 @@
+{
+ "metrics": "metrics_unident_s_hsp_scripted2.json",
+ "arm": "s2_scripted-hand",
+ "ref": "s2_bench_sp",
+ "n_arm": 10,
+ "n_ref": 10,
+ "per_partner": [
+  {
+   "partner": "heldout_hsp1_final",
+   "arm_mean": 123.0,
+   "ref_mean": 17.0,
+   "diff": 106.0,
+   "p": 6.495052934681418e-05
+  },
+  {
+   "partner": "heldout_hsp2_final",
+   "arm_mean": 3.0,
+   "ref_mean": 0.0,
+   "diff": 3.0,
+   "p": 1.0
+  },
+  {
+   "partner": "heldout_hsp3_final",
+   "arm_mean": 118.0,
+   "ref_mean": 0.0,
+   "diff": 118.0,
+   "p": 1.082508822446903e-05
+  },
+  {
+   "partner": "heldout_hsp10_final",
+   "arm_mean": 168.0,
+   "ref_mean": 90.0,
+   "diff": 78.0,
+   "p": 0.008075515815453896
+  },
+  {
+   "partner": "heldout_hsp11_final",
+   "arm_mean": 115.0,
+   "ref_mean": 110.0,
+   "diff": 5.0,
+   "p": 0.8922145965489618
+  },
+  {
+   "partner": "heldout_hsp12_final",
+   "arm_mean": 299.0,
+   "ref_mean": 136.0,
+   "diff": 163.0,
+   "p": 0.001472211998527788
+  },
+  {
+   "partner": "heldout_hsp13_final",
+   "arm_mean": 339.0,
+   "ref_mean": 178.0,
+   "diff": 161.0,
+   "p": 0.0003031024702851328
+  },
+  {
+   "partner": "heldout_hsp21_final",
+   "arm_mean": 253.0,
+   "ref_mean": 159.0,
+   "diff": 94.0,
+   "p": 0.05320530862326528
+  },
+  {
+   "partner": "heldout_hsp25_final",
+   "arm_mean": 210.0,
+   "ref_mean": 106.0,
+   "diff": 104.0,
+   "p": 0.061410725497412805
+  },
+  {
+   "partner": "heldout_hsp26_final",
+   "arm_mean": 392.0,
+   "ref_mean": 369.0,
+   "diff": 23.0,
+   "p": 0.5431271514862847
+  },
+  {
+   "partner": "heldout_hsp40_final",
+   "arm_mean": 285.0,
+   "ref_mean": 196.0,
+   "diff": 89.0,
+   "p": 0.07857931542142069
+  },
+  {
+   "partner": "heldout_hsp41_final",
+   "arm_mean": 209.0,
+   "ref_mean": 142.0,
+   "diff": 67.0,
+   "p": 0.14859598605728636
+  },
+  {
+   "partner": "heldout_hsp42_final",
+   "arm_mean": 312.0,
+   "ref_mean": 209.0,
+   "diff": 103.0,
+   "p": 0.017612418541211112
+  },
+  {
+   "partner": "heldout_hsp50_final",
+   "arm_mean": 353.0,
+   "ref_mean": 235.0,
+   "diff": 118.0,
+   "p": 0.05163567083071727
+  },
+  {
+   "partner": "heldout_hsp51_final",
+   "arm_mean": 359.0,
+   "ref_mean": 314.0,
+   "diff": 45.0,
+   "p": 0.31693693303600423
+  },
+  {
+   "partner": "heldout_hsp52_final",
+   "arm_mean": 116.0,
+   "ref_mean": 26.0,
+   "diff": 90.0,
+   "p": 0.001504687263201195
+  }
+ ],
+ "partners_ahead": 16,
+ "partners_sig_ahead": 7,
+ "partners_sig_behind": 0,
+ "deterministic": {
+  "arm": 228.375,
+  "ref": 142.9375,
+  "diff": 85.4375,
+  "p": 4.330035289787612e-05
+ },
+ "stochastic": {
+  "arm": 245.8875,
+  "ref": 150.9625,
+  "diff": 94.92499999999998,
+  "p": 1.082508822446903e-05
+ },
+ "worst_partner": {
+  "arm": 3.0,
+  "ref": 0.0
+ },
+ "arm_runs_beating_ref_best_run": 9,
+ "runs": {
+  "arm": {
+   "s2_scripted-hand_s1": 216.25,
+   "s2_scripted-hand_s10": 221.25,
+   "s2_scripted-hand_s2": 231.25,
+   "s2_scripted-hand_s3": 169.375,
+   "s2_scripted-hand_s4": 216.875,
+   "s2_scripted-hand_s5": 251.875,
+   "s2_scripted-hand_s6": 240.0,
+   "s2_scripted-hand_s7": 240.0,
+   "s2_scripted-hand_s8": 247.5,
+   "s2_scripted-hand_s9": 249.375
+  },
+  "ref": {
+   "s2_bench_sp_s1": 178.75,
+   "s2_bench_sp_s10": 148.125,
+   "s2_bench_sp_s2": 106.25,
+   "s2_bench_sp_s3": 146.875,
+   "s2_bench_sp_s4": 166.25,
+   "s2_bench_sp_s5": 65.0,
+   "s2_bench_sp_s6": 188.125,
+   "s2_bench_sp_s7": 175.625,
+   "s2_bench_sp_s8": 126.875,
+   "s2_bench_sp_s9": 127.5
+  }
+ }
+}
