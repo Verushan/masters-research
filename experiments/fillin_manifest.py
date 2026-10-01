@@ -48,6 +48,8 @@ S2_EXPS = [
     "fcp-S2-scripted-noann2",
     # Ablation: the hand-shaped arm against the same specialists, no swaps.
     "fcp-S2-scripted-handns",
+    # Partner removal: hand-shaped and C2' against K of the five specialists.
+    *[f"fcp-S2-scripted-{arm}-k{k}" for arm in ("hand", "noann2") for k in (1, 2, 3, 4)],
 ]
 # Step 7 neglect arms: the task reward and its weights, which the agent sees.
 NEGLECT_FLAGS = "morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect"
@@ -103,7 +105,9 @@ def main():
             actor = f"{args.layout}/fcp/s2/{exp}/{s}.pt"
             if exp.startswith("fcp-S2-scripted-") and not exp.startswith("fcp-S2-scripted-hand"):
                 anneal = " morl_anneal_dense=true" if "-neglect" in exp else ""
-                relax = RELAX_FLAGS if exp.endswith("2") else ""
+                # By arm name, not by the exp's last character: the partner-
+                # removal exps end in a pool size (-k1, -k3), not the arm.
+                relax = RELAX_FLAGS if re.search(r"-(neglect2|noann2)(-|$)", exp) else ""
                 emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-tasks.pkl", NEGLECT_FLAGS + anneal + relax)
             elif "fillego" in exp:
                 emit(f"{arm}_s{s}", actor, f"{cfg}/rnn_policy_config_mow-{obj}_mos.pkl", fill_flags)

@@ -82,6 +82,20 @@ YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arms bench_sp --arm_seeds $S1_S
     --heldout hsp --hsp_partners auto --out $YML_OUT --skip_missing | tail -1)
 echo "population yml: $YML"
 AGENTS=$(grep -oP '^[A-Za-z0-9_-]+(?=:)' $YML | tr '\n' ' ')
+# HELDOUT_ONLY=1 plays every trained agent against the held-out partners only,
+# in both seats, instead of the full agent x agent matrix. The zero-shot score
+# needs nothing else, and for a large pool (the partner-removal experiment has
+# 70+ trained agents) the full matrix costs three times as long. Self-play and
+# agent-agent compatibility are then absent from the metrics.
+EGOS="$AGENTS"
+PARTNERS="$AGENTS"
+ORDER_FLAG=()
+if [ -n "$HELDOUT_ONLY" ]; then
+    PARTNERS=$(echo $AGENTS | tr ' ' '\n' | grep '^heldout_' | tr '\n' ' ')
+    EGOS=$(echo $AGENTS | tr ' ' '\n' | grep -v '^heldout_' | tr '\n' ' ')
+    ORDER_FLAG=(--both_orders)
+    echo "held-out only: $(echo $EGOS | wc -w) agents x $(echo $PARTNERS | wc -w) partners, both seats"
+fi
 echo "agents ($(echo $AGENTS | wc -w)): $AGENTS"
 echo "entries on the task-weights config: $(grep -c "$TASK_CONFIG" $YML)"
 if [ ${#CFG_FLAGS[@]} -gt 0 ] && [ "$(grep -c "$TASK_CONFIG" $YML)" -eq 0 ]; then
@@ -97,7 +111,7 @@ common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
         --use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_task
         --morl_adaptive_target neglect --use_morl_obs_weights $NEGLECT_EXTRA
         --population_yaml_path $YML
-        --ego_policy_names $AGENTS --partner_policy_names $AGENTS)
+        --ego_policy_names $EGOS --partner_policy_names $PARTNERS "${ORDER_FLAG[@]}")
 python eval/cross_play.py "${common[@]}" \
     --experiment_name xp_${LAYOUT}${TAG}_det \
     --eval_episodes 1 \
