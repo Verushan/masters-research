@@ -93,5 +93,11 @@ PEAK_EXPS=""
 for ARM in $ARMS; do
     case "$ARM" in bench_morl|bench_morl_ad|bench_morl_div) PEAK_EXPS="$PEAK_EXPS --exp $ARM" ;; esac
 done
-[ -n "$PEAK_EXPS" ] && python extract_models/extract_peak_models.py \
-    --layout $LAYOUT --env Overcooked $PEAK_EXPS --metric ep_sparse_r
+# An if, not `[ ... ] && ...`: as the last command, a skipped test would be the
+# script's exit status, and a hand-shaped-only run (no peak step) would report
+# FAILED -- which is what left the random1 stage-2 jobs waiting forever on
+# afterok (jobs 61991/61992).
+if [ -n "$PEAK_EXPS" ]; then
+    python extract_models/extract_peak_models.py \
+        --layout $LAYOUT --env Overcooked $PEAK_EXPS --metric ep_sparse_r
+fi
