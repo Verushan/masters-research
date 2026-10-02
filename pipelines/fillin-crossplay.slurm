@@ -48,6 +48,11 @@ SEEDS=${SEEDS:-"1 2 3 4 5 6 7 8 9 10"}
 # SKIP_EXTRACT=1 scores what is already in the pool (fillin-train.slurm MODE=extract
 # wrote it), so the fill-in suite can read the same files while this runs.
 ARMS=${ARMS:-"scripted-hand scripted-neglect scripted-noann"}
+# HELDOUT_ARGS / PARTNER_GROUP swap the held-out partner set. random1's HSP
+# partners cooperate with nobody but their own training partner, so there the
+# held-out set is fresh stage-1 self-play seeds no population was built from:
+#   HELDOUT_ARGS="--heldout sp --heldout_exp bench_sp --heldout_seeds 7 8 9 10 11 12 --heldout_tags mid final" \
+#   PARTNER_GROUP=heldout ...   (analyze_crossplay calls the self-play held-out group "heldout")
 S1_SEEDS=${S1_SEEDS:-1}
 NEGLECT_EXTRA=${NEGLECT_EXTRA:-}
 REF_S2=${REF_S2:-bench_sp}
@@ -73,13 +78,15 @@ done
 # reference is already scored; all of them on a kitchen scored for the first time.
 CFG_FLAGS=()
 for A in $ARMS; do
-    [[ "$A" == scripted-hand* ]] || CFG_FLAGS+=("${A}=${TASK_CONFIG}")
+    # Only the neglect-weighted arms see the task weights; every other arm
+    # (scripted-hand*, mixedspec-hand, bench_sp-annego, ...) loads plain.
+    [[ "$A" == *neglect* || "$A" == *noann* ]] && CFG_FLAGS+=("${A}=${TASK_CONFIG}")
 done
 YML_OUT=$POLICY_POOL/$LAYOUT/morl_benchmark/cross_play${TAG}.yml
 YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arms bench_sp --arm_seeds $S1_SEEDS --peak_arms \
     --s2_arms $ARMS $REF_S2 --s2_arm_seeds $SEEDS \
     --s2_arm_config "${CFG_FLAGS[@]}" \
-    --heldout hsp --hsp_partners auto --out $YML_OUT --skip_missing | tail -1)
+    ${HELDOUT_ARGS:---heldout hsp --hsp_partners auto} --out $YML_OUT --skip_missing | tail -1)
 echo "population yml: $YML"
 AGENTS=$(grep -oP '^[A-Za-z0-9_-]+(?=:)' $YML | tr '\n' ' ')
 # HELDOUT_ONLY=1 plays every trained agent against the held-out partners only,
@@ -125,6 +132,6 @@ cd $PYTHONPATH/..
 python experiments/analyze_crossplay.py \
     --records experiments/results/cross_play_${LAYOUT}${TAG}_deterministic.json \
               experiments/results/cross_play_${LAYOUT}${TAG}_stochastic.json \
-    --partner_group heldout_hsp \
+    --partner_group ${PARTNER_GROUP:-heldout_hsp} \
     --out experiments/results/metrics_${LAYOUT}${TAG}.json
 echo "fill-in cross-play done for ${LAYOUT} at $(date)"

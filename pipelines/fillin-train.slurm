@@ -79,7 +79,14 @@ export ROLLOUT_THREADS=${FILLIN_ROLLOUT_THREADS:-12}
 
 LAYOUT=${LAYOUT:-unident_s}
 STEPS=${STEPS:-2e6}
-POP=scripted
+# POP names the population yml (fcp/s2/train-{POP}.yml) and the experiment
+# (fcp-S2-{POP}-{arm}). INCLUDE adds another population's frozen partners ahead of
+# the specialists -- the usual learned population plus the five scripts:
+#   POP=mixedspec INCLUDE=unident_s/fcp/s2/train-bench_sp.yml SPEC="hand:1-5 hand:6-10" \
+#       ARMS=hand sbatch --array=0-1 --export=ALL fillin-train.slurm
+# The swaps still only ever replace a scripted partner with another script.
+POP=${POP:-scripted}
+INCLUDE=${INCLUDE:-}
 SPEC=${SPEC:-"hand:1-5 hand:6-10 neglect:1-5 neglect:6-10 noann:1-5 noann:6-10"}
 ARMS=${ARMS:-"hand neglect noann"}
 EXP_TAG=${EXP_TAG:-""}
@@ -124,7 +131,7 @@ SEED_MAX=${SEEDS##*-}
 
 # The swap pool is the training partners, by script name, as the yml generator
 # reports them -- so the two cannot drift apart.
-SWAP_POOL=$(python prep/gen_script_population_yml.py $LAYOUT --name $POP | sed -n 's/^swap pool: //p')
+SWAP_POOL=$(python prep/gen_script_population_yml.py $LAYOUT --name $POP ${INCLUDE:+--include $INCLUDE} | sed -n 's/^swap pool: //p')
 if [ -z "$SWAP_POOL" ]; then
     echo "gen_script_population_yml.py did not report a swap pool"
     exit 1
