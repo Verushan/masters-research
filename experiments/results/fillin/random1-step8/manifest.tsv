@@ -1,0 +1,50 @@
+bench_sp_s1	random1/fcp/s1/bench_sp/sp1_final_actor.pt	random1/policy_config/mlp_policy_config.pkl	
+bench_sp_s2	random1/fcp/s1/bench_sp/sp2_final_actor.pt	random1/policy_config/mlp_policy_config.pkl	
+bench_sp_s3	random1/fcp/s1/bench_sp/sp3_final_actor.pt	random1/policy_config/mlp_policy_config.pkl	
+bench_sp_s4	random1/fcp/s1/bench_sp/sp4_final_actor.pt	random1/policy_config/mlp_policy_config.pkl	
+bench_sp_s5	random1/fcp/s1/bench_sp/sp5_final_actor.pt	random1/policy_config/mlp_policy_config.pkl	
+bench_sp_s6	random1/fcp/s1/bench_sp/sp6_final_actor.pt	random1/policy_config/mlp_policy_config.pkl	
+s2_scripted-hand_s1	random1/fcp/s2/fcp-S2-scripted-hand/1.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s2	random1/fcp/s2/fcp-S2-scripted-hand/2.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s3	random1/fcp/s2/fcp-S2-scripted-hand/3.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s4	random1/fcp/s2/fcp-S2-scripted-hand/4.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s5	random1/fcp/s2/fcp-S2-scripted-hand/5.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s6	random1/fcp/s2/fcp-S2-scripted-hand/6.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s7	random1/fcp/s2/fcp-S2-scripted-hand/7.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s8	random1/fcp/s2/fcp-S2-scripted-hand/8.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s9	random1/fcp/s2/fcp-S2-scripted-hand/9.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand_s10	random1/fcp/s2/fcp-S2-scripted-hand/10.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_scripted-noann2_s1	random1/fcp/s2/fcp-S2-scripted-noann2/1.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s2	random1/fcp/s2/fcp-S2-scripted-noann2/2.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s3	random1/fcp/s2/fcp-S2-scripted-noann2/3.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s4	random1/fcp/s2/fcp-S2-scripted-noann2/4.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s5	random1/fcp/s2/fcp-S2-scripted-noann2/5.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s6	random1/fcp/s2/fcp-S2-scripted-noann2/6.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s7	random1/fcp/s2/fcp-S2-scripted-noann2/7.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s8	random1/fcp/s2/fcp-S2-scripted-noann2/8.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s9	random1/fcp/s2/fcp-S2-scripted-noann2/9.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2_s10	random1/fcp/s2/fcp-S2-scripted-noann2/10.pt	random1/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_bench_sp_s1	random1/fcp/s2/fcp-S2-bench_sp/1.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s2	random1/fcp/s2/fcp-S2-bench_sp/2.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s3	random1/fcp/s2/fcp-S2-bench_sp/3.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s4	random1/fcp/s2/fcp-S2-bench_sp/4.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s5	random1/fcp/s2/fcp-S2-bench_sp/5.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s6	random1/fcp/s2/fcp-S2-bench_sp/6.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s7	random1/fcp/s2/fcp-S2-bench_sp/7.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s8	random1/fcp/s2/fcp-S2-bench_sp/8.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s9	random1/fcp/s2/fcp-S2-bench_sp/9.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s10	random1/fcp/s2/fcp-S2-bench_sp/10.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s11	random1/fcp/s2/fcp-S2-bench_sp/11.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp_s12	random1/fcp/s2/fcp-S2-bench_sp/12.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s1	random1/fcp/s2/fcp-S2-bench_sp-annego/1.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s2	random1/fcp/s2/fcp-S2-bench_sp-annego/2.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s3	random1/fcp/s2/fcp-S2-bench_sp-annego/3.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s4	random1/fcp/s2/fcp-S2-bench_sp-annego/4.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s5	random1/fcp/s2/fcp-S2-bench_sp-annego/5.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s6	random1/fcp/s2/fcp-S2-bench_sp-annego/6.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s7	random1/fcp/s2/fcp-S2-bench_sp-annego/7.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s8	random1/fcp/s2/fcp-S2-bench_sp-annego/8.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s9	random1/fcp/s2/fcp-S2-bench_sp-annego/9.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s10	random1/fcp/s2/fcp-S2-bench_sp-annego/10.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s11	random1/fcp/s2/fcp-S2-bench_sp-annego/11.pt	random1/policy_config/rnn_policy_config.pkl	
+s2_bench_sp-annego_s12	random1/fcp/s2/fcp-S2-bench_sp-annego/12.pt	random1/policy_config/rnn_policy_config.pkl	

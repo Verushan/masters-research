@@ -1,0 +1,40 @@
+s2_scripted-hand-k1_s1	unident_s/fcp/s2/fcp-S2-scripted-hand-k1/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k1_s2	unident_s/fcp/s2/fcp-S2-scripted-hand-k1/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k1_s3	unident_s/fcp/s2/fcp-S2-scripted-hand-k1/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k1_s4	unident_s/fcp/s2/fcp-S2-scripted-hand-k1/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k1_s5	unident_s/fcp/s2/fcp-S2-scripted-hand-k1/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-noann2-k1_s1	unident_s/fcp/s2/fcp-S2-scripted-noann2-k1/1.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k1_s2	unident_s/fcp/s2/fcp-S2-scripted-noann2-k1/2.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k1_s3	unident_s/fcp/s2/fcp-S2-scripted-noann2-k1/3.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k1_s4	unident_s/fcp/s2/fcp-S2-scripted-noann2-k1/4.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k1_s5	unident_s/fcp/s2/fcp-S2-scripted-noann2-k1/5.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-hand-k2_s1	unident_s/fcp/s2/fcp-S2-scripted-hand-k2/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k2_s2	unident_s/fcp/s2/fcp-S2-scripted-hand-k2/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k2_s3	unident_s/fcp/s2/fcp-S2-scripted-hand-k2/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k2_s4	unident_s/fcp/s2/fcp-S2-scripted-hand-k2/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k2_s5	unident_s/fcp/s2/fcp-S2-scripted-hand-k2/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-noann2-k2_s1	unident_s/fcp/s2/fcp-S2-scripted-noann2-k2/1.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k2_s2	unident_s/fcp/s2/fcp-S2-scripted-noann2-k2/2.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k2_s3	unident_s/fcp/s2/fcp-S2-scripted-noann2-k2/3.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k2_s4	unident_s/fcp/s2/fcp-S2-scripted-noann2-k2/4.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k2_s5	unident_s/fcp/s2/fcp-S2-scripted-noann2-k2/5.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-hand-k3_s1	unident_s/fcp/s2/fcp-S2-scripted-hand-k3/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k3_s2	unident_s/fcp/s2/fcp-S2-scripted-hand-k3/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k3_s3	unident_s/fcp/s2/fcp-S2-scripted-hand-k3/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k3_s4	unident_s/fcp/s2/fcp-S2-scripted-hand-k3/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k3_s5	unident_s/fcp/s2/fcp-S2-scripted-hand-k3/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-noann2-k3_s1	unident_s/fcp/s2/fcp-S2-scripted-noann2-k3/1.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k3_s2	unident_s/fcp/s2/fcp-S2-scripted-noann2-k3/2.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k3_s3	unident_s/fcp/s2/fcp-S2-scripted-noann2-k3/3.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k3_s4	unident_s/fcp/s2/fcp-S2-scripted-noann2-k3/4.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k3_s5	unident_s/fcp/s2/fcp-S2-scripted-noann2-k3/5.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-hand-k4_s1	unident_s/fcp/s2/fcp-S2-scripted-hand-k4/1.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k4_s2	unident_s/fcp/s2/fcp-S2-scripted-hand-k4/2.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k4_s3	unident_s/fcp/s2/fcp-S2-scripted-hand-k4/3.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k4_s4	unident_s/fcp/s2/fcp-S2-scripted-hand-k4/4.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-hand-k4_s5	unident_s/fcp/s2/fcp-S2-scripted-hand-k4/5.pt	unident_s/policy_config/rnn_policy_config.pkl	
+s2_scripted-noann2-k4_s1	unident_s/fcp/s2/fcp-S2-scripted-noann2-k4/1.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k4_s2	unident_s/fcp/s2/fcp-S2-scripted-noann2-k4/2.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k4_s3	unident_s/fcp/s2/fcp-S2-scripted-noann2-k4/3.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k4_s4	unident_s/fcp/s2/fcp-S2-scripted-noann2-k4/4.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
+s2_scripted-noann2-k4_s5	unident_s/fcp/s2/fcp-S2-scripted-noann2-k4/5.pt	unident_s/policy_config/rnn_policy_config_mow-tasks.pkl	morl_weights=20,3,3,5 morl_team_task=true morl_adaptive_target=neglect morl_neglect_prior=0.5 morl_neglect_halflife=10
