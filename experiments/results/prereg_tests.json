@@ -250,5 +250,89 @@
    "p": 0.6205,
    "replicates_direction": true
   }
+ },
+ "stage2_random1_sp_heldout": {
+  "per_kitchen": {
+   "unident_s": {
+    "n_hand": 20,
+    "n_morl": 20,
+    "mean_hand": 150.75,
+    "mean_morl": 151.34375,
+    "sd_hand": 34.12595188570222,
+    "sd_morl": 23.911565241586164,
+    "worst_hand": 68.75,
+    "worst_morl": 112.5,
+    "d": 0.020151194372102926,
+    "log_sd_ratio": -0.3556959039860293,
+    "floored": false
+   },
+   "random0": {
+    "n_hand": 12,
+    "n_morl": 12,
+    "mean_hand": 24.6875,
+    "mean_morl": 26.197916666666668,
+    "sd_hand": 12.74615583759918,
+    "sd_morl": 8.972251784437022,
+    "worst_hand": 7.5,
+    "worst_morl": 12.5,
+    "d": 0.13703742900975624,
+    "log_sd_ratio": -0.35109304358891774,
+    "floored": false
+   },
+   "random1": {
+    "n_hand": 12,
+    "n_morl": 12,
+    "mean_hand": 29.791666666666668,
+    "mean_morl": 26.597222222222225,
+    "sd_hand": 13.545308368135396,
+    "sd_morl": 17.927527833160774,
+    "worst_hand": 14.166666666666666,
+    "worst_morl": 4.166666666666667,
+    "d": -0.20105730294966306,
+    "log_sd_ratio": 0.28029715783869,
+    "floored": false
+   }
+  },
+  "pooled": {
+   "all": {
+    "kitchens": [
+     "unident_s",
+     "random0",
+     "random1"
+    ],
+    "mean_effect_d": -0.014622893189267969,
+    "p_mean": 0.95065,
+    "log_sd_ratio": -0.14216392991208568,
+    "sd_ratio": 0.8674790390667776,
+    "p_spread": 0.30345,
+    "spread_direction_lower_for_morl": 2
+   },
+   "unfloored": {
+    "kitchens": [
+     "unident_s",
+     "random0",
+     "random1"
+    ],
+    "mean_effect_d": -0.014622893189267969,
+    "p_mean": 0.94615,
+    "log_sd_ratio": -0.14216392991208568,
+    "sd_ratio": 0.8674790390667776,
+    "p_spread": 0.305,
+    "spread_direction_lower_for_morl": 2
+   }
+  },
+  "replication_unident_s_13_20": {
+   "n": [
+    8,
+    8
+   ],
+   "sd_hand": 32.80325124756256,
+   "sd_morl": 27.099354235848498,
+   "mean_hand": 160.546875,
+   "mean_morl": 162.1875,
+   "log_sd_ratio": -0.19101773521273394,
+   "p": 0.62265,
+   "replicates_direction": true
+  }
  }
 }

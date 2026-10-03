@@ -104,11 +104,11 @@ def partner_removal(rng):
     return {"table": table, "test1_a": t1, "test1_c2p": t1c, "test2": t2, "test3": t3}
 
 
-def stage2(rng):
+def stage2(rng, random1_file="metrics_random1_s2_hsp_ego12.json"):
     kitchens = {
         "unident_s": "metrics_unident_s_s2_hsp_ego20.json",
         "random0": "metrics_random0_s2_hsp_ego12.json",
-        "random1": "metrics_random1_s2_hsp_ego12.json",
+        "random1": random1_file,
     }
     per = {}
     for kit, fn in kitchens.items():
@@ -183,8 +183,12 @@ def main():
     sys.path.insert(0, osp.dirname(osp.abspath(__file__)))
     pr = partner_removal(rng)
     s2 = stage2(rng)
+    # Deviation from the pre-registration, reported as such: random1's HSP
+    # partners cooperate with nobody, so random1 is re-scored against held-out
+    # self-play agents (seeds 7-12, outside every population).
+    s2_sp = stage2(rng, "metrics_random1_sp_heldout.json")
     with open(args.out, "w") as f:
-        json.dump({"partner_removal": pr, "stage2": s2}, f, indent=1)
+        json.dump({"partner_removal": pr, "stage2": s2, "stage2_random1_sp_heldout": s2_sp}, f, indent=1)
 
     print("== 1. Partner removal (unident_s, zero-shot vs 16 HSP)")
     for arm in ("a", "c2p"):
@@ -201,6 +205,11 @@ def main():
         print(f"  pooled ({name}: {', '.join(p['kitchens'])}): mean d {p['mean_effect_d']:+.2f} p={p['p_mean']:.3f} | sd ratio {p['sd_ratio']:.2f} p={p['p_spread']:.3f} | lower spread in {p['spread_direction_lower_for_morl']}/{len(p['kitchens'])}")
     r = s2["replication_unident_s_13_20"]
     print(f"  replication, unident_s seeds 13-20: sd hand {r['sd_hand']:.1f} vs MORL {r['sd_morl']:.1f} (means {r['mean_hand']:.1f} / {r['mean_morl']:.1f}), p={r['p']:.3f}")
+    print("\n== 2b. Same, random1 scored against held-out self-play agents (deviation)")
+    for k, v in s2_sp["per_kitchen"].items():
+        print(f"  {k:10s} hand {v['mean_hand']:6.1f} sd {v['sd_hand']:5.1f} | MORL {v['mean_morl']:6.1f} sd {v['sd_morl']:5.1f} | d {v['d']:+.2f}  sd ratio {np.exp(v['log_sd_ratio']):.2f}{'  FLOORED' if v['floored'] else ''}")
+    for name, p in s2_sp["pooled"].items():
+        print(f"  pooled ({name}: {', '.join(p['kitchens'])}): mean d {p['mean_effect_d']:+.2f} p={p['p_mean']:.3f} | sd ratio {p['sd_ratio']:.2f} p={p['p_spread']:.3f} | lower spread in {p['spread_direction_lower_for_morl']}/{len(p['kitchens'])}")
     print(f"\nwrote {args.out}")
 
 
