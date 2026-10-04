@@ -55,11 +55,15 @@ GROUPS = [
     ("c2", "C2: corrected MORL, bonuses fade", "{layout}-step8", r"^s2_scripted-neglect2_s\d+$"),
     ("cp", "C′: original MORL, bonuses stay", "{layout}-step8", r"^s2_scripted-noann_s\d+$"),
     ("c", "C: original MORL, bonuses fade", "{layout}-step8", r"^s2_scripted-neglect_s\d+$"),
+    ("mix22", "Specialists + usual population, 22% of games", "{layout}-mixed", r"^s2_mixedspec-hand_s\d+$"),
+    ("mix53", "Specialists + usual population, 53% of games", "{layout}-mixed", r"^s2_mixspec50-hand_s\d+$"),
 ]
 
 # The comparisons the report makes. Each asks: are these two types' behaviours
 # further apart than the spread within each type?
 TESTS = [
+    ("mix53", "a"),
+    ("mix53", "s2_usual"),
     ("a", "s2_usual"),
     ("a", "ans"),
     ("a", "c2p"),

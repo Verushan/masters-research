@@ -397,6 +397,118 @@ checkpoints would average two different evaluations.
   survivors are still a usable pool. Per-seed output goes to `experiments/logs/hsp/{layout}/`
   (gitignored) — the batch loop only reports pass/fail, so that is where a traceback actually is.
 
+## Fill-in suite and specialist training (Sep–Oct 2026)
+
+Following the supervisors' 23 Sep request, we tested fill-in for a partner who neglects part of the work. That test
+produced the project's strongest result: a stage-2 agent trained against **scripted specialists**, with the
+ordinary hand-shaped reward. Reports: Claude Docs `ef9023ba` (30 Sep) and `eca0e379` (7 Oct). The catch-up doc is
+`51f37d8f`.
+
+**Scripted partners.** Fill-in is evaluated against these personalities, defined in `experiments/fillin_eval.py:PARTNERS`:
+
+| Personality | Behaviour |
+| --- | --- |
+| potter | fills pots only |
+| server | plates and serves only |
+| idle | does nothing |
+| clutter | moves onions around without using them |
+| generalist | does every job |
+| dial2 / dial5 / dial8 | the `Noisy_Agent` mix, with an onion-to-soup preference |
+
+- The env plays a script in a seat named `script:NAME`, by `SCRIPT_AGENTS` key.
+- `--script_swap_steps/_pool/_prob` replaces the partner mid-episode. Only a scripted seat is ever swapped.
+- `experiments/fillin_reference.py` plays a scripted oracle (the ceiling) and the generalist through the same harness.
+
+**Training against specialists.** `pipelines/fillin-train.slurm` builds the population yml with
+`prep/gen_script_population_yml.py` and runs `shell/train_morl_stage_2.sh`. Experiments are named
+`fcp-S2-{POP}-{arm}{suffix}`.
+
+- **Arms** (each line sets one ego reward):
+  - `hand`: the hand-shaped reward.
+  - `handns`: `hand` without swaps.
+  - `neglect` / `noann`: the neglect-weighted MORL reward, with and without annealing.
+  - `neglect2` / `noann2`: the same with the corrected rule, `--morl_neglect_prior 0.5 --morl_neglect_halflife 10`.
+- **`SPEC="arm:seeds ..."`**: one array task per entry. `arm@K:1-5` is the partner-removal experiment: seed `s`
+  trains against specialists `s..s+K-1 (mod 5)`, with no swaps at `K=1`.
+- **`POP` / `INCLUDE` / `REPEAT`**: specialists mixed into another population.
+  - `INCLUDE=<layout>/fcp/s2/train-bench_sp.yml` adds the usual learned partners.
+  - `REPEAT=k` copies each specialist entry.
+  - Stage 2 samples partners **uniformly per entry** (`overcooked_runner.mep_reset_map_ea2t_fn`), so the copies
+    set the share of specialist games.
+  - The 53% mix is `REPEAT=4` with 18 learned partners, or `REPEAT=2` with random3's 9.
+- **`FAMILY=K`, `SCRIPT_PARTNERS=none`**: the parametrised specialist family, below.
+- **`EXP_TAG`**: suffix for non-default budgets, so seeds never collide with the 2e6 runs.
+- **Extraction:** `MODE=extract` (`--checkpoint final`). Pass the same `POP` / `ARMS` / `EXP_TAG` as training.
+- **`train_morl_stage_2.sh`** honours `S2_YML`, which overrides the population file while keeping the
+  experiment name.
+
+**Scoring.**
+
+- **Fill-in:** `pipelines/fillin-suite.sh`. `MANIFEST_ARGS="--s2_exps ..."` picks the agents.
+  `experiments/fillin_manifest.py` assigns configs and env flags. The neglect arms need
+  `rnn_policy_config_mow-tasks.pkl` plus their flags; the corrected rule is chosen **by arm name**, not by the
+  exp's last character. Then `experiments/analyze_fillin.py`.
+- **Zero-shot:** `pipelines/fillin-crossplay.slurm`.
+  - `HELDOUT_ONLY=1` plays agents against the held-out partners only, in both seats. That is about 3× cheaper and
+    enough for the score.
+  - `HELDOUT_ARGS` / `PARTNER_GROUP` swap the held-out set. A self-play set is
+    `--heldout sp --heldout_exp bench_sp --heldout_seeds ...`, with `PARTNER_GROUP=heldout`.
+  - Only `*neglect*` / `*noann*` arms get the task-weights config.
+  - Per-arm means come from `experiments/zsc_by_arm.py`.
+- **BR-Prox (ZSC-Eval's metric):**
+  - `pipelines/br-partners.slurm` trains one best response per held-out partner. Run
+    `prep/gen_br_ymls.py <layout>` first if you pass `PARTNERS`.
+  - `experiments/br_prox.py` reads their final evaluations, parsed from `experiments/logs/br/<layout>/br_*.log`
+    into `results/br_values_*.json`. It divides each agent's **sampled-action** return by
+    `max(BR, best pool agent)` per partner.
+  - To score new agents, add their metrics files to `SOURCES` in `br_prox.py`.
+- **Behaviour:**
+  - `experiments/action_agreement.py`: same move on 160 replayed games.
+  - `experiments/behaviour_similarity.py`: behaviour profiles and compatibility.
+  - `experiments/partner_probe.py`: does memory identify the partner beyond the screen.
+  - `experiments/specialist_robustness.py`: per held-out partner.
+- **Pre-registered tests:** `experiments/prereg_tests.py`, criteria in
+  `experiments/report/preregistration-2026-10-07.md`.
+
+**Specialist family.** `zsceval/envs/overcooked/script_agent/family.py`.
+
+- Members are named `fam_o{O}_n{N}_l{L}_w{W}`: task mix, noise, laziness and wandering, each 0–10 in tenths.
+  `SCRIPT_AGENTS` builds them from the name on first lookup, so env, swap pool and yml need no changes.
+- `family.sample(k)` gives the extremes first, then spread-out interior points.
+- `experiments/family_check.py` checks that members cook. All of them do on unident_s; the noisiest and idle ones
+  can stall random1.
+
+**Results to know** (BR-Prox, sampled actions):
+
+| Kitchen | Usual stage-2 | 22% specialist games | 53% mix | Specialists only (A) |
+| --- | --- | --- | --- | --- |
+| unident_s | 0.40 | 0.45 | 0.63 | 0.72 |
+| random1 | 0.20 | 0.32 | 0.42 | 0.28 |
+| random3 | 0.17 | — | — | 0.004 (the scripts deadlock there) |
+
+- More specialists help: about +27 zero-shot per specialist on unident_s.
+- MORL in every form ties or loses, including as a stage-2 ego (`annego`, BR-Prox identical) and in partner removal.
+
+**Gotchas that cost real time:**
+
+- **Greedy (deterministic) cross-play deadlocks on narrow ring layouts.** On random1 every pairing looked floored at
+  about 12 and A looked worse than the usual agent; with sampled actions it ties (71 vs 72). Always check
+  `pair_matrix_stochastic` before concluding a kitchen floors or a result reverses. random3's failure is real under
+  both passes.
+- **HSP held-out partners on random1 and random3 cooperate only with their own training partner** (0 with each
+  other). Raw return floors there. BR-Prox, or a self-play held-out set (seeds no population used), is needed.
+- **The scripted cooks cannot hand items over counters.** The oracle scores 0 on random0 (Forced Coordination) and
+  deadlocks on random3, so the specialist route only works where the scripts can cook. Check with
+  `fillin_reference.py` or `family_check.py` before training.
+- **`git pull` on the cluster aborts when jobs rewrote a tracked result file that a later local commit also
+  changed.** Compare `md5sum` against `git show origin/<branch>:<file>`, back the file up, `git checkout --` it,
+  pull, then **verify `git log -1` before any `sbatch`**. Jobs submitted on stale code ignore new env variables
+  silently. A stale `fillin-train` with `POP=` unset would have retrained arm A's seeds.
+- **A job that ends with `[ -n "$X" ] && cmd` exits 1 when `X` is empty**, so `afterok` dependents never start.
+  Use `if`.
+- **The multi-recipe env's scripts needed two fixes** (submodule `ce6dcd0`): `max_num_items_for_soup`, and a
+  scripted cook must start a full pot with an empty-handed INTERACT.
+
 ## Pipeline architecture
 
 Two-stage population training (FCP is the worked example; MEP/TrajeDi/HSP/COLE/E3T follow the same shape):

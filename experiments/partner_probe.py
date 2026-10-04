@@ -50,7 +50,8 @@ GROUPS = [
     ("a", "A: specialists, with swaps", "{layout}-step8", "s2_scripted-hand_s"),
     ("ans", "A-ns: specialists, no swaps", "{layout}-step8", "s2_scripted-handns_s"),
     ("c2p", "C2′: corrected MORL", "{layout}-step8", "s2_scripted-noann2_s"),
-    ("mixed", "Specialists + usual population", "{layout}-mixed", "s2_mixedspec-hand_s"),
+    ("mixed", "Specialists + usual population, 22%", "{layout}-mixed", "s2_mixedspec-hand_s"),
+    ("mix53", "Specialists + usual population, 53%", "{layout}-mixed", "s2_mixspec50-hand_s"),
     ("usual", "Usual stage-2", "{layout}-mixed", "s2_bench_sp_s"),
 ]
 

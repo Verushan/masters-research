@@ -84,8 +84,10 @@ class Replayer(BaseScriptAgent):
 
 def manifest(layout):
     rows = {}
-    for folder in (f"{layout}-step8", layout):
+    for folder in (f"{layout}-step8", layout, f"{layout}-mixed"):
         path = osp.join(RESULTS, "fillin", folder, "manifest.tsv")
+        if not osp.exists(path):
+            continue
         for line in open(path):
             parts = line.rstrip("\n").split("\t")
             name, actor, config = parts[:3]
