@@ -1,0 +1,219 @@
+{
+ "members": [
+  "fam_o10_n0_l0_w0",
+  "fam_o0_n0_l0_w0",
+  "fam_o5_n0_l0_w0",
+  "fam_o5_n0_l10_w0",
+  "fam_o5_n6_l0_w0",
+  "fam_o0_n6_l6_w2",
+  "fam_o10_n3_l6_w1",
+  "fam_o2_n3_l0_w2",
+  "fam_o8_n0_l3_w2",
+  "fam_o0_n0_l6_w1",
+  "fam_o10_n6_l0_w2",
+  "fam_o2_n3_l3_w0",
+  "fam_o8_n6_l6_w0",
+  "fam_o8_n3_l0_w1",
+  "fam_o10_n0_l6_w0",
+  "fam_o2_n6_l3_w1"
+ ],
+ "partner": "place_onion_and_deliver_soup",
+ "layouts": {
+  "unident_s": {
+   "fam_o10_n0_l0_w0": {
+    "soups": 14.5,
+    "fill_share": 0.725534549670188,
+    "still": 0.33000000000000007,
+    "min_soups": 14
+   },
+   "fam_o0_n0_l0_w0": {
+    "soups": 8.25,
+    "fill_share": 0.0,
+    "still": 0.31625000000000003,
+    "min_soups": 8
+   },
+   "fam_o5_n0_l0_w0": {
+    "soups": 13.75,
+    "fill_share": 0.4783234126984127,
+    "still": 0.5231250000000001,
+    "min_soups": 13
+   },
+   "fam_o5_n0_l10_w0": {
+    "soups": 7.75,
+    "fill_share": 0.0,
+    "still": 1.0,
+    "min_soups": 7
+   },
+   "fam_o5_n6_l0_w0": {
+    "soups": 6.25,
+    "fill_share": 0.2330367924295818,
+    "still": 0.44062500000000004,
+    "min_soups": 5
+   },
+   "fam_o0_n6_l6_w2": {
+    "soups": 8.0,
+    "fill_share": 0.0,
+    "still": 0.7593749999999999,
+    "min_soups": 7
+   },
+   "fam_o10_n3_l6_w1": {
+    "soups": 10.5,
+    "fill_share": 0.29850827277297864,
+    "still": 0.786875,
+    "min_soups": 10
+   },
+   "fam_o2_n3_l0_w2": {
+    "soups": 6.5,
+    "fill_share": 0.2683395737327189,
+    "still": 0.430625,
+    "min_soups": 5
+   },
+   "fam_o8_n0_l3_w2": {
+    "soups": 11.25,
+    "fill_share": 0.3597630718954249,
+    "still": 0.6487499999999999,
+    "min_soups": 10
+   },
+   "fam_o0_n0_l6_w1": {
+    "soups": 7.5,
+    "fill_share": 0.0,
+    "still": 0.75375,
+    "min_soups": 7
+   },
+   "fam_o10_n6_l0_w2": {
+    "soups": 11.25,
+    "fill_share": 0.44344701844701845,
+    "still": 0.45375,
+    "min_soups": 10
+   },
+   "fam_o2_n3_l3_w0": {
+    "soups": 9.25,
+    "fill_share": 0.21927344019873732,
+    "still": 0.598125,
+    "min_soups": 8
+   },
+   "fam_o8_n6_l6_w0": {
+    "soups": 8.25,
+    "fill_share": 0.13438375350140055,
+    "still": 0.771875,
+    "min_soups": 7
+   },
+   "fam_o8_n3_l0_w1": {
+    "soups": 9.75,
+    "fill_share": 0.39900690525690524,
+    "still": 0.50625,
+    "min_soups": 9
+   },
+   "fam_o10_n0_l6_w0": {
+    "soups": 11.25,
+    "fill_share": 0.4420494140006335,
+    "still": 0.778125,
+    "min_soups": 10
+   },
+   "fam_o2_n6_l3_w1": {
+    "soups": 6.5,
+    "fill_share": 0.0827591024959446,
+    "still": 0.5737500000000001,
+    "min_soups": 5
+   }
+  },
+  "random1": {
+   "fam_o10_n0_l0_w0": {
+    "soups": 8.5,
+    "fill_share": 0.6370478983382208,
+    "still": 0.205,
+    "min_soups": 8
+   },
+   "fam_o0_n0_l0_w0": {
+    "soups": 5.5,
+    "fill_share": 0.0,
+    "still": 0.270625,
+    "min_soups": 5
+   },
+   "fam_o5_n0_l0_w0": {
+    "soups": 8.75,
+    "fill_share": 0.5035095579450418,
+    "still": 0.316875,
+    "min_soups": 7
+   },
+   "fam_o5_n0_l10_w0": {
+    "soups": 3.5,
+    "fill_share": 0.0,
+    "still": 1.0,
+    "min_soups": 0
+   },
+   "fam_o5_n6_l0_w0": {
+    "soups": 0.75,
+    "fill_share": 0.06104899105471188,
+    "still": 0.30125,
+    "min_soups": 0
+   },
+   "fam_o0_n6_l6_w2": {
+    "soups": 3.5,
+    "fill_share": 0.0,
+    "still": 0.735,
+    "min_soups": 2
+   },
+   "fam_o10_n3_l6_w1": {
+    "soups": 6.5,
+    "fill_share": 0.3277898550724638,
+    "still": 0.731875,
+    "min_soups": 6
+   },
+   "fam_o2_n3_l0_w2": {
+    "soups": 2.25,
+    "fill_share": 0.08634615384615385,
+    "still": 0.35937500000000006,
+    "min_soups": 2
+   },
+   "fam_o8_n0_l3_w2": {
+    "soups": 6.75,
+    "fill_share": 0.4069113756613757,
+    "still": 0.54375,
+    "min_soups": 6
+   },
+   "fam_o0_n0_l6_w1": {
+    "soups": 5.75,
+    "fill_share": 0.0,
+    "still": 0.74125,
+    "min_soups": 5
+   },
+   "fam_o10_n6_l0_w2": {
+    "soups": 7.0,
+    "fill_share": 0.44764957264957267,
+    "still": 0.3725,
+    "min_soups": 7
+   },
+   "fam_o2_n3_l3_w0": {
+    "soups": 2.0,
+    "fill_share": 0.10780478579391622,
+    "still": 0.543125,
+    "min_soups": 1
+   },
+   "fam_o8_n6_l6_w0": {
+    "soups": 3.0,
+    "fill_share": 0.05573035850495804,
+    "still": 0.730625,
+    "min_soups": 2
+   },
+   "fam_o8_n3_l0_w1": {
+    "soups": 2.0,
+    "fill_share": 0.14211829836829837,
+    "still": 0.330625,
+    "min_soups": 1
+   },
+   "fam_o10_n0_l6_w0": {
+    "soups": 6.0,
+    "fill_share": 0.4168560606060606,
+    "still": 0.7075,
+    "min_soups": 5
+   },
+   "fam_o2_n6_l3_w1": {
+    "soups": 2.75,
+    "fill_share": 0.011363636363636364,
+    "still": 0.600625,
+    "min_soups": 2
+   }
+  }
+ }
+}
