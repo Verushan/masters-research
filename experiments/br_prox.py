@@ -40,6 +40,7 @@ SOURCES = {
         "metrics_unident_s_hsp_pool.json",
     ],
     "random1": ["metrics_random1_hsp_scripted.json", "metrics_random1_s2_hsp_ego12.json"],
+    "random3": ["metrics_random3_hsp_scripted.json"],
 }
 LABELS = {
     "s2_scripted-hand": "A: specialists",
@@ -68,14 +69,20 @@ def stochastic_cells(path):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--br", default=osp.join(RESULTS, "br_values_unident_s_random1.json"))
+    ap.add_argument("--br", nargs="+", default=[osp.join(RESULTS, "br_values_unident_s_random1.json"),
+                                                 osp.join(RESULTS, "br_values_random3.json")])
     ap.add_argument("--br_value", choices=["final", "last2", "best"], default="last2")
     ap.add_argument("--out", default=osp.join(RESULTS, "br_prox.json"))
     args = ap.parse_args()
-    brs = json.load(open(args.br))
+    brs = {}
+    for path in args.br:
+        if osp.exists(path):
+            brs.update(json.load(open(path)))
     out = {}
 
     for layout, files in SOURCES.items():
+        if layout not in brs:
+            continue
         # agent -> partner index -> list of symmetrised stochastic returns
         score = defaultdict(lambda: defaultdict(list))
         for fn in files:
@@ -90,9 +97,11 @@ def main():
                     if vals:
                         score[a][int(re.search(r"hsp(\d+)", p).group(1))].append(float(np.mean(vals)))
         per_agent = {a: {p: float(np.mean(v)) for p, v in ps.items()} for a, ps in score.items()}
-        partners = sorted({p for ps in per_agent.values() for p in ps})
+        br = {int(k): v[args.br_value] for k, v in brs[layout].items() if v.get(args.br_value) is not None}
+        # Only partners with a trained BR: a pool-max stand-in can be near zero and
+        # would inflate every ratio built on it.
+        partners = sorted({p for ps in per_agent.values() for p in ps} & set(br))
         pool_best = {p: max(ps[p] for ps in per_agent.values() if p in ps) for p in partners}
-        br = {int(k): v[args.br_value] for k, v in brs[layout].items()}
         denom = {p: max(br.get(p, 0.0), pool_best[p]) for p in partners}
 
         def prox(a):
