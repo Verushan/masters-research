@@ -87,6 +87,10 @@ STEPS=${STEPS:-2e6}
 # The swaps still only ever replace a scripted partner with another script.
 POP=${POP:-scripted}
 INCLUDE=${INCLUDE:-}
+# REPEAT copies each specialist entry. Stage 2 samples partners uniformly per
+# entry, so with INCLUDE it sets the share of specialist games: 18 learned + 5 x 4
+# copies is ~53% (REPEAT=1 gave 5/23 = 22%, and lost most of the benefit).
+REPEAT=${REPEAT:-1}
 SPEC=${SPEC:-"hand:1-5 hand:6-10 neglect:1-5 neglect:6-10 noann:1-5 noann:6-10"}
 ARMS=${ARMS:-"hand neglect noann"}
 EXP_TAG=${EXP_TAG:-""}
@@ -131,7 +135,7 @@ SEED_MAX=${SEEDS##*-}
 
 # The swap pool is the training partners, by script name, as the yml generator
 # reports them -- so the two cannot drift apart.
-SWAP_POOL=$(python prep/gen_script_population_yml.py $LAYOUT --name $POP ${INCLUDE:+--include $INCLUDE} | sed -n 's/^swap pool: //p')
+SWAP_POOL=$(python prep/gen_script_population_yml.py $LAYOUT --name $POP ${INCLUDE:+--include $INCLUDE} --repeat $REPEAT | sed -n 's/^swap pool: //p')
 if [ -z "$SWAP_POOL" ]; then
     echo "gen_script_population_yml.py did not report a swap pool"
     exit 1
