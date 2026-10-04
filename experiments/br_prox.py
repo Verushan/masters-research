@@ -38,8 +38,9 @@ SOURCES = {
         "metrics_unident_s_hsp_mixed.json",
         "metrics_unident_s_s2_hsp_ego20.json",
         "metrics_unident_s_hsp_pool.json",
+        "metrics_unident_s_hsp_mix50.json",
     ],
-    "random1": ["metrics_random1_hsp_scripted.json", "metrics_random1_s2_hsp_ego12.json"],
+    "random1": ["metrics_random1_hsp_scripted.json", "metrics_random1_s2_hsp_ego12.json", "metrics_random1_hsp_mix50.json"],
     "random3": ["metrics_random3_hsp_scripted.json"],
 }
 LABELS = {
@@ -49,7 +50,8 @@ LABELS = {
     "s2_scripted-neglect2": "C2: corrected MORL, fade",
     "s2_scripted-noann": "C′: original MORL",
     "s2_scripted-neglect": "C: original MORL, fade",
-    "s2_mixedspec-hand": "Specialists + usual population",
+    "s2_mixedspec-hand": "Specialists + usual population (22% of games)",
+    "s2_mixspec50-hand": "Specialists + usual population (53% of games)",
     "s2_bench_sp": "Usual stage-2",
     "s2_bench_sp-annego": "Usual stage-2, MORL trainee",
     "bench_sp": "Stage-1 self-play",
