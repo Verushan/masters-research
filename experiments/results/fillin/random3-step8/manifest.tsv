@@ -26,3 +26,13 @@ s2_bench_sp_s2	random3/fcp/s2/fcp-S2-bench_sp/2.pt	random3/policy_config/rnn_pol
 s2_bench_sp_s3	random3/fcp/s2/fcp-S2-bench_sp/3.pt	random3/policy_config/rnn_policy_config.pkl	
 s2_bench_sp_s4	random3/fcp/s2/fcp-S2-bench_sp/4.pt	random3/policy_config/rnn_policy_config.pkl	
 s2_bench_sp_s5	random3/fcp/s2/fcp-S2-bench_sp/5.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s1	random3/fcp/s2/fcp-S2-mixspec50-hand/1.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s2	random3/fcp/s2/fcp-S2-mixspec50-hand/2.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s3	random3/fcp/s2/fcp-S2-mixspec50-hand/3.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s4	random3/fcp/s2/fcp-S2-mixspec50-hand/4.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s5	random3/fcp/s2/fcp-S2-mixspec50-hand/5.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s6	random3/fcp/s2/fcp-S2-mixspec50-hand/6.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s7	random3/fcp/s2/fcp-S2-mixspec50-hand/7.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s8	random3/fcp/s2/fcp-S2-mixspec50-hand/8.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s9	random3/fcp/s2/fcp-S2-mixspec50-hand/9.pt	random3/policy_config/rnn_policy_config.pkl	
+s2_mixspec50-hand_s10	random3/fcp/s2/fcp-S2-mixspec50-hand/10.pt	random3/policy_config/rnn_policy_config.pkl	

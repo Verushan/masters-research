@@ -41,7 +41,7 @@ SOURCES = {
         "metrics_unident_s_hsp_mix50.json",
     ],
     "random1": ["metrics_random1_hsp_scripted.json", "metrics_random1_s2_hsp_ego12.json", "metrics_random1_hsp_mix50.json"],
-    "random3": ["metrics_random3_hsp_scripted.json"],
+    "random3": ["metrics_random3_hsp_scripted.json", "metrics_random3_hsp_mix50.json"],
 }
 LABELS = {
     "s2_scripted-hand": "A: specialists",
