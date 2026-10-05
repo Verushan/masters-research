@@ -1,0 +1,88 @@
+{
+ "scene": "specialists_unident_s",
+ "seed": 5,
+ "steps": 150,
+ "panels": [
+  "potter: only fills pots",
+  "server: only plates and serves",
+  "idle: does nothing",
+  "dial8: everything, prefers onions",
+  "dial2: everything, prefers serving"
+ ],
+ "soups_by_seed": [
+  [
+   5,
+   5,
+   3,
+   5,
+   5,
+   5,
+   6,
+   5,
+   6,
+   6
+  ],
+  [
+   5,
+   7,
+   6,
+   6,
+   6,
+   6,
+   7,
+   7,
+   6,
+   6
+  ],
+  [
+   4,
+   3,
+   1,
+   1,
+   3,
+   3,
+   3,
+   2,
+   2,
+   3
+  ],
+  [
+   6,
+   6,
+   6,
+   6,
+   5,
+   6,
+   5,
+   6,
+   5,
+   6
+  ],
+  [
+   6,
+   6,
+   6,
+   5,
+   6,
+   6,
+   7,
+   6,
+   5,
+   7
+  ]
+ ],
+ "medians": [
+  5.0,
+  6.0,
+  3.0,
+  6.0,
+  6.0
+ ],
+ "shown": [
+  5,
+  6,
+  3,
+  6,
+  6
+ ]
+}

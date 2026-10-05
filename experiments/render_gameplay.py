@@ -64,6 +64,19 @@ SCENES = {
              ("actor", MLP, "unident_s/hsp/s1/hsp-s1/hsp10_final_w0_actor.pt"), False),
         ],
     ),
+    "specialists_unident_s": dict(
+        steps=150,
+        tile=32,
+        cols=3,
+        note="Blue hat: agent A. Green hat: the specialist. Each panel is a separate game.",
+        panels=[
+            ("potter: only fills pots", "unident_s", A, ("script", "potter"), False),
+            ("server: only plates and serves", "unident_s", A, ("script", "server"), False),
+            ("idle: does nothing", "unident_s", A, ("script", "idle"), False),
+            ("dial8: everything, prefers onions", "unident_s", A, ("script", "dial8"), False),
+            ("dial2: everything, prefers serving", "unident_s", A, ("script", "dial2"), False),
+        ],
+    ),
     "scripts_random3": dict(
         steps=200,
         note="The same two scripted cooks (both do every job) in two kitchens.",
@@ -139,7 +152,7 @@ def play(panel, seed, steps, keep_states):
 def render(scene, results, out, seed):
     from zsceval.envs.overcooked.overcooked_ai_py.visualization.state_visualizer import StateVisualizer
 
-    vis = StateVisualizer(tile_size=48, is_rendering_hud=False, is_rendering_cooking_timer=True)
+    vis = StateVisualizer(tile_size=scene.get("tile", 48), is_rendering_hud=False, is_rendering_cooking_timer=True)
     title_font, body_font, small = ImageFont.truetype(FONT, 18), ImageFont.truetype(FONT, 16), ImageFont.truetype(FONT, 14)
     pad, head, foot = 16, 58, 30
     frames_by_panel = []
@@ -151,24 +164,26 @@ def render(scene, results, out, seed):
 
             frames.append(Image.fromarray(pygame.surfarray.array3d(surf).transpose(1, 0, 2)))
         frames_by_panel.append(frames)
-    widths = [f[0].width for f in frames_by_panel]
-    height = max(f[0].height for f in frames_by_panel)
-    W = sum(widths) + pad * (len(widths) + 1)
-    H = head + height + foot + pad
+    # Panels sit in a grid of `cols` columns, each cell sized to the largest panel.
+    cols = scene.get("cols", len(frames_by_panel))
+    rows = -(-len(frames_by_panel) // cols)
+    cw = max(f[0].width for f in frames_by_panel)
+    ch = head + max(f[0].height for f in frames_by_panel)
+    W = cols * cw + pad * (cols + 1)
+    H = rows * ch + pad * (rows - 1) + foot + pad
     out_frames = []
     n = len(frames_by_panel[0])
     for t in range(n):
         canvas = Image.new("RGB", (W, H), (255, 255, 255))
         d = ImageDraw.Draw(canvas)
-        x = pad
-        for (panel, frames, (_m, _s, soups)) in zip(scene["panels"], frames_by_panel, results):
-            d.text((x, 10), panel[0], font=title_font, fill=(20, 20, 20))
-            d.text((x, 34), f"soups served: {soups[t]}", font=body_font, fill=(37, 99, 235))
+        for i, (panel, frames, (_m, _s, soups)) in enumerate(zip(scene["panels"], frames_by_panel, results)):
+            x, y = pad + (i % cols) * (cw + pad), (i // cols) * (ch + pad)
+            d.text((x, y + 10), panel[0], font=title_font, fill=(20, 20, 20))
+            d.text((x, y + 34), f"soups served: {soups[t]}", font=body_font, fill=(37, 99, 235))
             if scene.get("hats"):
-                d.text((x + 150, 36), scene["hats"], font=small, fill=(90, 90, 90))
-            canvas.paste(frames[t], (x, head))
-            x += frames[t].width + pad
-        d.text((pad, head + height + 8), f"step {t} of {n - 1}  ·  {scene['note']}", font=small, fill=(90, 90, 90))
+                d.text((x + 150, y + 36), scene["hats"], font=small, fill=(90, 90, 90))
+            canvas.paste(frames[t], (x, y + head))
+        d.text((pad, H - foot - 6), f"step {t} of {n - 1}  ·  {scene['note']}", font=small, fill=(90, 90, 90))
         out_frames.append(canvas.quantize(colors=128, method=Image.Quantize.MEDIANCUT))
     hold = [out_frames[-1]] * 15
     out_frames[0].save(out, save_all=True, append_images=out_frames[1:] + hold, duration=100, loop=0, optimize=True)
