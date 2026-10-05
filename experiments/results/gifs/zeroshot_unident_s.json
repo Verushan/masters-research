@@ -1,0 +1,43 @@
+{
+ "scene": "zeroshot_unident_s",
+ "seed": 2,
+ "steps": 200,
+ "panels": [
+  "Usual stage-2 agent",
+  "Agent A (trained with specialists)"
+ ],
+ "soups_by_seed": [
+  [
+   6,
+   4,
+   4,
+   4,
+   5,
+   5,
+   2,
+   6,
+   5,
+   4
+  ],
+  [
+   7,
+   8,
+   7,
+   8,
+   6,
+   6,
+   8,
+   6,
+   8,
+   7
+  ]
+ ],
+ "medians": [
+  4.5,
+  7.0
+ ],
+ "shown": [
+  4,
+  7
+ ]
+}

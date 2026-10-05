@@ -1,0 +1,29 @@
+{
+ "scene": "scripts_random3",
+ "seed": 2,
+ "steps": 200,
+ "panels": [
+  "unident_s",
+  "random3 (Counter Circuit)"
+ ],
+ "soups_by_seed": [
+  [
+   7,
+   6,
+   7
+  ],
+  [
+   0,
+   4,
+   2
+  ]
+ ],
+ "medians": [
+  7.0,
+  2.0
+ ],
+ "shown": [
+  7,
+  2
+ ]
+}
