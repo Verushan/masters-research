@@ -43,6 +43,7 @@ MLP = "{layout}/policy_config/mlp_policy_config.pkl"
 # A panel: (title, layout, seat 0, seat 1, greedy).
 USUAL = ("actor", RNN, "unident_s/fcp/s2/fcp-S2-bench_sp/1.pt")
 A = ("actor", RNN, "unident_s/fcp/s2/fcp-S2-scripted-hand/1.pt")
+A1 = ("actor", RNN, "random1/fcp/s2/fcp-S2-scripted-hand/2.pt")
 SCENES = {
     "fillin_unident_s": dict(
         steps=200,
@@ -75,6 +76,15 @@ SCENES = {
             ("idle: does nothing", "unident_s", A, ("script", "idle"), False),
             ("dial8: everything, prefers onions", "unident_s", A, ("script", "dial8"), False),
             ("dial2: everything, prefers serving", "unident_s", A, ("script", "dial2"), False),
+        ],
+    ),
+    "greedy_random1": dict(
+        steps=400,
+        tile=64,
+        note="Two copies of agent A (run 2). Greedy: always its most likely move.",
+        panels=[
+            ("Greedy actions", "random1", A1, A1, True),
+            ("Sampled actions (ZSC-Eval)", "random1", A1, A1, False),
         ],
     ),
     "scripts_random3": dict(

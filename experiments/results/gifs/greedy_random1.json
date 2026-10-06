@@ -1,0 +1,43 @@
+{
+ "scene": "greedy_random1",
+ "seed": 0,
+ "steps": 400,
+ "panels": [
+  "Greedy actions",
+  "Sampled actions (ZSC-Eval)"
+ ],
+ "soups_by_seed": [
+  [
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  [
+   3,
+   3,
+   2,
+   4,
+   5,
+   4,
+   4,
+   2,
+   4,
+   2
+  ]
+ ],
+ "medians": [
+  0.0,
+  3.5
+ ],
+ "shown": [
+  0,
+  3
+ ]
+}
