@@ -509,6 +509,42 @@ ordinary hand-shaped reward. Reports: Claude Docs `ef9023ba` (30 Sep) and `eca0e
 - **The multi-recipe env's scripts needed two fixes** (submodule `ce6dcd0`): `max_num_items_for_soup`, and a
   scripted cook must start a full pot with an empty-handed INTERACT.
 
+## Timed-order environment (Oct 2026)
+
+`--timed_orders` (multi-recipe `*_m` layouts only) swaps the static menu for an order queue, per
+`experiments/report/timed-orders-env-spec.md`:
+
+- **Rules.** At most 3 open orders. A new one arrives about every 30 steps (±25%) when there is room,
+  and is due 75 steps after it arrives.
+  - An expired order costs the team 10, split evenly.
+  - A delivery fills the most urgent open order of its recipe and pays `value × (0.5 + 0.5 × time_left / 75)`, rounded.
+  - A soup no open order wants pays 0.
+  - Knobs: `--order_queue/arrival/deadline/penalty/min_pay`.
+- **Observation.** Adds 4 planes per queue slot (open, onions, tomatoes, time left in tenths) plus an episode
+  clock: 25 → 38 planes. Agents need `{mlp,rnn}_policy_config_timed.pkl` (`prep/store_policy_config.py --timed_orders`).
+- **Off by default.** Static-menu rollouts hash identically to before. The old env raises on the flag.
+- **Logging.** Order events travel in `order_info`, not `SHAPED_INFOS`, so every HSP weight string is unchanged.
+  Episodes log `ep_orders_delivered`, `ep_orders_expired`, `ep_order_pay`, `ep_on_time_rate` (and `eval_` versions).
+- **Scripts.** `script_agent/order_script.py:OrderCook` reads the queue. Registered as `order_cook`, `order_potter`,
+  `order_server` and `order_cook_valuable`.
+  - The order-aware family is `ofam_{P}{J}_l{L}_w{W}` (`order_family.py`): preference urgent, valuable or
+    blind; jobs pot, serve or both; laziness; wandering.
+  - Build a population with `prep/gen_script_population_yml.py --partners none --order_family K --config_suffix _timed`.
+- **MORL.** Objectives `order_served`, `order_speed`, `order_value` and `order_expiry` (negative), in presets
+  `orders` and `orders_dense`.
+- **Training.** The multi-recipe env now supports scripted seats and `--script_swap_*` during training (ported
+  from the old env), and `train_morl_stage_2.sh` accepts `*_m` layouts. Pass timed flags via `EGO_FLAGS`.
+- **Checks.**
+  - `scripts/overcooked/morl/check_timed_orders.py`: 10 checks.
+  - `experiments/timed_orders_check.py`: scripted pairs; `--family K`.
+- **Tuning.** Arrival 30 and deadline 75 were picked so a queue-reading scripted pair keeps about 90% of orders on
+  time on both kitchens. Without a partner, one cook loses a quarter of the return on unident_s_m and all of it on
+  random1_m. Order-blind scripts go negative.
+- **Pilot.** `pipelines/timed-pilot.slurm` runs stage-1 `bench_sp` with timed orders, as experiment `bench_sp-timed`.
+  It is training only: `morl-benchmark.slurm`'s extraction ignores `EXP_SUFFIX` and would overwrite the `bench_sp` pool.
+- **Not done yet.** Order-related HSP bias terms. Until then, use self-play held-out seeds as on random1.
+- **Gotcha.** `timed_orders={}` means "defaults". It used to be treated as off.
+
 ## Pipeline architecture
 
 Two-stage population training (FCP is the worked example; MEP/TrajeDi/HSP/COLE/E3T follow the same shape):

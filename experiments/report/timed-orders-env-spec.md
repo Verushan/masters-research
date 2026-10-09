@@ -1,6 +1,8 @@
 # Design spec: an Overcooked environment with timed orders
 
-Status: proposal for the 7 Oct 2026 supervisor meeting. Nothing here is implemented yet.
+Status (9 Oct 2026): layers 1-6 implemented and validated (see CLAUDE.md, "Timed-order environment"). Defaults were
+retuned to arrival 30 / deadline 75 on scripted pairs (experiments/results/timed_orders_check.json); the table below
+keeps the first guesses. Layer 7 (HSP order bias terms) is not done. Originally a proposal for the 7 Oct meeting.
 
 ## Why
 
