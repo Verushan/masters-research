@@ -1,0 +1,82 @@
+{
+ "params": {
+  "queue": 3,
+  "arrival": 30,
+  "deadline": 75,
+  "penalty": 10
+ },
+ "results": {
+  "unident_s_m/oracle": {
+   "delivered": 11.3,
+   "expired": 0.9,
+   "unmatched": 0.4,
+   "pay": 124.8,
+   "sparse": 115.8,
+   "arrived": 13.8,
+   "on_time_rate": 0.9262295081967213
+  },
+  "unident_s_m/specialists": {
+   "delivered": 12.4,
+   "expired": 0.2,
+   "unmatched": 0.1,
+   "pay": 134.8,
+   "sparse": 132.8,
+   "arrived": 13.8,
+   "on_time_rate": 0.9841269841269842
+  },
+  "unident_s_m/alone": {
+   "delivered": 10.6,
+   "expired": 1.4,
+   "unmatched": 0.9,
+   "pay": 98.1,
+   "sparse": 84.1,
+   "arrived": 13.8,
+   "on_time_rate": 0.8833333333333333
+  },
+  "unident_s_m/blind": {
+   "delivered": 2.5,
+   "expired": 9.1,
+   "unmatched": 10.5,
+   "pay": 43.9,
+   "sparse": -47.1,
+   "arrived": 13.7,
+   "on_time_rate": 0.21551724137931036
+  },
+  "random1_m/oracle": {
+   "delivered": 11.2,
+   "expired": 1.1,
+   "unmatched": 0.8,
+   "pay": 108.5,
+   "sparse": 97.5,
+   "arrived": 13.8,
+   "on_time_rate": 0.910569105691057
+  },
+  "random1_m/specialists": {
+   "delivered": 6.4,
+   "expired": 5.2,
+   "unmatched": 2.1,
+   "pay": 58.2,
+   "sparse": 6.2,
+   "arrived": 13.8,
+   "on_time_rate": 0.5517241379310345
+  },
+  "random1_m/alone": {
+   "delivered": 3.2,
+   "expired": 8.1,
+   "unmatched": 1.0,
+   "pay": 30.0,
+   "sparse": -51.0,
+   "arrived": 13.8,
+   "on_time_rate": 0.2831858407079646
+  },
+  "random1_m/blind": {
+   "delivered": 2.6,
+   "expired": 9.0,
+   "unmatched": 6.5,
+   "pay": 42.6,
+   "sparse": -47.4,
+   "arrived": 13.8,
+   "on_time_rate": 0.22413793103448276
+  }
+ }
+}
