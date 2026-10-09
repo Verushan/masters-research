@@ -68,14 +68,21 @@ def main():
     ap.add_argument("--deadline", type=int, default=75)
     ap.add_argument("--queue", type=int, default=3)
     ap.add_argument("--penalty", type=int, default=10)
+    ap.add_argument("--family", type=int, default=0,
+                    help="Also play the first K order-family members (order_family.sample) beside order_cook")
     ap.add_argument("--out")
     args = ap.parse_args()
     params = dict(queue=args.queue, arrival=args.arrival, deadline=args.deadline, penalty=args.penalty)
     print(f"params {params}")
     out = {"params": params, "results": {}}
+    pairs = dict(PAIRS)
+    if args.family:
+        from zsceval.envs.overcooked_new.script_agent import order_family
+
+        pairs.update({m: ("order_cook", m) for m in order_family.sample(args.family)})
     for layout in args.layouts:
         print(f"== {layout}")
-        for name, pair in PAIRS.items():
+        for name, pair in pairs.items():
             runs = []
             for g in range(args.games):
                 seat_pair = pair if g % 2 == 0 else pair[::-1]
@@ -84,7 +91,7 @@ def main():
             closed = m["delivered"] + m["expired"]
             m["on_time_rate"] = m["delivered"] / closed if closed else 0.0
             out["results"][f"{layout}/{name}"] = m
-            print(f"  {name:12s} return {m['sparse']:6.1f}  served {m['delivered']:4.1f}/{m['arrived']:4.1f} orders"
+            print(f"  {name:16s} return {m['sparse']:6.1f}  served {m['delivered']:4.1f}/{m['arrived']:4.1f} orders"
                   f"  expired {m['expired']:4.1f}  on-time {m['on_time_rate']:.2f}  unwanted soups {m['unmatched']:4.1f}")
     if args.out:
         with open(args.out, "w") as f:

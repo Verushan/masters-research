@@ -1,0 +1,298 @@
+{
+ "params": {
+  "queue": 3,
+  "arrival": 30,
+  "deadline": 75,
+  "penalty": 10
+ },
+ "results": {
+  "unident_s_m/oracle": {
+   "delivered": 11.333333333333334,
+   "expired": 0.8333333333333334,
+   "unmatched": 0.5,
+   "pay": 119.0,
+   "sparse": 110.66666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.9315068493150684
+  },
+  "unident_s_m/specialists": {
+   "delivered": 12.5,
+   "expired": 0.16666666666666666,
+   "unmatched": 0.16666666666666666,
+   "pay": 132.33333333333334,
+   "sparse": 130.66666666666666,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.986842105263158
+  },
+  "unident_s_m/alone": {
+   "delivered": 10.666666666666666,
+   "expired": 1.3333333333333333,
+   "unmatched": 0.8333333333333334,
+   "pay": 94.5,
+   "sparse": 81.16666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.8888888888888888
+  },
+  "unident_s_m/blind": {
+   "delivered": 2.0,
+   "expired": 9.833333333333334,
+   "unmatched": 11.166666666666666,
+   "pay": 33.5,
+   "sparse": -64.83333333333333,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.16901408450704225
+  },
+  "unident_s_m/ofam_ub_l0_w0": {
+   "delivered": 11.333333333333334,
+   "expired": 0.8333333333333334,
+   "unmatched": 0.5,
+   "pay": 119.0,
+   "sparse": 110.66666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.9315068493150684
+  },
+  "unident_s_m/ofam_up_l0_w0": {
+   "delivered": 10.166666666666666,
+   "expired": 2.1666666666666665,
+   "unmatched": 0.0,
+   "pay": 116.5,
+   "sparse": 94.83333333333333,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.8243243243243243
+  },
+  "unident_s_m/ofam_us_l0_w0": {
+   "delivered": 12.0,
+   "expired": 0.16666666666666666,
+   "unmatched": 0.16666666666666666,
+   "pay": 114.66666666666667,
+   "sparse": 113.0,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.9863013698630138
+  },
+  "unident_s_m/ofam_bb_l0_w0": {
+   "delivered": 9.666666666666666,
+   "expired": 2.8333333333333335,
+   "unmatched": 10.333333333333334,
+   "pay": 95.5,
+   "sparse": 67.16666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.7733333333333333
+  },
+  "unident_s_m/ofam_vb_l0_w0": {
+   "delivered": 10.666666666666666,
+   "expired": 1.5,
+   "unmatched": 0.5,
+   "pay": 115.66666666666667,
+   "sparse": 100.66666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.8767123287671232
+  },
+  "unident_s_m/ofam_ub_l10_w0": {
+   "delivered": 10.666666666666666,
+   "expired": 1.3333333333333333,
+   "unmatched": 0.8333333333333334,
+   "pay": 94.5,
+   "sparse": 81.16666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.8888888888888888
+  },
+  "unident_s_m/ofam_bs_l6_w2": {
+   "delivered": 11.166666666666666,
+   "expired": 0.8333333333333334,
+   "unmatched": 0.8333333333333334,
+   "pay": 110.66666666666667,
+   "sparse": 102.33333333333333,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.9305555555555555
+  },
+  "unident_s_m/ofam_vp_l6_w2": {
+   "delivered": 12.0,
+   "expired": 0.0,
+   "unmatched": 0.0,
+   "pay": 126.0,
+   "sparse": 126.0,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 1.0
+  },
+  "unident_s_m/ofam_bp_l3_w1": {
+   "delivered": 9.166666666666666,
+   "expired": 3.3333333333333335,
+   "unmatched": 8.0,
+   "pay": 95.16666666666667,
+   "sparse": 61.833333333333336,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.7333333333333333
+  },
+  "unident_s_m/ofam_us_l6_w2": {
+   "delivered": 11.166666666666666,
+   "expired": 0.8333333333333334,
+   "unmatched": 0.8333333333333334,
+   "pay": 110.66666666666667,
+   "sparse": 102.33333333333333,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.9305555555555555
+  },
+  "unident_s_m/ofam_vs_l6_w0": {
+   "delivered": 10.0,
+   "expired": 2.1666666666666665,
+   "unmatched": 1.8333333333333333,
+   "pay": 102.5,
+   "sparse": 80.83333333333333,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.8219178082191781
+  },
+  "unident_s_m/ofam_vs_l0_w2": {
+   "delivered": 11.333333333333334,
+   "expired": 0.8333333333333334,
+   "unmatched": 0.3333333333333333,
+   "pay": 121.0,
+   "sparse": 112.66666666666667,
+   "arrived": 14.0,
+   "on_time_rate": 0.9315068493150684
+  },
+  "random1_m/oracle": {
+   "delivered": 11.0,
+   "expired": 1.3333333333333333,
+   "unmatched": 1.0,
+   "pay": 102.0,
+   "sparse": 88.66666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.8918918918918919
+  },
+  "random1_m/specialists": {
+   "delivered": 6.666666666666667,
+   "expired": 5.0,
+   "unmatched": 2.6666666666666665,
+   "pay": 54.166666666666664,
+   "sparse": 4.166666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.5714285714285714
+  },
+  "random1_m/alone": {
+   "delivered": 3.3333333333333335,
+   "expired": 8.0,
+   "unmatched": 0.8333333333333334,
+   "pay": 30.333333333333332,
+   "sparse": -49.666666666666664,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.29411764705882354
+  },
+  "random1_m/blind": {
+   "delivered": 2.8333333333333335,
+   "expired": 9.166666666666666,
+   "unmatched": 6.166666666666667,
+   "pay": 46.333333333333336,
+   "sparse": -45.333333333333336,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.23611111111111113
+  },
+  "random1_m/ofam_ub_l0_w0": {
+   "delivered": 11.0,
+   "expired": 1.3333333333333333,
+   "unmatched": 1.0,
+   "pay": 102.0,
+   "sparse": 88.66666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.8918918918918919
+  },
+  "random1_m/ofam_up_l0_w0": {
+   "delivered": 2.3333333333333335,
+   "expired": 9.0,
+   "unmatched": 0.0,
+   "pay": 22.333333333333332,
+   "sparse": -67.66666666666667,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.20588235294117646
+  },
+  "random1_m/ofam_us_l0_w0": {
+   "delivered": 7.333333333333333,
+   "expired": 4.5,
+   "unmatched": 2.1666666666666665,
+   "pay": 62.166666666666664,
+   "sparse": 17.166666666666668,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.619718309859155
+  },
+  "random1_m/ofam_bb_l0_w0": {
+   "delivered": 6.666666666666667,
+   "expired": 5.5,
+   "unmatched": 7.0,
+   "pay": 54.833333333333336,
+   "sparse": -0.16666666666666666,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.547945205479452
+  },
+  "random1_m/ofam_vb_l0_w0": {
+   "delivered": 10.5,
+   "expired": 1.5,
+   "unmatched": 1.1666666666666667,
+   "pay": 96.5,
+   "sparse": 81.5,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.875
+  },
+  "random1_m/ofam_ub_l10_w0": {
+   "delivered": 3.3333333333333335,
+   "expired": 8.0,
+   "unmatched": 0.8333333333333334,
+   "pay": 30.333333333333332,
+   "sparse": -49.666666666666664,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.29411764705882354
+  },
+  "random1_m/ofam_bs_l6_w2": {
+   "delivered": 4.333333333333333,
+   "expired": 6.833333333333333,
+   "unmatched": 2.0,
+   "pay": 42.333333333333336,
+   "sparse": -26.0,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.3880597014925373
+  },
+  "random1_m/ofam_vp_l6_w2": {
+   "delivered": 3.5,
+   "expired": 7.666666666666667,
+   "unmatched": 2.6666666666666665,
+   "pay": 31.166666666666668,
+   "sparse": -45.5,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.3134328358208955
+  },
+  "random1_m/ofam_bp_l3_w1": {
+   "delivered": 4.666666666666667,
+   "expired": 7.0,
+   "unmatched": 3.6666666666666665,
+   "pay": 43.166666666666664,
+   "sparse": -26.833333333333332,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.39999999999999997
+  },
+  "random1_m/ofam_us_l6_w2": {
+   "delivered": 4.333333333333333,
+   "expired": 6.833333333333333,
+   "unmatched": 2.0,
+   "pay": 42.333333333333336,
+   "sparse": -26.0,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.3880597014925373
+  },
+  "random1_m/ofam_vs_l6_w0": {
+   "delivered": 3.1666666666666665,
+   "expired": 8.333333333333334,
+   "unmatched": 1.0,
+   "pay": 34.5,
+   "sparse": -48.833333333333336,
+   "arrived": 13.833333333333334,
+   "on_time_rate": 0.2753623188405797
+  },
+  "random1_m/ofam_vs_l0_w2": {
+   "delivered": 5.833333333333333,
+   "expired": 5.833333333333333,
+   "unmatched": 1.8333333333333333,
+   "pay": 55.666666666666664,
+   "sparse": -2.6666666666666665,
+   "arrived": 14.0,
+   "on_time_rate": 0.5
+  }
+ }
+}
