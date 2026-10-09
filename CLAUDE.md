@@ -545,6 +545,26 @@ ordinary hand-shaped reward. Reports: Claude Docs `ef9023ba` (30 Sep) and `eca0e
 - **Not done yet.** Order-related HSP bias terms. Until then, use self-play held-out seeds as on random1.
 - **Gotcha.** `timed_orders={}` means "defaults". It used to be treated as off.
 
+## W&B housekeeping
+
+`util/wandb_catalog.py` annotates every run across the `Overcooked`, `Overcooked-new` and `zsc-eval-experiments`
+projects:
+
+- **Notes.** What the experiment was, followed by the host.
+- **Tags.** `stage-*`, `study-*`, `kitchen-*`, and one `status-*` from: `used`, `pilot`, `smoke`, `legacy`,
+  `superseded`, `crashed`, `unreferenced`, `in-progress`. A run counts as `used` when its experiment has
+  checkpoints in the cluster pool, or is a BR / HSP partner.
+- **Unchanged tags.** It never adds or removes `unused` or `hidden`, which extraction reads.
+- **New experiment names** need a rule in `describe()`, otherwise they show as `study-unknown`.
+
+All 862 runs were annotated on 9 Oct 2026, and 28 crashed or smoke runs were deleted. Re-run after new
+experiments finish (pool list: `find policy_pool -maxdepth 4 -type d` on the cluster):
+
+```bash
+python util/wandb_catalog.py --dump --inventory runs.jsonl --pool pool.txt --show unreferenced   # dry run
+python util/wandb_catalog.py --inventory runs.jsonl --pool pool.txt --apply
+```
+
 ## Pipeline architecture
 
 Two-stage population training (FCP is the worked example; MEP/TrajeDi/HSP/COLE/E3T follow the same shape):

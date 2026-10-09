@@ -8,7 +8,8 @@ Each run gets
          status-<...>:
            used          checkpoints in the cluster policy pool, or a BR / HSP
                          partner the scoring reads
-           pilot         smoke tests, verifications and pilots
+           pilot         pilots (kept: their checkpoints fed early results)
+           smoke         one-off smoke tests and wiring verifications
            legacy        the upstream pipeline shakeout (May-Aug)
            superseded    replaced by a later version (already tagged so, or a
                          rule below)
@@ -81,7 +82,7 @@ def describe(layout, exp, tags):
     if exp == "fcp-S2-s16":
         return "legacy", "upstream-fcp", "Upstream ZSC-Eval FCP stage-2 over 16 'sp' agents, pipeline shakeout.", "legacy"
     if exp in ("morl_verify", "sp_verify"):
-        return "legacy", "upstream-fcp", f"Verification run ({exp}) from the first MORL wiring, Aug 2026.", "pilot"
+        return "legacy", "upstream-fcp", f"Verification run ({exp}) from the first MORL wiring, Aug 2026.", "smoke"
     if exp == "morl":
         return "1", "morl-early", "First MORL self-play test (before the MORL benchmark existed).", "legacy"
     if exp in ("hsp-s1", "hsp-s1-pilot"):
@@ -107,7 +108,7 @@ def describe(layout, exp, tags):
             f"Stage-1 self-play (MORL benchmark arm {arm}): {S1_ARMS[arm]}"
             + ("" if arm in ("bench_sp", "bench_sparse") and not suf else f"; {objs}")
             + ". 2e6 steps, 12 rollout threads; checkpoints init/mid/final become stage-2 partners."
-        ), "pilot" if pilot else "used"
+        ), "smoke" if pilot else "used"
     m = re.match(r"^fcp-S2-(.+)$", exp)
     if m:
         rest = m.group(1)
