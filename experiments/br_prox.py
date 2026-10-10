@@ -40,8 +40,15 @@ SOURCES = {
         "metrics_unident_s_hsp_pool.json",
         "metrics_unident_s_hsp_mix50.json",
         "metrics_unident_s_hsp_family16.json",
+        "metrics_unident_s_hsp_family16mix.json",
     ],
-    "random1": ["metrics_random1_hsp_scripted.json", "metrics_random1_s2_hsp_ego12.json", "metrics_random1_hsp_mix50.json"],
+    "random1": [
+        "metrics_random1_hsp_scripted.json",
+        "metrics_random1_s2_hsp_ego12.json",
+        "metrics_random1_hsp_mix50.json",
+        "metrics_random1_hsp_family16.json",
+        "metrics_random1_hsp_family16mix.json",
+    ],
     "random3": ["metrics_random3_hsp_scripted.json", "metrics_random3_hsp_mix50.json"],
 }
 LABELS = {
@@ -54,6 +61,7 @@ LABELS = {
     "s2_mixedspec-hand": "Specialists + usual population (22% of games)",
     "s2_mixspec50-hand": "Specialists + usual population (53% of games)",
     "s2_family16-hand": "Generated family of 16 specialists",
+    "s2_family16mix-hand": "Family + usual population (47% of games)",
     "s2_bench_sp": "Usual stage-2",
     "s2_bench_sp-annego": "Usual stage-2, MORL trainee",
     "bench_sp": "Stage-1 self-play",
