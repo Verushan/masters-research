@@ -548,8 +548,15 @@ not trained there.
   random1_m. Order-blind scripts go negative.
 - **Pilot result (10 Oct): self-play learned nothing.** 6 runs (2 kitchens × 3 seeds) served 0 orders and stayed at
   random-play return (about −114). They did not even learn the shaped sub-tasks that the static-menu `bench_sp-rec` runs learn
-  at the same budget (potting 3.6 → 27 per episode there, flat at 2–4 here). Ablations `-timed-noobs`
-  (`--order_obs_off`), `-timed-nopen` (`--order_penalty 0`) and both are separating observation planes from reward noise.
+  at the same budget (potting 3.6 → 27 per episode there, flat at 2–4 here).
+- **Why: the expiry penalty, not the order planes.** Ablations on unident_s_m at 0.4–0.8M steps:
+  - With the penalty, nothing learns, queue visible or not (shaped 13, 1.5 pots per episode).
+  - Without it, both variants learn (shaped 35–45, about 5 pots).
+  - About 11 expiries per episode that the agents cannot prevent yet drown the +3/+5 shaping signals.
+  - Even without the penalty, learning is slower than the static menu, because only matching soups pay.
+- **Fix: `--order_penalty_anneal_horizon H`.** It ramps the penalty into the *training* reward from 0 to full over
+  H steps. Logged `ep_sparse_r` always keeps the full penalty. Test runs: `-timed-ramp` (2e6, H=1e6) and
+  `-timed-ramp5e6` (5e6, H=2.5e6); set the budget with `MORL_BENCH_STEPS`.
 - **Pilot.** `pipelines/timed-pilot.slurm` runs stage-1 `bench_sp` with timed orders, as experiment `bench_sp-timed`.
   It is training only: `morl-benchmark.slurm`'s extraction ignores `EXP_SUFFIX` and would overwrite the `bench_sp` pool.
 - **Not done yet.** Order-related HSP bias terms. Until then, use self-play held-out seeds as on random1.

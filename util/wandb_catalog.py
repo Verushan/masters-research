@@ -104,6 +104,8 @@ def describe(layout, exp, tags):
             "-noobs": " Diagnostic: queue hidden from the observation (--order_obs_off).",
             "-nopen": " Diagnostic: no expiry penalty (--order_penalty 0).",
             "-noobs-nopen": " Diagnostic: queue hidden and no expiry penalty.",
+            "-ramp": " Expiry penalty ramped into the training reward over the first 1e6 steps.",
+            "-ramp5e6": " 5e6 steps, expiry penalty ramped in over the first 2.5e6.",
         }.get(m.group(2), f" Variant {m.group(2)}.")
         return "1", "timed-orders", (
             f"Stage-1 self-play in the timed-order env (queue 3, arrival ~30, deadline 75, expiry -10, speed-scaled pay): "
