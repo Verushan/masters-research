@@ -50,6 +50,10 @@ LAYOUT=${LAYOUT_LIST[$(( IDX / ${#SEED_LIST[@]} ))]}
 SEED=${SEED_LIST[$(( IDX % ${#SEED_LIST[@]} ))]}
 echo "timed pilot: layout ${LAYOUT}, arm ${ARM}, seed ${SEED}, rollout_threads ${ROLLOUT_THREADS}"
 
+# Stagger the tasks: seeds of one experiment share a results directory, and two
+# starting in the same second raced to create it on the shared filesystem
+# (66741_1 died in os.makedirs within 36 s).
+sleep $(( IDX * 30 ))
 cd $PYTHONPATH/zsceval/scripts/overcooked
 python morl/check_timed_orders.py || exit 1
 EXTRA_FLAGS="--timed_orders ${TIMED_FLAGS:-}" EXP_SUFFIX=${EXP_SUFFIX:--timed} \
