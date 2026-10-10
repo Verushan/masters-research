@@ -97,11 +97,21 @@ def describe(layout, exp, tags):
             "Best response: an agent trained against one held-out HSP partner only (2e6 steps). "
             "Its return is the denominator of ZSC-Eval's BR-Prox for that partner."
         ), "used"
+    m = re.match(r"^(bench_[a-z_]+?)-timed(-.*)?$", exp)
+    if m and m.group(1) in S1_ARMS:
+        variant = {
+            None: "",
+            "-noobs": " Diagnostic: queue hidden from the observation (--order_obs_off).",
+            "-nopen": " Diagnostic: no expiry penalty (--order_penalty 0).",
+            "-noobs-nopen": " Diagnostic: queue hidden and no expiry penalty.",
+        }.get(m.group(2), f" Variant {m.group(2)}.")
+        return "1", "timed-orders", (
+            f"Stage-1 self-play in the timed-order env (queue 3, arrival ~30, deadline 75, expiry -10, speed-scaled pay): "
+            f"{S1_ARMS[m.group(1)]}. 2e6 steps, training only (pilot).{variant}"
+        ), "pilot"
     m = re.match(r"^(bench_[a-z_]+?)(?:-([a-z0-9]+))?$", exp)
     if m and m.group(1) in S1_ARMS:
         arm, suf = m.group(1), m.group(2) or ""
-        if suf == "timed":
-            return "1", "timed-orders", f"Stage-1 self-play in the timed-order env: {S1_ARMS[arm]}.", "used"
         objs = MORL_SET.get(suf, suf)
         pilot = suf == "smoke"
         return "1", "morl-benchmark", (

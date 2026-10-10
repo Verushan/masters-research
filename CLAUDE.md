@@ -486,6 +486,12 @@ ordinary hand-shaped reward. Reports: Claude Docs `ef9023ba` (30 Sep) and `eca0e
 | random1 | 0.20 | 0.32 | 0.42 | 0.28 |
 | random3 | 0.17 | — | — | 0.004 (the scripts deadlock there) |
 
+The generated family (16 members, `FAMILY=16 SCRIPT_PARTNERS=none`) replaces the hand-written five without loss:
+BR-Prox 0.705 vs A's 0.718 on unident_s (p = .39), and 0.339 vs 0.280 on random1 (p = .017, family better). Mixed
+into the usual population (16 + 18, 47% of games) it scores 0.662 on unident_s and 0.332 on random1, below the
+hand-written 53% mix there (0.417, p = .004). On random3 the family adds nothing (`family_check.py`), so it was
+not trained there.
+
 - More specialists help: about +27 zero-shot per specialist on unident_s.
 - MORL in every form ties or loses, including as a stage-2 ego (`annego`, BR-Prox identical) and in partner removal.
 
@@ -540,6 +546,10 @@ ordinary hand-shaped reward. Reports: Claude Docs `ef9023ba` (30 Sep) and `eca0e
 - **Tuning.** Arrival 30 and deadline 75 were picked so a queue-reading scripted pair keeps about 90% of orders on
   time on both kitchens. Without a partner, one cook loses a quarter of the return on unident_s_m and all of it on
   random1_m. Order-blind scripts go negative.
+- **Pilot result (10 Oct): self-play learned nothing.** 6 runs (2 kitchens × 3 seeds) served 0 orders and stayed at
+  random-play return (about −114). They did not even learn the shaped sub-tasks that the static-menu `bench_sp-rec` runs learn
+  at the same budget (potting 3.6 → 27 per episode there, flat at 2–4 here). Ablations `-timed-noobs`
+  (`--order_obs_off`), `-timed-nopen` (`--order_penalty 0`) and both are separating observation planes from reward noise.
 - **Pilot.** `pipelines/timed-pilot.slurm` runs stage-1 `bench_sp` with timed orders, as experiment `bench_sp-timed`.
   It is training only: `morl-benchmark.slurm`'s extraction ignores `EXP_SUFFIX` and would overwrite the `bench_sp` pool.
 - **Not done yet.** Order-related HSP bias terms. Until then, use self-play held-out seeds as on random1.
