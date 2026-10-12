@@ -108,6 +108,8 @@ def describe(layout, exp, tags):
             "-ramp5e6": " 5e6 steps, expiry penalty ramped in over the first 2.5e6.",
             "-partial": " Partial credit: a menu soup that fills no order pays half its value (--order_unmatched_pay 0.5).",
             "-partial-ramp": " Partial credit (unmatched soups pay half) and the expiry penalty ramped in over 1e6 steps.",
+            "-partial-nopen": " Partial credit, no expiry penalty: is the kitchen learnable at all?",
+            "-partial-pen2": " Partial credit, expiry penalty 2 (not 10), ramped in over the whole 2e6 run.",
         }.get(m.group(2), f" Variant {m.group(2)}.")
         return "1", "timed-orders", (
             f"Stage-1 self-play in the timed-order env (queue 3, arrival ~30, deadline 75, expiry -10, speed-scaled pay): "
