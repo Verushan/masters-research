@@ -565,6 +565,14 @@ not trained there.
   8 soups an episode at that budget. Pay requires a soup to match an open order, so random early play almost never
   earns any, and delivery is never learned. The timed rules need partial credit or a warm start before training on
   them is informative.
+- **Partial credit: `--order_unmatched_pay F`** (default 0 = matched-only, so earlier runs reproduce).
+  - A menu soup that fills no open order pays F of its value. Filling an order still pays the full speed-scaled
+    price, and removes an order that would expire.
+  - At F = 0.5, scripted order-blind pairs go from −47 to +47 (unident_s_m) and +16 (random1_m), against 114 / 96
+    for order-reading pairs (`results/timed_orders_check_partial.json`).
+  - Logs `ep_unmatched_pay`; `ep_sparse_r` = order pay + unmatched pay − penalties.
+  - Pilot (12 Oct): `-timed-partial-ramp` (F 0.5, penalty ramp H=1e6) and `-timed-partial` (F 0.5, full penalty),
+    on 2 kitchens × 2 seeds at 2e6.
 - **Pilot.** `pipelines/timed-pilot.slurm` runs stage-1 `bench_sp` with timed orders, as experiment `bench_sp-timed`.
   It is training only: `morl-benchmark.slurm`'s extraction ignores `EXP_SUFFIX` and would overwrite the `bench_sp` pool.
 - **Not done yet.** Order-related HSP bias terms. Until then, use self-play held-out seeds as on random1.
