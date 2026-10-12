@@ -110,6 +110,10 @@ def describe(layout, exp, tags):
             "-partial-ramp": " Partial credit (unmatched soups pay half) and the expiry penalty ramped in over 1e6 steps.",
             "-partial-nopen": " Partial credit, no expiry penalty: is the kitchen learnable at all?",
             "-partial-pen2": " Partial credit, expiry penalty 2 (not 10), ramped in over the whole 2e6 run.",
+            "-partial-nopen-noobs": " Diagnostic: partial credit, no penalty, queue hidden (learns like the static menu).",
+            "-partial-nopen-tb3": " Diagnostic: partial credit, no penalty, queue visible with time planes capped at 3 (does not learn).",
+            "-partial-nopen-serve": " Partial credit, no penalty, queue drawn on the serving windows only.",
+            "-partial-ramp-serve": " Partial credit, expiry penalty ramped in over 1e6 steps, queue drawn on the serving windows only.",
         }.get(m.group(2), f" Variant {m.group(2)}.")
         return "1", "timed-orders", (
             f"Stage-1 self-play in the timed-order env (queue 3, arrival ~30, deadline 75, expiry -10, speed-scaled pay): "
