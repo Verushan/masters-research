@@ -68,11 +68,13 @@ def main():
     ap.add_argument("--deadline", type=int, default=75)
     ap.add_argument("--queue", type=int, default=3)
     ap.add_argument("--penalty", type=int, default=10)
+    ap.add_argument("--unmatched_pay", type=float, default=0.0)
     ap.add_argument("--family", type=int, default=0,
                     help="Also play the first K order-family members (order_family.sample) beside order_cook")
     ap.add_argument("--out")
     args = ap.parse_args()
-    params = dict(queue=args.queue, arrival=args.arrival, deadline=args.deadline, penalty=args.penalty)
+    params = dict(queue=args.queue, arrival=args.arrival, deadline=args.deadline, penalty=args.penalty,
+                  unmatched_pay=args.unmatched_pay)
     print(f"params {params}")
     out = {"params": params, "results": {}}
     pairs = dict(PAIRS)
