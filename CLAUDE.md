@@ -554,9 +554,17 @@ not trained there.
   - Without it, both variants learn (shaped 35–45, about 5 pots).
   - About 11 expiries per episode that the agents cannot prevent yet drown the +3/+5 shaping signals.
   - Even without the penalty, learning is slower than the static menu, because only matching soups pay.
-- **Fix: `--order_penalty_anneal_horizon H`.** It ramps the penalty into the *training* reward from 0 to full over
-  H steps. Logged `ep_sparse_r` always keeps the full penalty. Test runs: `-timed-ramp` (2e6, H=1e6) and
-  `-timed-ramp5e6` (5e6, H=2.5e6); set the budget with `MORL_BENCH_STEPS`.
+- **The penalty curriculum did not fix it.** `--order_penalty_anneal_horizon H` ramps the penalty into the
+  *training* reward from 0 to full over H steps; logged `ep_sparse_r` keeps the full penalty. All 8 runs served 0
+  orders:
+  - `-timed-ramp`: 2e6 steps, H=1e6.
+  - `-timed-ramp5e6`: 5e6 steps, H=2.5e6.
+  - What little was learned decayed as the penalty phased in.
+- **The deeper problem is reward sparsity, not just the penalty.** With no penalty at all (`-timed-nopen`, full 2e6),
+  agents learn to pot (about 4.6 per episode) but never deliver a single order. On the static menu they serve about
+  8 soups an episode at that budget. Pay requires a soup to match an open order, so random early play almost never
+  earns any, and delivery is never learned. The timed rules need partial credit or a warm start before training on
+  them is informative.
 - **Pilot.** `pipelines/timed-pilot.slurm` runs stage-1 `bench_sp` with timed orders, as experiment `bench_sp-timed`.
   It is training only: `morl-benchmark.slurm`'s extraction ignores `EXP_SUFFIX` and would overwrite the `bench_sp` pool.
 - **Not done yet.** Order-related HSP bias terms. Until then, use self-play held-out seeds as on random1.
