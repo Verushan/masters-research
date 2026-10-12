@@ -56,5 +56,6 @@ echo "timed pilot: layout ${LAYOUT}, arm ${ARM}, seed ${SEED}, rollout_threads $
 sleep $(( IDX * 30 ))
 cd $PYTHONPATH/zsceval/scripts/overcooked
 python morl/check_timed_orders.py || exit 1
-EXTRA_FLAGS="--timed_orders ${TIMED_FLAGS:-}" EXP_SUFFIX=${EXP_SUFFIX:--timed} \
+# TIMED_BASE="" runs the same pipeline on the static menu (a like-for-like control).
+EXTRA_FLAGS="${TIMED_BASE---timed_orders} ${TIMED_FLAGS:-}" EXP_SUFFIX=${EXP_SUFFIX:--timed} \
     bash shell/train_morl_benchmark.sh $LAYOUT $ARM $SEED $SEED
