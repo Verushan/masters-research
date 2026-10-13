@@ -114,6 +114,8 @@ def describe(layout, exp, tags):
             "-partial-nopen-tb3": " Diagnostic: partial credit, no penalty, queue visible with time planes capped at 3 (does not learn).",
             "-partial-nopen-serve": " Partial credit, no penalty, queue drawn on the serving windows only.",
             "-partial-ramp-serve": " Partial credit, expiry penalty ramped in over 1e6 steps, queue drawn on the serving windows only.",
+            "-partial-nopen-noclock": " Diagnostic: partial credit, no penalty, queue visible (grid) without the clock plane.",
+            "-partial-nopen-clockonly": " Diagnostic: partial credit, no penalty, clock visible, queue hidden.",
         }.get(m.group(2), f" Variant {m.group(2)}.")
         return "1", "timed-orders", (
             f"Stage-1 self-play in the timed-order env (queue 3, arrival ~30, deadline 75, expiry -10, speed-scaled pay): "
