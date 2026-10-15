@@ -119,6 +119,19 @@ common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
         --morl_adaptive_target neglect --use_morl_obs_weights $NEGLECT_EXTRA
         --population_yaml_path $YML
         --ego_policy_names $EGOS --partner_policy_names $PARTNERS "${ORDER_FLAG[@]}")
+# SWAP_STEP=t (with HELDOUT_ONLY=1): instead of the two usual passes, one
+# sampled-action pass in which every held-out partner is replaced by the next
+# one at step t -- the "trained without swaps, tested with them" test.
+# Analyse with experiments/analyze_swaps.py.
+if [ -n "$SWAP_STEP" ]; then
+    [ -n "$HELDOUT_ONLY" ] || { echo "SWAP_STEP needs HELDOUT_ONLY=1"; exit 1; }
+    python eval/cross_play.py "${common[@]}" \
+        --experiment_name xp_${LAYOUT}${TAG}_swap \
+        --eval_stochastic --eval_episodes $EPISODES_STOCHASTIC --swap_step $SWAP_STEP \
+        --eval_result_path $RESULTS/cross_play_${LAYOUT}${TAG}_swap${SWAP_STEP}.json || exit 1
+    echo "swap cross-play done for ${LAYOUT} at $(date)"
+    exit 0
+fi
 python eval/cross_play.py "${common[@]}" \
     --experiment_name xp_${LAYOUT}${TAG}_det \
     --eval_episodes 1 \
