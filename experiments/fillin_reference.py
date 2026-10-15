@@ -40,9 +40,8 @@ from loguru import logger
 sys.path.insert(0, osp.dirname(osp.abspath(__file__)))
 sys.path.insert(0, osp.join(osp.dirname(osp.abspath(__file__)), "..", "zsc-eval"))
 
-from fillin_eval import PARTNERS, SCHEDULES, move_target  # noqa: E402
+from fillin_eval import PARTNERS, _new_script, idle_interacts, kitchen, move_target, step_events  # noqa: E402
 from zsceval.envs.morl.tasks import TASKS, task_completions, task_demand  # noqa: E402
-from zsceval.envs.overcooked.Overcooked_Env import Overcooked  # noqa: E402
 from zsceval.envs.overcooked.overcooked_ai_py.mdp.actions import Action  # noqa: E402
 
 POLICY_POOL = os.environ.get("POLICY_POOL")
@@ -57,10 +56,20 @@ COMPLEMENT = {
     "dial2": "generalist",
     "dial5": "generalist",
     "dial8": "generalist",
+    # Multi-recipe only: the cook who fetches the other ingredient and serves.
+    "onion_potter": "tomato_cook",
+    "tomato_potter": "onion_cook",
+}
+# Reference agents that are nobody's partner, for the oracle's complements.
+NEW_REF_AGENTS = {
+    "tomato_cook": dict(make=_new_script("menu_cook_tomato")),
+    "onion_cook": dict(make=_new_script("menu_cook_onion")),
 }
 
 
-def run_episode(env, schedule, mode, seat):
+def run_episode(env, schedule, mode, seat, partners=None):
+    partners = partners or PARTNERS
+    agents = {**partners, **(NEW_REF_AGENTS if partners is not PARTNERS else {})}
     obs, _share, available = env.reset()
     base, mdp = env.base_env, env.base_mdp
     partner_seat = 1 - seat
@@ -70,17 +79,18 @@ def run_episode(env, schedule, mode, seat):
 
     def install(partner_name):
         nonlocal agent
-        partner = PARTNERS[partner_name]["make"]()
+        partner = partners[partner_name]["make"]()
         partner.reset(mdp, base.state, partner_seat)
         env.script_agent = [partner, None] if seat == 1 else [None, partner]
         # The generalist keeps its own state across a swap: it has no idea the
         # partner changed. The oracle is replaced with the new complement.
         if agent is None or mode == "oracle":
-            agent = PARTNERS[COMPLEMENT[partner_name] if mode == "oracle" else "generalist"]["make"]()
+            agent = agents[COMPLEMENT[partner_name] if mode == "oracle" else "generalist"]["make"]()
             agent.reset(mdp, base.state, seat)
 
     install(segments[0][1])
     rec = {k: [] for k in ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact")}
+    totals = None
     for t in range(400):
         if seg_i + 1 < len(segments) and t >= segments[seg_i + 1][0]:
             seg_i += 1
@@ -100,7 +110,7 @@ def run_episode(env, schedule, mode, seat):
         blocked = bool(
             target is not None and after[seat] == before[seat] and target in (before[partner_seat], after[partner_seat])
         )
-        shaped = info["shaped_info_by_agent"]
+        shaped, totals = step_events(env, info, totals)
         done = task_completions(shaped, info["sparse_r_by_agent"])
         if seat == 1:
             done = done[::-1]
@@ -111,9 +121,7 @@ def run_episode(env, schedule, mode, seat):
         rec["entropy"].append(0.0)
         rec["blocked"].append(blocked)
         rec["stay"].append(agent_action == Action.STAY)
-        rec["idle_interact"].append(
-            int(shaped[seat].get("IDLE_INTERACT_X", 0) + shaped[seat].get("IDLE_INTERACT_EMPTY", 0))
-        )
+        rec["idle_interact"].append(idle_interacts(shaped[seat]))
         if np.all(dones):
             break
     return rec
@@ -123,7 +131,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--layout", required=True)
     ap.add_argument("--mode", choices=["generalist", "oracle"], required=True)
-    ap.add_argument("--schedules", nargs="*", default=list(SCHEDULES))
+    ap.add_argument("--schedules", nargs="*", default=None, help="Default: every schedule the layout's env has")
     ap.add_argument("--seats", nargs="+", type=int, default=[0, 1])
     ap.add_argument("--episodes", type=int, default=5)
     ap.add_argument("--seed", type=int, default=0)
@@ -135,6 +143,9 @@ def main():
         all_args = pickle.load(f)[0]
     all_args.layout_name = args.layout
     all_args.episode_length = 400
+    Overcooked, partners, schedules = kitchen(args.layout)
+    all_args.old_dynamics = partners is PARTNERS
+    args.schedules = args.schedules or list(schedules)
     env = Overcooked(all_args, run_dir=osp.dirname(osp.abspath(__file__)), evaluation=True)
 
     name = f"ref_{args.mode}_s{args.seed + 1}"
@@ -145,7 +156,7 @@ def main():
                 seed = args.seed * 100000 + seat * 50000 + zlib.crc32(sched.encode()) % 500 * 100 + ep
                 random.seed(seed)
                 np.random.seed(seed)
-                rec = run_episode(env, SCHEDULES[sched], args.mode, seat)
+                rec = run_episode(env, schedules[sched], args.mode, seat, partners)
                 episodes.append({"seat": seat, "schedule": sched, "episode": ep, "seed": seed, **rec})
             done = np.array(episodes[-1]["done"])
             logger.info(f"{name} seat {seat} vs {sched}: {int(done[:, :, 3].sum())} deliveries")
@@ -157,8 +168,8 @@ def main():
         "config": None,
         "env_flags": "",
         "tasks": list(TASKS),
-        "partners": {k: {"covers": v["covers"]} for k, v in PARTNERS.items()},
-        "schedules": {k: SCHEDULES[k] for k in args.schedules},
+        "partners": {k: {"covers": v["covers"]} for k, v in partners.items()},
+        "schedules": {k: schedules[k] for k in args.schedules},
         "deterministic": False,
         "seats": args.seats,
         "episodes": episodes,

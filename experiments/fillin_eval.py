@@ -19,6 +19,10 @@ per partner. `experiments/analyze_fillin.py` turns the records into metrics.
         --agent bench_sp_s1=unident_s/fcp/s1/bench_sp/sp1_final_actor.pt \\
         --out experiments/results/fillin/unident_s_bench_sp_s1.json.gz
 
+Multi-recipe layouts (`*_m`, `*_cx`) run in the new env with the same partner
+names played by dish-aware scripts (`kitchen()`), plus two ingredient
+specialists (`onion_potter`, `tomato_potter`) and their swap schedules.
+
 Widened-observation agents (partner picture, preference weights) need their
 own policy config and the env flags they trained under:
 
@@ -45,7 +49,6 @@ from loguru import logger
 sys.path.insert(0, osp.join(osp.dirname(osp.abspath(__file__)), "..", "zsc-eval"))
 
 from zsceval.envs.morl.tasks import TASKS, task_completions, task_demand  # noqa: E402
-from zsceval.envs.overcooked.Overcooked_Env import Overcooked  # noqa: E402
 from zsceval.envs.overcooked.overcooked_ai_py.mdp.actions import Action  # noqa: E402
 from zsceval.envs.overcooked.script_agent.base import BaseScriptAgent  # noqa: E402
 from zsceval.envs.overcooked.script_agent.script_agent import SCRIPT_AGENTS  # noqa: E402
@@ -85,6 +88,31 @@ PARTNERS = {
     },
 }
 
+def _new_script(name):
+    def make():
+        from zsceval.envs.overcooked_new.script_agent.script_agent import SCRIPT_AGENTS as NEW
+
+        return NEW[name]()
+
+    return make
+
+
+# The same personalities for the multi-recipe env, where a potter has to build a
+# menu dish rather than drop in onions (an all-onion pot is off the `_cx` menus).
+# Onion-only and tomato-only potters each leave one ingredient to the agent: the
+# fill-in question a single-ingredient kitchen cannot ask.
+NEW_PARTNERS = {
+    "potter": dict(make=_new_script("menu_potter"), covers=["fill_pot"]),
+    "server": dict(make=_new_script("menu_server"), covers=["fetch_dish", "plate_soup", "deliver"]),
+    "generalist": dict(make=_new_script("menu_cook"), covers=list(TASKS)),
+    "idle": dict(make=_new_script("idle"), covers=[]),
+    "clutter": dict(make=_new_script("put_onion_everywhere"), covers=[]),
+    **{f"dial{k}": dict(make=_new_script(f"menu_dial{k}"), covers=list(TASKS)) for k in (2, 5, 8)},
+    # Half of fill_pot each: they pot only their own ingredient and never serve.
+    "onion_potter": dict(make=_new_script("menu_potter_onion"), covers=["fill_pot"]),
+    "tomato_potter": dict(make=_new_script("menu_potter_tomato"), covers=["fill_pot"]),
+}
+
 # Swap schedules: (first step, partner). A single entry is a partner held for
 # the whole episode. The two flips swap exact complements, so the task the
 # agent should be doing reverses at the swap.
@@ -98,6 +126,48 @@ SCHEDULES = {
     "server>idle>potter": [(0, "server"), (133, "idle"), (266, "potter")],
     "dial5>clutter>generalist": [(0, "dial5"), (133, "clutter"), (266, "generalist")],
 }
+NEW_SCHEDULES = {
+    **{k: v for k, v in SCHEDULES.items() if all(p in NEW_PARTNERS for _, p in v)},
+    **{name: [(0, name)] for name in ("onion_potter", "tomato_potter")},
+    "onion_potter>tomato_potter": [(0, "onion_potter"), (200, "tomato_potter")],
+    "tomato_potter>onion_potter": [(0, "tomato_potter"), (200, "onion_potter")],
+}
+
+
+def kitchen(layout):
+    """(env class, partners, schedules) for the env version a layout runs in."""
+    from zsceval.overcooked_config import OLD_LAYOUTS
+
+    if layout in OLD_LAYOUTS:
+        from zsceval.envs.overcooked.Overcooked_Env import Overcooked
+
+        return Overcooked, PARTNERS, SCHEDULES
+    from zsceval.envs.overcooked_new.Overcooked_Env import Overcooked
+
+    return Overcooked, NEW_PARTNERS, NEW_SCHEDULES
+
+
+def step_events(env, info, prev):
+    """This step's per-agent event counters, and the totals to pass next step.
+
+    The old env's info carries this step's counters. The new env's wrapper
+    replaces them with the episode's running totals, updated in place, so its
+    steps are differenced against a copy of the previous totals (`prev` is None
+    on the first step of an episode).
+    """
+    shaped = info["shaped_info_by_agent"]
+    if not hasattr(env, "cumulative_shaped_info"):
+        return shaped, None
+    totals = [dict(d) for d in shaped]
+    prev = prev or [{} for _ in totals]
+    return [{k: v - p.get(k, 0) for k, v in t.items()} for t, p in zip(totals, prev)], totals
+
+
+def idle_interacts(shaped):
+    """The old env splits IDLE_INTERACT by target; the new one does not."""
+    if "IDLE_INTERACT_X" in shaped:
+        return int(shaped["IDLE_INTERACT_X"] + shaped.get("IDLE_INTERACT_EMPTY", 0))
+    return int(shaped.get("IDLE_INTERACT", 0))
 
 
 def load_actor(config_rel, actor_rel, env_overrides):
@@ -138,20 +208,21 @@ def move_target(pos, action):
     return (pos[0] + action[0], pos[1] + action[1])
 
 
-def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0):
+def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0, partners=None):
     """One episode with the agent in base-env `seat`; returns per-step arrays.
 
     Every record is in agent-first order whichever seat it held: `done[t][0]`
     is the agent's completions, `done[t][1]` the partner's.
     """
     partner_seat = 1 - seat
+    partners = partners or PARTNERS
     obs, _share, available = env.reset()
     base, mdp = env.base_env, env.base_mdp
     segments = sorted(schedule)
     seg_i = 0
 
     def install(name):
-        agent = PARTNERS[name]["make"]()
+        agent = partners[name]["make"]()
         agent.reset(mdp, base.state, partner_seat)
         env.script_agent = [agent, None] if seat == 1 else [None, agent]
 
@@ -159,6 +230,7 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0):
     rnn = np.zeros((1, all_args.recurrent_N, all_args.hidden_size), dtype=np.float32)
     masks = np.ones((1, 1), dtype=np.float32)
     rec = {k: [] for k in ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact")}
+    totals = None
 
     for t in range(all_args.episode_length):
         if seg_i + 1 < len(segments) and t >= segments[seg_i + 1][0]:
@@ -193,7 +265,7 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0):
             and after[seat] == before[seat]
             and target in (before[partner_seat], after[partner_seat])
         )
-        shaped = info["shaped_info_by_agent"]
+        shaped, totals = step_events(env, info, totals)
         done = task_completions(shaped, info["sparse_r_by_agent"])
         if seat == 1:
             done = done[::-1]
@@ -205,9 +277,7 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0):
         rec["entropy"].append(entropy)
         rec["blocked"].append(blocked)
         rec["stay"].append(agent_action == Action.STAY)
-        rec["idle_interact"].append(
-            int(shaped[seat].get("IDLE_INTERACT_X", 0) + shaped[seat].get("IDLE_INTERACT_EMPTY", 0))
-        )
+        rec["idle_interact"].append(idle_interacts(shaped[seat]))
         if np.all(dones):
             break
     return rec
@@ -219,7 +289,7 @@ def main():
     ap.add_argument("--agent", required=True, help="NAME=pool-relative actor checkpoint")
     ap.add_argument("--config", default=None, help="Pool-relative policy config (default: the layout's mlp config)")
     ap.add_argument("--env_flags", default="", help="Space-separated k=v env/args overrides")
-    ap.add_argument("--schedules", nargs="*", default=list(SCHEDULES))
+    ap.add_argument("--schedules", nargs="*", default=None, help="Default: every schedule the layout's env has")
     ap.add_argument(
         "--seats",
         nargs="+",
@@ -241,6 +311,9 @@ def main():
     all_args, actor = load_actor(config_rel, actor_rel, overrides)
     all_args.layout_name = args.layout
     all_args.episode_length = 400
+    Overcooked, partners, schedules = kitchen(args.layout)
+    all_args.old_dynamics = partners is PARTNERS
+    args.schedules = args.schedules or list(schedules)
     env = Overcooked(all_args, run_dir=osp.dirname(osp.abspath(__file__)), evaluation=True)
     assert env.agent_idx == 0, "the agent must hold base-env seat 0 for per-agent counters to line up"
 
@@ -255,7 +328,7 @@ def main():
                 np.random.seed(seed)
                 torch.manual_seed(seed)
                 rng = np.random.default_rng(seed)
-                rec = run_episode(env, actor, all_args, SCHEDULES[sched], args.deterministic, rng, seat)
+                rec = run_episode(env, actor, all_args, schedules[sched], args.deterministic, rng, seat, partners)
                 episodes.append({"seat": seat, "schedule": sched, "episode": ep, "seed": seed, **rec})
             done = np.array(episodes[-1]["done"])
             logger.info(
@@ -270,8 +343,8 @@ def main():
         "config": config_rel,
         "env_flags": args.env_flags,
         "tasks": list(TASKS),
-        "partners": {k: {"covers": v["covers"]} for k, v in PARTNERS.items()},
-        "schedules": {k: SCHEDULES[k] for k in args.schedules},
+        "partners": {k: {"covers": v["covers"]} for k, v in partners.items()},
+        "schedules": {k: schedules[k] for k in args.schedules},
         "deterministic": args.deterministic,
         "seats": args.seats,
         "episodes": episodes,

@@ -614,8 +614,18 @@ gives `bench_morl_ann` weights `0,20,3,3,3,3`, so the end-of-training reward is 
 **Pilot.** `pipelines/dish-pilot.slurm` runs stage-1 `bench_sp` and `bench_morl_ann` (`MORL_TEAM_TASK=1`), both
 kitchens × 3 seeds, 5e6 steps, as `{arm}-cx`. Checks: `scripts/overcooked/morl/check_complex_dishes.py` (7).
 
-- **Not done yet.** Policy configs for cross-play (`prep/store_policy_config.py unident_s_cx random1_cx`), HSP
-  partners, and porting the fill-in suite to the new env.
+- **Fill-in on the new env.** `fillin_eval.py` / `fillin_reference.py` pick the env from the layout
+  (`fillin_eval.kitchen`). Personalities have the same names but are played by dish-aware scripts (`menu_*`).
+  - Two ingredient specialists are added, `onion_potter` and `tomato_potter`, with flip schedules.
+  - `morl/tasks.py` reads both envs. On the new env `fill_pot` is a viable placement or starting the cook.
+  - The new env's wrapper reports **running totals** in `info["shaped_info_by_agent"]`, so the harness
+    differences them (`step_events`).
+  - The `menu_*` scripts take a random step when they have nothing to do (`idle_move`). Parked in random1's
+    ring, a specialist blocked even the oracle (0 soups).
+  - On `_cx` menus the complement-only oracle is no ceiling: beside a potter it serves only, and the generalist
+    beats it (2.75 vs 2.12 soups/100 on unident_s_cx), because five-ingredient dishes make potting the bottleneck.
+- **Not done yet.** HSP partners on `_cx`. Policy configs come from `prep/store_policy_config.py unident_s_cx
+  random1_cx`.
 - **Gotcha.** The tracked `planners/unident_s_m_mp.pkl` pickles a module that no longer exists (`zscbench`), so
   every run recomputes and rewrites it. That is the planner-file conflict in the cluster `git pull` routine.
 
