@@ -34,6 +34,7 @@
 #            Arm `hand` changed two things at once -- who it trains with, and
 #            swaps during training -- and this separates them.
 #            Run with SPEC="handns:1-5 handns:6-10" ARMS="handns".
+#   noann2ns C2' (noann2) without swaps, the MORL counterpart of handns.
 #
 # There is no fixed-weight task arm: `tasks` at 20,3,3,5 with team credit and
 # annealing is the hand-shaped reward exactly, step for step
@@ -157,6 +158,9 @@ case $ARM in
     noann)   REWARD="${NEGLECT}" ;;
     neglect2) REWARD="${NEGLECT} ${RELAX} --morl_anneal_dense" ;;
     noann2)   REWARD="${NEGLECT} ${RELAX}" ;;
+    # C2' without swaps: with handns, the 2x2 of reward x swap-training that the
+    # supervisors asked for (15 Oct): train without swaps, test with them.
+    noann2ns) REWARD="${NEGLECT} ${RELAX}"; SWAPS="" ;;
     *) echo "unknown arm '${ARM}' (expected one of: ${ARMS})"; exit 1 ;;
 esac
 export EGO_FLAGS="${REWARD} ${SWAPS}"

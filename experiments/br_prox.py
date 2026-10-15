@@ -54,6 +54,7 @@ SOURCES = {
 LABELS = {
     "s2_scripted-hand": "A: specialists",
     "s2_scripted-handns": "A-ns: specialists, no swaps",
+    "s2_scripted-noann2ns": "C2′-ns: corrected MORL, no swaps",
     "s2_scripted-noann2": "C2′: corrected MORL",
     "s2_scripted-neglect2": "C2: corrected MORL, fade",
     "s2_scripted-noann": "C′: original MORL",

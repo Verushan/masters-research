@@ -71,6 +71,7 @@ S2_REWARD = {
     "noann": "original neglect-weighted MORL reward, not annealed (C')",
     "neglect2": "corrected neglect-weighted MORL rule (prior 0.5, halflife 10), annealed (C2)",
     "noann2": "corrected neglect-weighted MORL rule, not annealed (C2')",
+    "noann2ns": "corrected neglect-weighted MORL rule, not annealed, no mid-game swaps (C2'-ns)",
 }
 SPECIALISTS = "5 scripted specialists (potter, server, idle, dial2, dial8), swapped at step 200 with p=0.5"
 
