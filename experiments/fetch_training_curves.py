@@ -75,7 +75,7 @@ def main():
 
     entity = os.environ["WANDB_ENTITY"]
     project = args.project or os.environ["WANDB_PROJECT"]
-    if args.project is None and args.layout.endswith(("_m", "_mx")):
+    if args.project is None and args.layout.endswith(("_m", "_mx", "_cx")):
         project = f"{project}-new"
     logger.info(f"project {entity}/{project}")
     api = wandb.Api(timeout=60)

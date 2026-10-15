@@ -230,7 +230,7 @@ cd .. || exit 1
 # New-env runs are logged to `{env}-new`; extracting a multi-recipe layout from
 # Overcooked finds zero runs and exits 0 with an empty pool.
 case "$LAYOUT" in
-    *_m|*_mx) WB_PROJECT=Overcooked-new ;;
+    *_m|*_mx|*_cx) WB_PROJECT=Overcooked-new ;;
     *) WB_PROJECT=overcooked ;;
 esac
 python extract_models/extract_bias_agents_models.py $LAYOUT "$WB_PROJECT" $EXP || exit 1

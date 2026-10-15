@@ -122,6 +122,18 @@ def describe(layout, exp, tags):
             f"Stage-1 self-play in the timed-order env (queue 3, arrival ~30, deadline 75, expiry -10, speed-scaled pay): "
             f"{S1_ARMS[m.group(1)]}. 2e6 steps, training only (pilot).{variant}"
         ), "pilot"
+    m = re.match(r"^(bench_[a-z_]+?)-cx(-.*)?$", exp)
+    if m and m.group(1) in S1_ARMS:
+        return "1", "complex-dishes", (
+            f"Stage-1 self-play in a complex-dish kitchen (pots hold 5, best dish onion x3 + tomato x2 pays 60, "
+            f"onion soup 20, off-menu dishes 0): {S1_ARMS[m.group(1)]}; objectives `dishes`. "
+            f"Learnability pilot (Phase 2a), 5e6 steps.{' Variant ' + m.group(2) + '.' if m.group(2) else ''}"
+        ), "pilot"
+    if exp == "bench_sp-ctrl12":
+        return "1", "timed-orders", (
+            "Static-menu control for the timed-order pilots: the hand-shaped baseline on the same pipeline and "
+            "code, no timed orders. 2e6 steps, training only."
+        ), "pilot"
     m = re.match(r"^(bench_[a-z_]+?)(?:-([a-z0-9]+))?$", exp)
     if m and m.group(1) in S1_ARMS:
         arm, suf = m.group(1), m.group(2) or ""

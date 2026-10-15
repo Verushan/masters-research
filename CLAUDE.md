@@ -578,6 +578,47 @@ not trained there.
 - **Not done yet.** Order-related HSP bias terms. Until then, use self-play held-out seeds as on random1.
 - **Gotcha.** `timed_orders={}` means "defaults". It used to be treated as off.
 
+## Complex-dish kitchens (Phase 2a, Oct 2026)
+
+The supervisors asked (15 Oct) for kitchens complex enough to give MORL a real chance: on the static menus
+every objective just meant "more soup". The `_cx` layouts (`unident_s_cx`, `random1_cx`) keep the `_m` grids but:
+
+- **Pots hold 5** (`"max_num_items_for_soup": 5`).
+- **The menu rewards big mixed dishes:** OOO 20, OT 10, OOTT 40, OOOTT 60, OOTTT 60, cook times 20/10/25/30/30.
+- **An off-menu dish pays 0** (`"wrong_dish_value": 0`). Upstream charges −10, which `_m` layouts keep. With
+  5 slots, 15 of the 20 possible soups are off the menu.
+
+Scripted pricing (`experiments/dish_check.py`, `results/dish_check.json`):
+
+- The best strategy, OOOTT in every pot, pays 2× onion soup: 720 vs 360 on unident_s_cx, 420 vs 217 on random1_cx.
+- The old onion script fills pots with five onions and scores 0.
+- One cook alone keeps 58% (unident_s_cx) and 36% (random1_cx).
+- `dish_OOTT`-style names build an `OrderCook(preference="fixed")` that cooks only that dish, in every pot.
+
+**MORL.** Objective `dish_value` is the delivered value / 20. Preset `dishes`: `task_completion`, `dish_value`,
+`ingredient_prep`, `plating`, `coordination_anchored`, `recipe_quality`. `task_completion` (dishes served) and
+`dish_value` conflict: OOO cooks serve 18 dishes for 18 value units, OOOTT cooks 12 dishes for 36.
+`--morl_anneal_dense` and `--morl_team_task` now work in the new env too; the task objectives are
+`objectives.is_task_objective` (`task_completion*`, `dish_value`). In `train_morl_benchmark.sh`, `OBJECTIVES=dishes`
+gives `bench_morl_ann` weights `0,20,3,3,3,3`, so the end-of-training reward is exactly the sparse reward.
+
+**Upstream fixes this needed:**
+
+- `Recipe.configure` read `max_num_ingredients` while the MDP passed `max_num_items_for_soup`, so a layout's
+  limit never took effect.
+- `copy()` and `mdp_params` dropped the recipe settings. The Recipe class is global, so a copy reset every
+  price and limit.
+- Soups of 4–5 ingredients count as `deliver_size_three_order`. `SHAPED_INFOS` is the HSP weight index and does
+  not grow.
+
+**Pilot.** `pipelines/dish-pilot.slurm` runs stage-1 `bench_sp` and `bench_morl_ann` (`MORL_TEAM_TASK=1`), both
+kitchens × 3 seeds, 5e6 steps, as `{arm}-cx`. Checks: `scripts/overcooked/morl/check_complex_dishes.py` (7).
+
+- **Not done yet.** Policy configs for cross-play (`prep/store_policy_config.py unident_s_cx random1_cx`), HSP
+  partners, and porting the fill-in suite to the new env.
+- **Gotcha.** The tracked `planners/unident_s_m_mp.pkl` pickles a module that no longer exists (`zscbench`), so
+  every run recomputes and rewrites it. That is the planner-file conflict in the cluster `git pull` routine.
+
 ## W&B housekeeping
 
 `util/wandb_catalog.py` annotates every run across the `Overcooked`, `Overcooked-new` and `zsc-eval-experiments`

@@ -96,7 +96,7 @@ def main():
 
     for layout in args.layouts:
         # New-env layouts are logged to `{project}-new`.
-        layout_proj = f"{proj}-new" if layout.endswith(("_m", "_mx")) else proj
+        layout_proj = f"{proj}-new" if layout.endswith(("_m", "_mx", "_cx")) else proj
         trained = trained_br(api, ent, layout_proj, layout)
         proxy = proxy_br(METRICS_FOR.get(layout, ""))
         shared = sorted(set(trained) & set(proxy))

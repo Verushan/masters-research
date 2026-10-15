@@ -1,0 +1,167 @@
+{
+ "unident_s_cx": {
+  "menu": {
+   "OOO": [
+    20,
+    20
+   ],
+   "OT": [
+    10,
+    10
+   ],
+   "OOTT": [
+    40,
+    25
+   ],
+   "OOOTT": [
+    60,
+    30
+   ],
+   "OOTTT": [
+    60,
+    30
+   ]
+  },
+  "results": {
+   "dish_OOO": {
+    "return": 360.0,
+    "min": 360.0,
+    "served": {
+     "OOO": 18.0
+    }
+   },
+   "dish_OT": {
+    "return": 240.0,
+    "min": 240.0,
+    "served": {
+     "OT": 24.0
+    }
+   },
+   "dish_OOTT": {
+    "return": 360.0,
+    "min": 360.0,
+    "served": {
+     "OOTT": 9.0
+    }
+   },
+   "dish_OOOTT": {
+    "return": 720.0,
+    "min": 720.0,
+    "served": {
+     "OOOTT": 12.0
+    }
+   },
+   "dish_OOTTT": {
+    "return": 540.0,
+    "min": 540.0,
+    "served": {
+     "OOTTT": 9.0
+    }
+   },
+   "valuable": {
+    "return": 560.0,
+    "min": 560.0,
+    "served": {
+     "OOO": 4.0,
+     "OOOTT": 6.0,
+     "OOTTT": 2.0
+    }
+   },
+   "onion_script": {
+    "return": 0.0,
+    "min": 0.0,
+    "served": {
+     "OOOOO": 10.166666666666666
+    }
+   },
+   "alone": {
+    "return": 420.0,
+    "min": 360.0,
+    "served": {}
+   }
+  },
+  "best": "dish_OOOTT"
+ },
+ "random1_cx": {
+  "menu": {
+   "OOO": [
+    20,
+    20
+   ],
+   "OT": [
+    10,
+    10
+   ],
+   "OOTT": [
+    40,
+    25
+   ],
+   "OOOTT": [
+    60,
+    30
+   ],
+   "OOTTT": [
+    60,
+    30
+   ]
+  },
+  "results": {
+   "dish_OOO": {
+    "return": 216.66666666666666,
+    "min": 200.0,
+    "served": {
+     "OOO": 10.833333333333334
+    }
+   },
+   "dish_OT": {
+    "return": 161.66666666666666,
+    "min": 160.0,
+    "served": {
+     "OT": 16.166666666666668
+    }
+   },
+   "dish_OOTT": {
+    "return": 340.0,
+    "min": 320.0,
+    "served": {
+     "OOTT": 8.5
+    }
+   },
+   "dish_OOOTT": {
+    "return": 420.0,
+    "min": 420.0,
+    "served": {
+     "OOOTT": 7.0
+    }
+   },
+   "dish_OOTTT": {
+    "return": 420.0,
+    "min": 360.0,
+    "served": {
+     "OOTTT": 7.0
+    }
+   },
+   "valuable": {
+    "return": 410.0,
+    "min": 360.0,
+    "served": {
+     "OOOTT": 5.0,
+     "OOTTT": 1.8333333333333333
+    }
+   },
+   "onion_script": {
+    "return": 0.0,
+    "min": 0.0,
+    "served": {
+     "OOOOO": 6.0
+    }
+   },
+   "alone": {
+    "return": 150.0,
+    "min": 0.0,
+    "served": {}
+   }
+  },
+  "best": "dish_OOOTT"
+ }
+}

@@ -39,7 +39,7 @@ echo "extracting ${EXP} partners for ${LAYOUT}"
 # live in a different W&B project. Extracting them from Overcooked finds
 # nothing (job 54488: "num of runs: 0", exit 0, empty pool).
 case "$LAYOUT" in
-    *_m|*_mx) WB_PROJECT=Overcooked-new ;;
+    *_m|*_mx|*_cx) WB_PROJECT=Overcooked-new ;;
     *) WB_PROJECT=overcooked ;;
 esac
 python extract_models/extract_bias_agents_models.py "$LAYOUT" "$WB_PROJECT" "$EXP" || exit 1
