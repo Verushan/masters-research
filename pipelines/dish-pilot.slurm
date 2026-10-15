@@ -9,14 +9,15 @@
 
 # Complex-dish pilot (Phase 2a, 15 Oct plan): can stage-1 self-play learn the
 # `_cx` menus, where the best dish takes five ingredients of two kinds and an
-# all-onion pot pays nothing? One array task per (layout, seed), stage 1 only,
+# all-onion pot pays nothing? Includes the split-pantry kitchen (Phase 3), where
+# the valuable dishes need both cooks. One array task per (layout, seed), stage 1 only,
 # logged as `{arm}-cx` so nothing collides with the static-menu runs.
 #
 # Two arms, the hand-shaped baseline and MORL in its most competitive form
 # (dense objectives annealed like the baseline's shaping, deliveries credited to
 # the team), both on the `dishes` objective set so both log the same breakdown:
-#   sbatch --array=0-5 dish-pilot.slurm                                   # bench_sp
-#   ARM=bench_morl_ann MORL_TEAM_TASK=1 sbatch --array=0-5 --export=ALL dish-pilot.slurm
+#   sbatch --array=0-8 dish-pilot.slurm                                   # bench_sp
+#   ARM=bench_morl_ann MORL_TEAM_TASK=1 sbatch --array=0-8 --export=ALL dish-pilot.slurm
 #
 # Scripted references (what each cooking strategy is worth, a cook alone):
 #   python experiments/dish_check.py   -> experiments/results/dish_check.json
@@ -36,7 +37,7 @@ conda activate zsceval
 # .env sets a repo-wide ROLLOUT_THREADS, and it is the PPO batch size; every
 # stage-1 run we compare against used 12.
 export ROLLOUT_THREADS=${DISH_ROLLOUT_THREADS:-12}
-read -r -a LAYOUT_LIST <<< "${LAYOUTS:-unident_s_cx random1_cx}"
+read -r -a LAYOUT_LIST <<< "${LAYOUTS:-unident_s_cx random1_cx pantry_cx}"
 read -r -a SEED_LIST <<< "${SEEDS:-1 2 3}"
 ARM=${ARM:-bench_sp}
 export OBJECTIVES=${OBJECTIVES:-dishes}

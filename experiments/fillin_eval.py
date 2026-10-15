@@ -229,7 +229,10 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0, part
     install(segments[0][1])
     rnn = np.zeros((1, all_args.recurrent_N, all_args.hidden_size), dtype=np.float32)
     masks = np.ones((1, 1), dtype=np.float32)
-    rec = {k: [] for k in ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact")}
+    # sparse: the team's delivery reward this step. On the multi-recipe menus a
+    # soup's worth varies (10-60), so soups/100 alone undercounts big dishes.
+    keys = ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact", "sparse")
+    rec = {k: [] for k in keys}
     totals = None
 
     for t in range(all_args.episode_length):
@@ -278,6 +281,7 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0, part
         rec["blocked"].append(blocked)
         rec["stay"].append(agent_action == Action.STAY)
         rec["idle_interact"].append(idle_interacts(shaped[seat]))
+        rec["sparse"].append(float(sum(info["sparse_r_by_agent"])))
         if np.all(dones):
             break
     return rec

@@ -611,8 +611,37 @@ gives `bench_morl_ann` weights `0,20,3,3,3,3`, so the end-of-training reward is 
 - Soups of 4–5 ingredients count as `deliver_size_three_order`. `SHAPED_INFOS` is the HSP weight index and does
   not grow.
 
-**Pilot.** `pipelines/dish-pilot.slurm` runs stage-1 `bench_sp` and `bench_morl_ann` (`MORL_TEAM_TASK=1`), both
-kitchens × 3 seeds, 5e6 steps, as `{arm}-cx`. Checks: `scripts/overcooked/morl/check_complex_dishes.py` (7).
+**Handmade kitchens (Phase 3)** use the same menu. Scripted pricing (best dish vs onion-only; the share one cook
+alone keeps):
+
+| Kitchen | Idea | Best vs onion | Alone keeps |
+| --- | --- | --- | --- |
+| `pantry_cx` | Onions on the left, tomatoes on the right, shared pots in the dividing wall | 1.97× | 0% |
+| `doorway_cx` | Pantry and stove rooms joined by one door (the door walls are counters) | 1.97× | 96% |
+| `bigkitchen_cx` | 4 pots, 2 windows, open room | 1.78× | 75% |
+
+- `pantry_cx` is the strongest candidate: the valuable dishes need both cooks and no counter handover. On the
+  fill-in suite it is the one kitchen where knowing the partner pays. The oracle scores 24 reward/100 beside a
+  server, where the blind generalist scores 0.
+- In `doorway_cx` a second scripted cook mostly gets in the way. Learned agents could pass items over the door
+  counters, which scripts cannot do.
+- Start tiles matter for the idle-partner test. An idle partner on a door mouth or a dispenser's only access tile
+  cuts the kitchen off, which is why `doorway_cx` puts player 1 at (2,1).
+
+**Pilot.** `pipelines/dish-pilot.slurm` runs stage-1 `bench_sp` and `bench_morl_ann` (`MORL_TEAM_TASK=1`) on
+unident_s_cx, random1_cx and pantry_cx × 3 seeds, 5e6 steps, as `{arm}-cx`. Checks:
+`scripts/overcooked/morl/check_complex_dishes.py` (8).
+
+**Script options added for these kitchens** (`OrderCook`, all opt-in):
+
+- `idle_move`: a cook with nothing to do steps aside.
+- `break_loops`: breaks a two-cook mirror livelock. It caused the big kitchen's zero games.
+- `solo`: only dishes it can finish alone, judged by reachable dispensers.
+- The `menu_*` personalities and the `dish_*` cooks use the first two. The multi-recipe fill-in oracle beside a
+  server or an idle partner uses `solo`. Beside a potter it uses the generalist, because with five-ingredient
+  dishes the pot is the bottleneck.
+- Fill-in records now store `sparse` per step. `analyze_fillin.py` adds a reward/100 table, because a dish there
+  is worth 10–60.
 
 - **Fill-in on the new env.** `fillin_eval.py` / `fillin_reference.py` pick the env from the layout
   (`fillin_eval.kitchen`). Personalities have the same names but are played by dish-aware scripts (`menu_*`).
@@ -622,8 +651,6 @@ kitchens × 3 seeds, 5e6 steps, as `{arm}-cx`. Checks: `scripts/overcooked/morl/
     differences them (`step_events`).
   - The `menu_*` scripts take a random step when they have nothing to do (`idle_move`). Parked in random1's
     ring, a specialist blocked even the oracle (0 soups).
-  - On `_cx` menus the complement-only oracle is no ceiling: beside a potter it serves only, and the generalist
-    beats it (2.75 vs 2.12 soups/100 on unident_s_cx), because five-ingredient dishes make potting the bottleneck.
 - **Not done yet.** HSP partners on `_cx`. Policy configs come from `prep/store_policy_config.py unident_s_cx
   random1_cx`.
 - **Gotcha.** The tracked `planners/unident_s_m_mp.pkl` pickles a module that no longer exists (`zscbench`), so

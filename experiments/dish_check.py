@@ -7,7 +7,7 @@ spent on a menu, this prices each cooking strategy with scripted cooks that
 can execute it perfectly:
 
     dish_X + dish_X     both cooks make only recipe X, in every pot
-    valuable            order_cook_valuable: the most valuable menu dish first
+    valuable            menu_cook: the most valuable menu dish first (the fill-in generalist)
     onion_script        the old order-blind onion script (fills pots with onions)
     alone               dish_<best> + idle: how much the second cook is worth
 
@@ -79,7 +79,7 @@ def main():
         menu = {code(r): (r.value, r.time) for r in map(Recipe.from_dict, mdp.start_all_orders)}
         print(f"== {layout}: menu " + ", ".join(f"{k} {v}/{t}t" for k, (v, t) in menu.items()))
         pairs = {f"dish_{k}": (f"dish_{k}", f"dish_{k}") for k in menu}
-        pairs["valuable"] = ("order_cook_valuable", "order_cook_valuable")
+        pairs["valuable"] = ("menu_cook", "menu_cook")
         pairs["onion_script"] = ("place_onion_and_deliver_soup", "place_onion_and_deliver_soup")
         res = {}
         for name, pair in pairs.items():

@@ -163,5 +163,251 @@
    }
   },
   "best": "dish_OOOTT"
+ },
+ "pantry_cx": {
+  "menu": {
+   "OOO": [
+    20,
+    20
+   ],
+   "OT": [
+    10,
+    10
+   ],
+   "OOTT": [
+    40,
+    25
+   ],
+   "OOOTT": [
+    60,
+    30
+   ],
+   "OOTTT": [
+    60,
+    30
+   ]
+  },
+  "results": {
+   "dish_OOO": {
+    "return": 213.33333333333334,
+    "min": 200.0,
+    "served": {
+     "OOO": 10.666666666666666
+    }
+   },
+   "dish_OT": {
+    "return": 145.0,
+    "min": 140.0,
+    "served": {
+     "OT": 14.5
+    }
+   },
+   "dish_OOTT": {
+    "return": 360.0,
+    "min": 360.0,
+    "served": {
+     "OOTT": 9.0
+    }
+   },
+   "dish_OOOTT": {
+    "return": 420.0,
+    "min": 420.0,
+    "served": {
+     "OOOTT": 7.0
+    }
+   },
+   "dish_OOTTT": {
+    "return": 420.0,
+    "min": 420.0,
+    "served": {
+     "OOTTT": 7.0
+    }
+   },
+   "valuable": {
+    "return": 420.0,
+    "min": 420.0,
+    "served": {
+     "OOOTT": 4.666666666666667,
+     "OOTTT": 2.3333333333333335
+    }
+   },
+   "onion_script": {
+    "return": 0.0,
+    "min": 0.0,
+    "served": {
+     "OOOOO": 5.833333333333333
+    }
+   },
+   "alone": {
+    "return": 0.0,
+    "min": 0.0,
+    "served": {}
+   }
+  },
+  "best": "dish_OOOTT"
+ },
+ "bigkitchen_cx": {
+  "menu": {
+   "OOO": [
+    20,
+    20
+   ],
+   "OT": [
+    10,
+    10
+   ],
+   "OOTT": [
+    40,
+    25
+   ],
+   "OOOTT": [
+    60,
+    30
+   ],
+   "OOTTT": [
+    60,
+    30
+   ]
+  },
+  "results": {
+   "dish_OOO": {
+    "return": 180.0,
+    "min": 140.0,
+    "served": {
+     "OOO": 9.0
+    }
+   },
+   "dish_OT": {
+    "return": 113.33333333333333,
+    "min": 90.0,
+    "served": {
+     "OT": 11.333333333333334
+    }
+   },
+   "dish_OOTT": {
+    "return": 246.66666666666666,
+    "min": 200.0,
+    "served": {
+     "OOTT": 6.166666666666667
+    }
+   },
+   "dish_OOOTT": {
+    "return": 320.0,
+    "min": 240.0,
+    "served": {
+     "OOOTT": 5.333333333333333
+    }
+   },
+   "dish_OOTTT": {
+    "return": 290.0,
+    "min": 240.0,
+    "served": {
+     "OOTTT": 4.833333333333333
+    }
+   },
+   "valuable": {
+    "return": 316.6666666666667,
+    "min": 260.0,
+    "served": {
+     "OOO": 0.3333333333333333,
+     "OOOTT": 4.166666666666667,
+     "OOTTT": 1.0
+    }
+   },
+   "onion_script": {
+    "return": 0.0,
+    "min": 0.0,
+    "served": {
+     "OOOOO": 1.3333333333333333
+    }
+   },
+   "alone": {
+    "return": 240.0,
+    "min": 240.0,
+    "served": {}
+   }
+  },
+  "best": "dish_OOOTT"
+ },
+ "doorway_cx": {
+  "menu": {
+   "OOO": [
+    20,
+    20
+   ],
+   "OT": [
+    10,
+    10
+   ],
+   "OOTT": [
+    40,
+    25
+   ],
+   "OOOTT": [
+    60,
+    30
+   ],
+   "OOTTT": [
+    60,
+    30
+   ]
+  },
+  "results": {
+   "dish_OOO": {
+    "return": 126.66666666666667,
+    "min": 120.0,
+    "served": {
+     "OOO": 6.333333333333333
+    }
+   },
+   "dish_OT": {
+    "return": 91.66666666666667,
+    "min": 90.0,
+    "served": {
+     "OT": 9.166666666666666
+    }
+   },
+   "dish_OOTT": {
+    "return": 213.33333333333334,
+    "min": 200.0,
+    "served": {
+     "OOTT": 5.333333333333333
+    }
+   },
+   "dish_OOOTT": {
+    "return": 250.0,
+    "min": 240.0,
+    "served": {
+     "OOOTT": 4.166666666666667
+    }
+   },
+   "dish_OOTTT": {
+    "return": 240.0,
+    "min": 240.0,
+    "served": {
+     "OOTTT": 4.0
+    }
+   },
+   "valuable": {
+    "return": 270.0,
+    "min": 240.0,
+    "served": {
+     "OOOTT": 4.5
+    }
+   },
+   "onion_script": {
+    "return": 0.0,
+    "min": 0.0,
+    "served": {
+     "OOOOO": 3.0
+    }
+   },
+   "alone": {
+    "return": 240.0,
+    "min": 240.0,
+    "served": {}
+   }
+  },
+  "best": "dish_OOOTT"
  }
 }

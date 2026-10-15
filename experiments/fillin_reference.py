@@ -64,12 +64,29 @@ COMPLEMENT = {
 NEW_REF_AGENTS = {
     "tomato_cook": dict(make=_new_script("menu_cook_tomato")),
     "onion_cook": dict(make=_new_script("menu_cook_onion")),
+    "solo_cook": dict(make=_new_script("menu_cook_solo")),
+    "solo_potter": dict(make=_new_script("menu_potter_solo")),
+}
+# The multi-recipe oracle differs in two places. Beside a potter it cooks as
+# well as serving: with five-ingredient dishes the pot is the bottleneck, and the
+# serve-only complement lost to the blind generalist (2.12 vs 2.75 soups/100 on
+# unident_s_cx). Beside a server or an idle partner, who never pot, it makes
+# only dishes it can finish alone, which in a split pantry means onion soup on
+# its own side. Not beside the clutterer: the onions it leaves on the shared
+# counter let a full cook finish mixed dishes (45 vs 20 reward/100 on pantry_cx).
+NEW_COMPLEMENT = {
+    **COMPLEMENT,
+    "potter": "generalist",
+    "server": "solo_potter",
+    "idle": "solo_cook",
 }
 
 
 def run_episode(env, schedule, mode, seat, partners=None):
     partners = partners or PARTNERS
-    agents = {**partners, **(NEW_REF_AGENTS if partners is not PARTNERS else {})}
+    new = partners is not PARTNERS
+    agents = {**partners, **(NEW_REF_AGENTS if new else {})}
+    complement = NEW_COMPLEMENT if new else COMPLEMENT
     obs, _share, available = env.reset()
     base, mdp = env.base_env, env.base_mdp
     partner_seat = 1 - seat
@@ -85,11 +102,14 @@ def run_episode(env, schedule, mode, seat, partners=None):
         # The generalist keeps its own state across a swap: it has no idea the
         # partner changed. The oracle is replaced with the new complement.
         if agent is None or mode == "oracle":
-            agent = agents[COMPLEMENT[partner_name] if mode == "oracle" else "generalist"]["make"]()
+            agent = agents[complement[partner_name] if mode == "oracle" else "generalist"]["make"]()
             agent.reset(mdp, base.state, seat)
 
     install(segments[0][1])
-    rec = {k: [] for k in ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact")}
+    # sparse: the team's delivery reward this step. On the multi-recipe menus a
+    # soup's worth varies (10-60), so soups/100 alone undercounts big dishes.
+    keys = ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact", "sparse")
+    rec = {k: [] for k in keys}
     totals = None
     for t in range(400):
         if seg_i + 1 < len(segments) and t >= segments[seg_i + 1][0]:
@@ -122,6 +142,7 @@ def run_episode(env, schedule, mode, seat, partners=None):
         rec["blocked"].append(blocked)
         rec["stay"].append(agent_action == Action.STAY)
         rec["idle_interact"].append(idle_interacts(shaped[seat]))
+        rec["sparse"].append(float(sum(info["sparse_r_by_agent"])))
         if np.all(dones):
             break
     return rec

@@ -47,7 +47,8 @@ import numpy as np
 sys.path.insert(0, osp.dirname(osp.abspath(__file__)))
 from compare_arms import permutation_test  # noqa: E402
 
-NEGLECT_PARTNERS = ("potter", "server", "idle", "clutter")
+# onion_potter / tomato_potter: the multi-recipe env's ingredient specialists.
+NEGLECT_PARTNERS = ("potter", "server", "idle", "clutter", "onion_potter", "tomato_potter")
 PREFERENCE_PARTNERS = ("generalist", "dial2", "dial5", "dial8")
 RATE_THRESHOLD = 1.0  # completions per 100 steps that count as "does this task"
 # Step 8: what the Step 7 arms never trained with. Their partners were potter,
@@ -88,6 +89,8 @@ def segment_metrics(ep, partner, start, end, idx, tasks, covers):
         "start": start,
         "steps": steps,
         "soups_per_100": float(done[:, :, 3].sum() / steps * 100),
+        # Records from before `sparse` was stored have no value column.
+        "value_per_100": float(np.sum(ep["sparse"][start:end]) / steps * 100) if "sparse" in ep else None,
         "agent_tasks": agent.tolist(),
         "agent_rate": (agent / steps * 100).tolist(),
         "partner_tasks": part.tolist(),
@@ -148,7 +151,8 @@ def agent_summary(payload):
         sel = lambda s, p=p: whole(s) and s["partner"] == p  # noqa: E731
         out["by_partner"][p] = {
             k: mean(k, sel)
-            for k in ("soups_per_100", "coverage", "duplication", "pot_share", "entropy", "stay", "blocked")
+            for k in ("soups_per_100", "value_per_100", "coverage", "duplication", "pot_share", "entropy", "stay",
+                      "blocked")  # fmt: skip
         }
         for seat in (0, 1):
             here = lambda s, p=p, seat=seat: whole(s) and s["partner"] == p and s["seat"] == seat  # noqa: E731
@@ -249,15 +253,26 @@ def main():
 
     print("\nsoups/100 by partner (single-partner episodes, both seats)")
     ps = NEGLECT_PARTNERS + PREFERENCE_PARTNERS
-    print(f"{'arm':{width}s} " + "".join(f"{p:>11s}" for p in ps))
+    print(f"{'arm':{width}s} " + "".join(f"{p:>14s}" for p in ps))
     for arm, d in arms.items():
         print(
             f"{arm:{width}s} "
             + "".join(
-                f"{d['by_partner'][p]['soups_per_100']:11.2f}" if d["by_partner"][p]["soups_per_100"] is not None else f"{'-':>11s}"
+                f"{d['by_partner'][p]['soups_per_100']:14.2f}" if d["by_partner"][p]["soups_per_100"] is not None else f"{'-':>14s}"
                 for p in ps
             )
         )
+    if any(d["by_partner"][p]["value_per_100"] is not None for d in arms.values() for p in ps):
+        print("\nteam reward/100 steps by partner (multi-recipe menus, where a dish is worth 10-60)")
+        print(f"{'arm':{width}s} " + "".join(f"{p:>14s}" for p in ps))
+        for arm, d in arms.items():
+            print(
+                f"{arm:{width}s} "
+                + "".join(
+                    f"{d['by_partner'][p]['value_per_100']:14.2f}" if d["by_partner"][p]["value_per_100"] is not None else f"{'-':>14s}"
+                    for p in ps
+                )
+            )
 
     print("\nsoups/100 by seat (seat 0 / seat 1), neglect partners")
     for arm, d in arms.items():
@@ -276,12 +291,12 @@ def main():
         print(f"{arm:{width}s} " + "  ".join(pairs))
 
     print("\naction entropy by partner (nats; max 1.79): how random the agent's moves are with each personality")
-    print(f"{'arm':{width}s} " + "".join(f"{p:>11s}" for p in ps))
+    print(f"{'arm':{width}s} " + "".join(f"{p:>14s}" for p in ps))
     for arm, d in arms.items():
         print(
             f"{arm:{width}s} "
             + "".join(
-                f"{d['by_partner'][p]['entropy']:11.2f}" if d["by_partner"][p]["entropy"] is not None else f"{'-':>11s}"
+                f"{d['by_partner'][p]['entropy']:14.2f}" if d["by_partner"][p]["entropy"] is not None else f"{'-':>14s}"
                 for p in ps
             )
         )
