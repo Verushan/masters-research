@@ -17,11 +17,12 @@ pre-registered comparisons (experiments/report/preregistration-2026-10-15-swaps.
          does MORL need swap training less than the hand-shaped reward does?
 
     python experiments/analyze_swaps.py \\
-        --records experiments/results/cross_play_unident_s_hsp_noswap_swap200.json \\
+        --records experiments/results/cross_play_unident_s_hsp_swaps_swap200.json.gz \\
         --out experiments/results/swaps_unident_s.json
 """
 
 import argparse
+import gzip
 import json
 import os.path as osp
 import re
@@ -49,7 +50,7 @@ def per_run(records_paths):
     runs = defaultdict(lambda: defaultdict(list))
     swap_step = None
     for path in records_paths:
-        d = json.load(open(path))
+        d = json.load(gzip.open(path, "rt") if path.endswith(".gz") else open(path))
         swap_step = d.get("swap_step") or swap_step
         for r in d["records"]:
             if "partner_seat" not in r:

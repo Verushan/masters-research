@@ -41,6 +41,7 @@ SOURCES = {
         "metrics_unident_s_hsp_mix50.json",
         "metrics_unident_s_hsp_family16.json",
         "metrics_unident_s_hsp_family16mix.json",
+        "metrics_unident_s_hsp_noswap.json",
     ],
     "random1": [
         "metrics_random1_hsp_scripted.json",
@@ -48,6 +49,7 @@ SOURCES = {
         "metrics_random1_hsp_mix50.json",
         "metrics_random1_hsp_family16.json",
         "metrics_random1_hsp_family16mix.json",
+        "metrics_random1_hsp_noswap.json",
     ],
     "random3": ["metrics_random3_hsp_scripted.json", "metrics_random3_hsp_mix50.json"],
 }

@@ -1,0 +1,389 @@
+{
+ "swap_step": 200,
+ "arms": {
+  "bench_sp": {
+   "label": "Stage-1 self-play",
+   "n": 1,
+   "before": 89.5,
+   "after": 87.0,
+   "kept": 0.9720670391061452,
+   "after_sd": null,
+   "runs": {
+    "bench_sp_s1": {
+     "before": 89.5,
+     "after": 87.0,
+     "kept": 0.9720670391061452,
+     "games": 160
+    }
+   }
+  },
+  "s2_scripted-hand": {
+   "label": "A: hand-shaped, trained with swaps",
+   "n": 10,
+   "before": 116.9875,
+   "after": 122.4,
+   "kept": 1.0466989721427358,
+   "after_sd": 5.3763887094922325,
+   "runs": {
+    "s2_scripted-hand_s1": {
+     "before": 116.0,
+     "after": 123.5,
+     "kept": 1.0646551724137931,
+     "games": 160
+    },
+    "s2_scripted-hand_s2": {
+     "before": 113.5,
+     "after": 117.625,
+     "kept": 1.0363436123348018,
+     "games": 160
+    },
+    "s2_scripted-hand_s3": {
+     "before": 113.125,
+     "after": 123.5,
+     "kept": 1.0917127071823205,
+     "games": 160
+    },
+    "s2_scripted-hand_s4": {
+     "before": 114.875,
+     "after": 122.5,
+     "kept": 1.0663764961915125,
+     "games": 160
+    },
+    "s2_scripted-hand_s5": {
+     "before": 123.0,
+     "after": 126.0,
+     "kept": 1.024390243902439,
+     "games": 160
+    },
+    "s2_scripted-hand_s6": {
+     "before": 115.375,
+     "after": 113.0,
+     "kept": 0.9794149512459371,
+     "games": 160
+    },
+    "s2_scripted-hand_s7": {
+     "before": 116.75,
+     "after": 128.875,
+     "kept": 1.1038543897216273,
+     "games": 160
+    },
+    "s2_scripted-hand_s8": {
+     "before": 120.375,
+     "after": 127.375,
+     "kept": 1.0581516095534786,
+     "games": 160
+    },
+    "s2_scripted-hand_s9": {
+     "before": 125.75,
+     "after": 126.375,
+     "kept": 1.0049701789264414,
+     "games": 160
+    },
+    "s2_scripted-hand_s10": {
+     "before": 111.125,
+     "after": 115.25,
+     "kept": 1.0371203599550056,
+     "games": 160
+    }
+   }
+  },
+  "s2_scripted-handns": {
+   "label": "A-ns: hand-shaped, no swaps",
+   "n": 10,
+   "before": 114.9625,
+   "after": 112.8625,
+   "kept": 0.9744602418407069,
+   "after_sd": 22.389035790116356,
+   "runs": {
+    "s2_scripted-handns_s1": {
+     "before": 116.625,
+     "after": 114.125,
+     "kept": 0.9785637727759914,
+     "games": 160
+    },
+    "s2_scripted-handns_s2": {
+     "before": 116.75,
+     "after": 109.375,
+     "kept": 0.936830835117773,
+     "games": 160
+    },
+    "s2_scripted-handns_s3": {
+     "before": 132.875,
+     "after": 136.875,
+     "kept": 1.0301034807149576,
+     "games": 160
+    },
+    "s2_scripted-handns_s4": {
+     "before": 125.625,
+     "after": 129.375,
+     "kept": 1.0298507462686568,
+     "games": 160
+    },
+    "s2_scripted-handns_s5": {
+     "before": 121.625,
+     "after": 111.375,
+     "kept": 0.9157245632065776,
+     "games": 160
+    },
+    "s2_scripted-handns_s6": {
+     "before": 86.75,
+     "after": 83.25,
+     "kept": 0.9596541786743515,
+     "games": 160
+    },
+    "s2_scripted-handns_s7": {
+     "before": 123.25,
+     "after": 131.125,
+     "kept": 1.063894523326572,
+     "games": 160
+    },
+    "s2_scripted-handns_s8": {
+     "before": 111.125,
+     "after": 119.0,
+     "kept": 1.0708661417322836,
+     "games": 160
+    },
+    "s2_scripted-handns_s9": {
+     "before": 90.125,
+     "after": 66.25,
+     "kept": 0.7350901525658807,
+     "games": 160
+    },
+    "s2_scripted-handns_s10": {
+     "before": 124.875,
+     "after": 127.875,
+     "kept": 1.024024024024024,
+     "games": 160
+    }
+   }
+  },
+  "s2_scripted-noann2": {
+   "label": "C2': MORL, trained with swaps",
+   "n": 10,
+   "before": 116.35,
+   "after": 121.775,
+   "kept": 1.0470671507633926,
+   "after_sd": 10.686147575248997,
+   "runs": {
+    "s2_scripted-noann2_s1": {
+     "before": 114.25,
+     "after": 116.75,
+     "kept": 1.0218818380743981,
+     "games": 160
+    },
+    "s2_scripted-noann2_s2": {
+     "before": 123.25,
+     "after": 128.875,
+     "kept": 1.0456389452332657,
+     "games": 160
+    },
+    "s2_scripted-noann2_s3": {
+     "before": 117.375,
+     "after": 123.75,
+     "kept": 1.0543130990415335,
+     "games": 160
+    },
+    "s2_scripted-noann2_s4": {
+     "before": 121.75,
+     "after": 128.625,
+     "kept": 1.0564681724845997,
+     "games": 160
+    },
+    "s2_scripted-noann2_s5": {
+     "before": 90.75,
+     "after": 98.5,
+     "kept": 1.0853994490358128,
+     "games": 160
+    },
+    "s2_scripted-noann2_s6": {
+     "before": 122.75,
+     "after": 128.375,
+     "kept": 1.0458248472505092,
+     "games": 160
+    },
+    "s2_scripted-noann2_s7": {
+     "before": 128.375,
+     "after": 138.125,
+     "kept": 1.0759493670886076,
+     "games": 160
+    },
+    "s2_scripted-noann2_s8": {
+     "before": 116.0,
+     "after": 119.5,
+     "kept": 1.0301724137931034,
+     "games": 160
+    },
+    "s2_scripted-noann2_s9": {
+     "before": 117.5,
+     "after": 119.75,
+     "kept": 1.0191489361702128,
+     "games": 160
+    },
+    "s2_scripted-noann2_s10": {
+     "before": 111.5,
+     "after": 115.5,
+     "kept": 1.0358744394618835,
+     "games": 160
+    }
+   }
+  },
+  "s2_scripted-noann2ns": {
+   "label": "C2'-ns: MORL, no swaps",
+   "n": 10,
+   "before": 118.825,
+   "after": 125.45,
+   "kept": 1.0565777927734945,
+   "after_sd": 7.918683953508661,
+   "runs": {
+    "s2_scripted-noann2ns_s1": {
+     "before": 121.875,
+     "after": 122.625,
+     "kept": 1.0061538461538462,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s2": {
+     "before": 127.875,
+     "after": 137.875,
+     "kept": 1.078201368523949,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s3": {
+     "before": 121.875,
+     "after": 123.0,
+     "kept": 1.0092307692307692,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s4": {
+     "before": 118.125,
+     "after": 120.75,
+     "kept": 1.0222222222222221,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s5": {
+     "before": 118.0,
+     "after": 127.375,
+     "kept": 1.0794491525423728,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s6": {
+     "before": 101.75,
+     "after": 111.25,
+     "kept": 1.0933660933660934,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s7": {
+     "before": 123.5,
+     "after": 126.5,
+     "kept": 1.0242914979757085,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s8": {
+     "before": 120.125,
+     "after": 127.375,
+     "kept": 1.060353798126951,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s9": {
+     "before": 109.875,
+     "after": 120.5,
+     "kept": 1.0967007963594995,
+     "games": 160
+    },
+    "s2_scripted-noann2ns_s10": {
+     "before": 125.25,
+     "after": 137.25,
+     "kept": 1.095808383233533,
+     "games": 160
+    }
+   }
+  },
+  "s2_bench_sp": {
+   "label": "Usual stage-2",
+   "n": 10,
+   "before": 72.2125,
+   "after": 74.85,
+   "kept": 1.017693875649577,
+   "after_sd": 20.679078933926323,
+   "runs": {
+    "s2_bench_sp_s1": {
+     "before": 73.125,
+     "after": 78.25,
+     "kept": 1.07008547008547,
+     "games": 160
+    },
+    "s2_bench_sp_s2": {
+     "before": 67.5,
+     "after": 67.875,
+     "kept": 1.0055555555555555,
+     "games": 160
+    },
+    "s2_bench_sp_s3": {
+     "before": 78.625,
+     "after": 83.875,
+     "kept": 1.066772655007949,
+     "games": 160
+    },
+    "s2_bench_sp_s4": {
+     "before": 76.25,
+     "after": 88.875,
+     "kept": 1.1655737704918032,
+     "games": 160
+    },
+    "s2_bench_sp_s5": {
+     "before": 33.875,
+     "after": 24.125,
+     "kept": 0.7121771217712177,
+     "games": 160
+    },
+    "s2_bench_sp_s6": {
+     "before": 97.875,
+     "after": 101.625,
+     "kept": 1.0383141762452108,
+     "games": 160
+    },
+    "s2_bench_sp_s7": {
+     "before": 70.75,
+     "after": 74.25,
+     "kept": 1.0494699646643109,
+     "games": 160
+    },
+    "s2_bench_sp_s8": {
+     "before": 64.75,
+     "after": 64.75,
+     "kept": 1.0,
+     "games": 160
+    },
+    "s2_bench_sp_s9": {
+     "before": 78.625,
+     "after": 81.25,
+     "kept": 1.0333863275039745,
+     "games": 160
+    },
+    "s2_bench_sp_s10": {
+     "before": 80.75,
+     "after": 83.625,
+     "kept": 1.0356037151702786,
+     "games": 160
+    }
+   }
+  }
+ },
+ "tests": {
+  "H1: C2'-ns vs A-ns (after swap)": {
+   "diff": 12.587500000000006,
+   "p": 0.11424798112104613
+  },
+  "H2: swap-training benefit, hand minus MORL (after swap)": {
+   "diff": 13.212500000000006,
+   "p": 0.12515
+  },
+  "swap training helps (A)": {
+   "diff": 9.537500000000009,
+   "p": 0.24041438437723267
+  },
+  "swap training helps (C2')": {
+   "diff": -3.674999999999997,
+   "p": 0.4056810063002013
+  }
+ }
+}
