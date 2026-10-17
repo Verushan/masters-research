@@ -32,6 +32,12 @@
 #
 # Usage: sbatch --array=0-1 br-partners.slurm      # one task per layout
 #        LAYOUTS=random3 PARTNERS="12 13" sbatch --array=0 --export=ALL br-partners.slurm
+#
+# Self-play held-out partners (the complex-dish kitchens, which have no HSP set):
+#        LAYOUTS="unident_s_cx pantry_cx" \
+#        BR_ARGS="--sp_exp bench_sp-cx-lr --sp_seeds 7 8 9 10 11 12 --sp_tags mid final" \
+#        sbatch --array=0-1 --export=ALL br-partners.slurm
+# Partners are then keyed sp{seed}_{tag}; experiments/br_values.py reads the logs.
 
 cd /home-mscluster/vnaidoo/Coding/masters-research/pipelines
 
@@ -66,13 +72,15 @@ CONCURRENCY=${CONCURRENCY:-$(( ${SLURM_CPUS_PER_TASK:-14} / 7 ))}
 LOGDIR=/home-mscluster/vnaidoo/Coding/masters-research/experiments/logs/br/${LAYOUT}
 mkdir -p "$LOGDIR"
 
+# New-env layouts train at the half learning rate every agent there uses (the
+# 16 Oct stability diagnostic); BR_FLAGS="" restores the default.
 case "$LAYOUT" in
-    random0|random0_medium|random1|random3|small_corridor|unident_s) VERSION=old ;;
-    *) VERSION=new ;;
+    random0|random0_medium|random1|random3|small_corridor|unident_s) VERSION=old; BR_FLAGS=${BR_FLAGS-} ;;
+    *) VERSION=new; BR_FLAGS=${BR_FLAGS---lr 2.5e-4 --critic_lr 2.5e-4} ;;
 esac
 
 cd $PYTHONPATH/zsceval/scripts
-PARTNERS=${PARTNERS:-$(python prep/gen_br_ymls.py $LAYOUT --hsp_exp $HSP_EXP --tag $TAG | tail -1)}
+PARTNERS=${PARTNERS:-$(python prep/gen_br_ymls.py $LAYOUT ${BR_ARGS:---hsp_exp $HSP_EXP --tag $TAG} | tail -1)}
 if [ -z "$PARTNERS" ]; then
     echo "no partners for ${LAYOUT}"
     exit 1
@@ -82,7 +90,12 @@ echo "layout ${LAYOUT}, partners: ${PARTNERS}, steps ${STEPS}, concurrency ${CON
 cd $PYTHONPATH/zsceval/scripts/overcooked
 
 running=0
+n=0
 for i in $PARTNERS; do
+    n=$((n + 1))
+    # HSP partners are numbered and seed their BR by that number; self-play
+    # partners (sp{seed}_{tag}) take their position in the list.
+    if [[ "$i" =~ ^[0-9]+$ ]]; then BR_SEED=$i; else BR_SEED=$n; fi
     YML=$POLICY_POOL/${LAYOUT}/br/train_br_${i}.yml
     if [ ! -f "$YML" ]; then
         echo "### partner ${i}: no yml, skipping"
@@ -92,7 +105,7 @@ for i in $PARTNERS; do
     (
         python train/train_adaptive.py --env_name Overcooked --algorithm_name adaptive \
             --experiment_name "${EXP}" --layout_name $LAYOUT --num_agents 2 \
-            --seed $i --n_training_threads $TRAINING_THREADS \
+            --seed $BR_SEED --n_training_threads $TRAINING_THREADS \
             --n_rollout_threads $BR_ROLLOUT_THREADS --dummy_batch_size 1 \
             --episode_length 400 --num_env_steps $STEPS \
             --reward_shaping_horizon $STEPS \
@@ -105,7 +118,7 @@ for i in $PARTNERS; do
             --eval_episodes 12 --eval_stochastic \
             --population_yaml_path "$YML" \
             --population_size 1 --adaptive_agent_name "br_agent" \
-            --use_proper_time_limits \
+            --use_proper_time_limits $BR_FLAGS \
             --wandb_tags br ${LAYOUT} \
             --wandb_name $WANDB_ENTITY
     ) > "${LOGDIR}/br_${i}.log" 2>&1 &

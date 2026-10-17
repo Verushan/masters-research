@@ -73,6 +73,16 @@ LABELS = {
 }
 
 
+def partner_key(name):
+    """HSP partners by index (heldout_hsp12_final -> 12), self-play held-out
+    partners by checkpoint (heldout_sp7_mid -> "sp7_mid"), as br_values.py keys them."""
+    m = re.search(r"hsp(\d+)", name)
+    if m:
+        return int(m.group(1))
+    m = re.search(r"(sp\d+_\w+)$", name)
+    return m.group(1) if m else name
+
+
 def stochastic_cells(path):
     d = json.load(open(path))
     cells = {}
@@ -85,7 +95,8 @@ def stochastic_cells(path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--br", nargs="+", default=[osp.join(RESULTS, "br_values_unident_s_random1.json"),
-                                                 osp.join(RESULTS, "br_values_random3.json")])
+                                                 osp.join(RESULTS, "br_values_random3.json"),
+                                                 osp.join(RESULTS, "br_values_cx.json")])
     ap.add_argument("--br_value", choices=["final", "last2", "best"], default="last2")
     ap.add_argument("--out", default=osp.join(RESULTS, "br_prox.json"))
     args = ap.parse_args()
@@ -110,9 +121,10 @@ def main():
                 for p in partners:
                     vals = [cells[k] for k in ((a, p), (p, a)) if k in cells]
                     if vals:
-                        score[a][int(re.search(r"hsp(\d+)", p).group(1))].append(float(np.mean(vals)))
+                        score[a][partner_key(p)].append(float(np.mean(vals)))
         per_agent = {a: {p: float(np.mean(v)) for p, v in ps.items()} for a, ps in score.items()}
-        br = {int(k): v[args.br_value] for k, v in brs[layout].items() if v.get(args.br_value) is not None}
+        br = {int(k) if k.isdigit() else k: v[args.br_value]
+              for k, v in brs[layout].items() if v.get(args.br_value) is not None}
         # Only partners with a trained BR: a pool-max stand-in can be near zero and
         # would inflate every ratio built on it.
         partners = sorted({p for ps in per_agent.values() for p in ps} & set(br))

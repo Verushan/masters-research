@@ -35,6 +35,14 @@
 #            swaps during training -- and this separates them.
 #            Run with SPEC="handns:1-5 handns:6-10" ARMS="handns".
 #   noann2ns C2' (noann2) without swaps, the MORL counterpart of handns.
+#   dishann / dishannns   multi-recipe (`_cx`) layouts only: the MORL ego there,
+#            annealed `dishes` objectives with team-credited deliveries, with and
+#            without swaps. The neglect arms need the old env. On these layouts
+#            the specialists are the menu_* cooks plus the onion-only and
+#            tomato-only potters (gen_script_population_yml.NEW_SCRIPTS), runs log
+#            to Overcooked-new, and every arm trains at lr 2.5e-4:
+#   LAYOUT=pantry_cx SPEC="hand:1-5 hand:6-10 dishann:1-5 dishann:6-10" ARMS="hand dishann" \
+#       sbatch --array=0-3 --export=ALL fillin-train.slurm
 #
 # There is no fixed-weight task arm: `tasks` at 20,3,3,5 with team credit and
 # annealing is the hand-shaped reward exactly, step for step
@@ -101,6 +109,18 @@ SPEC=${SPEC:-"hand:1-5 hand:6-10 neglect:1-5 neglect:6-10 noann:1-5 noann:6-10"}
 ARMS=${ARMS:-"hand neglect noann"}
 EXP_TAG=${EXP_TAG:-""}
 
+# Multi-recipe layouts (the complex-dish `_cx` kitchens) run in the new env:
+# their runs log to Overcooked-new, objectives are the `dishes` set, and every
+# arm trains at the half learning rate, which the 16 Oct stability diagnostic
+# found stops the late collapse there (5/6 runs learned vs 3/6, final 223 vs 87).
+# S2_LR_FLAGS="" restores the default rate.
+case $LAYOUT in
+    random0|random0_medium|random1|random3|small_corridor|unident_s)
+        NEW_ENV=""; WB_PROJECT=Overcooked; OBJ=tasks; LR_FLAGS=${S2_LR_FLAGS-} ;;
+    *)
+        NEW_ENV=1; WB_PROJECT=Overcooked-new; OBJ=dishes; LR_FLAGS=${S2_LR_FLAGS---lr 2.5e-4 --critic_lr 2.5e-4} ;;
+esac
+
 cd $PYTHONPATH/zsceval/scripts
 
 if [ "${MODE}" = "extract" ]; then
@@ -111,9 +131,13 @@ if [ "${MODE}" = "extract" ]; then
     # The final checkpoint, as fillin-crossplay.slurm takes it, so the fill-in
     # suite and the zero-shot matrix score the same file. The task-weights
     # config is what both load the neglect arms through.
-    python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked -a fcp $EXP_FLAGS \
+    python extract_models/extract_S2_models.py --layout $LAYOUT --env $WB_PROJECT -a fcp $EXP_FLAGS \
         --checkpoint final || exit 1
-    python prep/store_policy_config.py $LAYOUT --morl_obs_weights tasks || exit 1
+    if [ -n "$NEW_ENV" ]; then
+        python prep/store_policy_config.py $LAYOUT || exit 1
+    else
+        python prep/store_policy_config.py $LAYOUT --morl_obs_weights tasks || exit 1
+    fi
     for ARM in $ARMS; do
         echo "fcp-S2-${POP}-${ARM}${EXP_TAG}: $(ls $POLICY_POOL/$LAYOUT/fcp/s2/fcp-S2-${POP}-${ARM}${EXP_TAG}/ 2>/dev/null | wc -l) checkpoints"
     done
@@ -151,9 +175,23 @@ SWAPS="--script_swap_steps 200 --script_swap_pool ${SWAP_POOL} --script_swap_pro
 NEGLECT="--use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_task \
 --morl_adaptive_target neglect --use_morl_obs_weights"
 RELAX="--morl_neglect_prior 0.5 --morl_neglect_halflife 10"
+# The new env's MORL ego: annealed `dishes` objectives, deliveries credited to
+# the team (MORL's strongest form in stage 1). dish_value at 20 is the sparse
+# reward itself, so at the end of training the ego optimises the task alone.
+DISHMORL="--use_morl --morl_objectives dishes --morl_weights 0,20,3,3,3,3 --morl_anneal_dense --morl_team_task"
 case $ARM in
-    hand)    REWARD="--morl_objectives tasks" ;;
-    handns)  REWARD="--morl_objectives tasks"; SWAPS="" ;;
+    neglect*|noann*)
+        # The neglect rule shows the ego its weights (--use_morl_obs_weights),
+        # which only the old env supports.
+        if [ -n "$NEW_ENV" ]; then echo "arm ${ARM} needs the old env; on ${LAYOUT} use dishann"; exit 1; fi ;;
+    dishann*)
+        if [ -z "$NEW_ENV" ]; then echo "arm ${ARM} is for the multi-recipe layouts"; exit 1; fi ;;
+esac
+case $ARM in
+    hand)    REWARD="--morl_objectives ${OBJ}" ;;
+    handns)  REWARD="--morl_objectives ${OBJ}"; SWAPS="" ;;
+    dishann)   REWARD="${DISHMORL}" ;;
+    dishannns) REWARD="${DISHMORL}"; SWAPS="" ;;
     neglect) REWARD="${NEGLECT} --morl_anneal_dense" ;;
     noann)   REWARD="${NEGLECT}" ;;
     neglect2) REWARD="${NEGLECT} ${RELAX} --morl_anneal_dense" ;;
@@ -163,7 +201,7 @@ case $ARM in
     noann2ns) REWARD="${NEGLECT} ${RELAX}"; SWAPS="" ;;
     *) echo "unknown arm '${ARM}' (expected one of: ${ARMS})"; exit 1 ;;
 esac
-export EGO_FLAGS="${REWARD} ${SWAPS}"
+export EGO_FLAGS="${REWARD} ${SWAPS} ${LR_FLAGS}"
 
 # Stagger the array: two tasks of one arm share a run directory, and starting
 # together they raced first on creating it (fixed with exist_ok) and then inside
@@ -178,6 +216,7 @@ sleep $((IDX * 60))
 # paired. With K=1 there is no other partner to swap to, so no swaps. The
 # experiment is fcp-S2-scripted-{arm}-k{K}; extract with EXP_TAG=-k{K}.
 if [ -n "$K" ]; then
+    if [ -n "$NEW_ENV" ]; then echo "the partner-removal rotation is written for the old env's five specialists"; exit 1; fi
     PARTNERS=(potter server idle dial2 dial8)
     if [ "$K" -lt 1 ] || [ "$K" -gt 5 ]; then
         echo "pool size K=${K} must be 1-5"
