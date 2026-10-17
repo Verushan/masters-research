@@ -632,6 +632,36 @@ alone keeps):
 unident_s_cx, random1_cx and pantry_cx × 3 seeds, 5e6 steps, as `{arm}-cx`. Checks:
 `scripts/overcooked/morl/check_complex_dishes.py` (8).
 
+**Stability (16 Oct diagnostic).** In the 5e6 pilot, 4 of the 7 runs that learned collapsed in the last 1–2M
+steps. In the clearest case, entropy rose back to about 1.39 while the actor gradient norm fell to about 0.03:
+a dead policy. Single-change variants of `bench_sp`, 6 runs each:
+
+| Variant | Learned | Held to the end | Mean final |
+| --- | --- | --- | --- |
+| pilot | 3 | 2 | 87 |
+| `-cx-shape2` (shaping horizon 1e7) | 4 | 3 | 143 |
+| **`-cx-lr` (lr and critic_lr 2.5e-4)** | **5** | **4** | **223** |
+| `-cx-ent` (final entropy 0.03) | 1 | 1 | 43 |
+
+Every Phase 4 agent on these kitchens trains at lr 2.5e-4. `fillin-train.slurm` and `br-partners.slurm` default to it
+on new-env layouts. In stage 1, pass `DISH_FLAGS="--lr 2.5e-4 --critic_lr 2.5e-4" EXP_SUFFIX=-cx-lr`.
+
+On unident_s_cx, `bench_sp` often settles for onion soup only. The one MORL run that learned went for the 60-point
+mixed dishes before it collapsed (pilot, default lr).
+
+**Phase 4 setup** (unident_s_cx, pantry_cx):
+
+- **Stage 1.** `bench_sp-cx-lr` seeds 1–12: 1–6 are the population, 7–12 the self-play held-out set.
+  `bench_morl_ann-cx-lr` seeds 1–6. Both are registered in `gen_arm_S2_yml.py`.
+- **Specialist arms.** `fillin-train.slurm` arms `hand` and `dishann` / `dishannns`. On multi-recipe layouts
+  `gen_script_population_yml.py` uses `NEW_SCRIPTS`: `menu_*` cooks plus the onion-only and tomato-only potters,
+  7 training partners.
+- **BR-Prox.** `br-partners.slurm` with
+  `BR_ARGS="--sp_exp bench_sp-cx-lr --sp_seeds 7 8 9 10 11 12 --sp_tags mid final"`. `experiments/br_values.py`
+  parses the logs. `br_prox.py` keys partners as `sp{seed}_{tag}`.
+- **Limitation.** The neglect arms (C2′) need `--use_morl_obs_weights`, which is old-env only, so they cannot run
+  here.
+
 **Script options added for these kitchens** (`OrderCook`, all opt-in):
 
 - `idle_move`: a cook with nothing to do steps aside.
