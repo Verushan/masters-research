@@ -165,12 +165,19 @@ SEED_MAX=${SEEDS##*-}
 
 # The swap pool is the training partners, by script name, as the yml generator
 # reports them -- so the two cannot drift apart.
-SWAP_POOL=$(python prep/gen_script_population_yml.py $LAYOUT --name $POP ${INCLUDE:+--include $INCLUDE} --repeat $REPEAT --family $FAMILY ${SCRIPT_PARTNERS:+--partners $SCRIPT_PARTNERS} | sed -n 's/^swap pool: //p')
-if [ -z "$SWAP_POOL" ]; then
+GEN_OUT=$(python prep/gen_script_population_yml.py $LAYOUT --name $POP ${INCLUDE:+--include $INCLUDE} --repeat $REPEAT --family $FAMILY ${SCRIPT_PARTNERS:+--partners $SCRIPT_PARTNERS}) || exit 1
+SWAP_POOL=$(echo "$GEN_OUT" | sed -n 's/^swap pool: //p')
+if [ -n "$SWAP_POOL" ]; then
+    SWAPS="--script_swap_steps 200 --script_swap_pool ${SWAP_POOL} --script_swap_prob 0.5"
+elif [ "$SCRIPT_PARTNERS" = "none" ] && [ -n "$INCLUDE" ] && [ "$FAMILY" = "0" ]; then
+    # No scripts at all: the usual learned population alone (INCLUDE), as the
+    # baseline stage-2 arms on the complex-dish kitchens train. Nothing to swap.
+    #   POP=usual INCLUDE=pantry_cx/fcp/s2/train-bench_sp-cx-lr.yml SCRIPT_PARTNERS=none ...
+    SWAPS=""
+else
     echo "gen_script_population_yml.py did not report a swap pool"
     exit 1
 fi
-SWAPS="--script_swap_steps 200 --script_swap_pool ${SWAP_POOL} --script_swap_prob 0.5"
 
 NEGLECT="--use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_task \
 --morl_adaptive_target neglect --use_morl_obs_weights"
