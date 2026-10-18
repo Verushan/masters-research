@@ -69,7 +69,8 @@ BR_ROLLOUT_THREADS=${BR_ROLLOUT_THREADS:-12}
 CONCURRENCY=${CONCURRENCY:-$(( ${SLURM_CPUS_PER_TASK:-14} / 7 ))}
 [ "$CONCURRENCY" -lt 1 ] && CONCURRENCY=1
 
-LOGDIR=/home-mscluster/vnaidoo/Coding/masters-research/experiments/logs/br/${LAYOUT}
+# BR_LOGDIR keeps a second budget's logs apart (br_values.py --logs reads them).
+LOGDIR=${BR_LOGDIR:-/home-mscluster/vnaidoo/Coding/masters-research/experiments/logs/br}/${LAYOUT}
 mkdir -p "$LOGDIR"
 
 # New-env layouts train at the half learning rate every agent there uses (the
