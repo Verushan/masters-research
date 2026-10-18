@@ -105,7 +105,9 @@ def main():
         arm = "s2_" + exp[len("fcp-S2-"):]
         for s in seeds:
             actor = f"{args.layout}/fcp/s2/{exp}/{s}.pt"
-            if exp.startswith("fcp-S2-scripted-") and not exp.startswith("fcp-S2-scripted-hand"):
+            # The neglect arms only: other scripted arms (dishann on the
+            # complex-dish kitchens) see an ordinary observation.
+            if exp.startswith("fcp-S2-scripted-") and re.search(r"-(neglect|noann)", exp):
                 anneal = " morl_anneal_dense=true" if "-neglect" in exp else ""
                 # By arm name, not by the exp's last character: the partner-
                 # removal exps end in a pool size (-k1, -k3), not the arm.
