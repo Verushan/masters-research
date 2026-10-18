@@ -55,19 +55,39 @@ ARMS=${ARMS:-"scripted-hand scripted-neglect scripted-noann"}
 #   PARTNER_GROUP=heldout ...   (analyze_crossplay calls the self-play held-out group "heldout")
 S1_SEEDS=${S1_SEEDS:-1}
 NEGLECT_EXTRA=${NEGLECT_EXTRA:-}
-REF_S2=${REF_S2:-bench_sp}
+REF_S2=${REF_S2-bench_sp}
 TASK_CONFIG=rnn_policy_config_mow-tasks.pkl
 THREADS=12
 DUMMY=2
 EPISODES_STOCHASTIC=5
 TAG=${TAG:-_hsp_scripted}
 RESULTS=$PYTHONPATH/../experiments/results
+# S1_ARM fills the generator's stage-1 slot (bench_sp-cx-lr on the complex-dish
+# kitchens, whose usual reference arm is in ARMS as usual-hand: REF_S2="").
+S1_ARM=${S1_ARM:-bench_sp}
+
+# Multi-recipe layouts (the complex-dish `_cx` kitchens): the new env, runs in
+# Overcooked-new, no neglect arms and so no widened observation; the `dishes`
+# objectives are tracked for the breakdown only.
+case $LAYOUT in
+    random0|random0_medium|random1|random3|small_corridor|unident_s)
+        VERSION=old; WB_PROJECT=Overcooked
+        ENV_FLAGS=(--use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_task
+                   --morl_adaptive_target neglect --use_morl_obs_weights $NEGLECT_EXTRA) ;;
+    *)
+        VERSION=new; WB_PROJECT=Overcooked-new
+        ENV_FLAGS=(--morl_objectives dishes) ;;
+esac
 
 cd $PYTHONPATH/zsceval/scripts
-python prep/store_policy_config.py $LAYOUT --morl_obs_weights tasks || exit 1
+if [ "$VERSION" = old ]; then
+    python prep/store_policy_config.py $LAYOUT --morl_obs_weights tasks || exit 1
+else
+    python prep/store_policy_config.py $LAYOUT || exit 1
+fi
 
 for A in $ARMS; do
-    [ -n "$SKIP_EXTRACT" ] || python extract_models/extract_S2_models.py --layout $LAYOUT --env Overcooked \
+    [ -n "$SKIP_EXTRACT" ] || python extract_models/extract_S2_models.py --layout $LAYOUT --env $WB_PROJECT \
         --algorithm fcp --exp fcp-S2-${A} --checkpoint final \
         || echo "  stage-2 extraction failed for ${A}"
     echo "${A}: $(ls $POLICY_POOL/$LAYOUT/fcp/s2/fcp-S2-${A}/ 2>/dev/null | tr '\n' ' ')"
@@ -83,7 +103,7 @@ for A in $ARMS; do
     [[ "$A" == *neglect* || "$A" == *noann* ]] && CFG_FLAGS+=("${A}=${TASK_CONFIG}")
 done
 YML_OUT=$POLICY_POOL/$LAYOUT/morl_benchmark/cross_play${TAG}.yml
-YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arms bench_sp --arm_seeds $S1_SEEDS --peak_arms \
+YML=$(python prep/gen_crossplay_yml.py $LAYOUT --arms $S1_ARM --arm_seeds $S1_SEEDS --peak_arms \
     --s2_arms $ARMS $REF_S2 --s2_arm_seeds $SEEDS \
     --s2_arm_config "${CFG_FLAGS[@]}" \
     ${HELDOUT_ARGS:---heldout hsp --hsp_partners auto} --out $YML_OUT --skip_missing | tail -1)
@@ -112,11 +132,10 @@ fi
 mkdir -p $RESULTS
 cd overcooked
 common=(--env_name Overcooked --algorithm_name population --layout_name $LAYOUT
-        --num_agents 2 --seed 1 --episode_length 400 --overcooked_version old
+        --num_agents 2 --seed 1 --episode_length 400 --overcooked_version $VERSION
         --n_eval_rollout_threads $THREADS --dummy_batch_size $DUMMY
         --n_training_threads 2
-        --use_morl --morl_objectives tasks --morl_weights 20,3,3,5 --morl_team_task
-        --morl_adaptive_target neglect --use_morl_obs_weights $NEGLECT_EXTRA
+        "${ENV_FLAGS[@]}"
         --population_yaml_path $YML
         --ego_policy_names $EGOS --partner_policy_names $PARTNERS "${ORDER_FLAG[@]}")
 # SWAP_STEP=t (with HELDOUT_ONLY=1): instead of the two usual passes, one
