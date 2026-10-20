@@ -1,0 +1,230 @@
+{
+ "unident_s_cx": {
+  "sp10_final": {
+   "final": 233.33,
+   "last2": 234.16500000000002,
+   "best": 236.67,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp10_mid": {
+   "final": 81.67,
+   "last2": 77.5,
+   "best": 83.33,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp12_final": {
+   "final": 193.33,
+   "last2": 195.0,
+   "best": 208.33,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp12_mid": {
+   "final": 130.0,
+   "last2": 121.66499999999999,
+   "best": 132.5,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp15_final": {
+   "final": 258.33,
+   "last2": 259.16499999999996,
+   "best": 260.0,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp15_mid": {
+   "final": 160.0,
+   "last2": 160.0,
+   "best": 160.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp16_final": {
+   "final": 240.0,
+   "last2": 240.0,
+   "best": 240.0,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp16_mid": {
+   "final": 7.5,
+   "last2": 5.835,
+   "best": 20.83,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp17_final": {
+   "final": 220.0,
+   "last2": 213.33499999999998,
+   "best": 220.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp17_mid": {
+   "final": 146.67,
+   "last2": 145.0,
+   "best": 150.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp19_final": {
+   "final": 218.33,
+   "last2": 210.0,
+   "best": 218.33,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp19_mid": {
+   "final": 33.33,
+   "last2": 32.08,
+   "best": 125.0,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp20_final": {
+   "final": 201.67,
+   "last2": 202.5,
+   "best": 205.0,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp20_mid": {
+   "final": 6.67,
+   "last2": 5.0,
+   "best": 43.33,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp7_final": {
+   "final": 256.67,
+   "last2": 258.33500000000004,
+   "best": 260.0,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp7_mid": {
+   "final": 160.0,
+   "last2": 152.5,
+   "best": 168.33,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp9_final": {
+   "final": 203.33,
+   "last2": 201.66500000000002,
+   "best": 203.33,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp9_mid": {
+   "final": 79.17,
+   "last2": 73.75,
+   "best": 79.17,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  }
+ },
+ "pantry_cx": {
+  "sp13_final": {
+   "final": 273.33,
+   "last2": 259.16499999999996,
+   "best": 273.33,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp13_mid": {
+   "final": 343.33,
+   "last2": 343.75,
+   "best": 344.17,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp15_final": {
+   "final": 420.0,
+   "last2": 417.5,
+   "best": 420.0,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp15_mid": {
+   "final": 0.83,
+   "last2": 0.83,
+   "best": 38.33,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp17_final": {
+   "final": 70.0,
+   "last2": 70.0,
+   "best": 70.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp17_mid": {
+   "final": 38.33,
+   "last2": 49.165,
+   "best": 60.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp8_final": {
+   "final": 165.0,
+   "last2": 187.5,
+   "best": 210.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp8_mid": {
+   "final": 7.5,
+   "last2": 7.085,
+   "best": 20.83,
+   "n_evals": 42,
+   "last_step": 4996800,
+   "source": "5m"
+  },
+  "sp9_final": {
+   "final": 175.83,
+   "last2": 160.41500000000002,
+   "best": 195.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  },
+  "sp9_mid": {
+   "final": 4.17,
+   "last2": 2.92,
+   "best": 25.0,
+   "n_evals": 17,
+   "last_step": 1996800,
+   "source": "2m"
+  }
+ }
+}

@@ -1,0 +1,889 @@
+{
+ "unident_s_cx | onion soup (self-play held-out)": {
+  "partners": 18,
+  "with_br": 18,
+  "arms": {
+   "usual-hand": {
+    "label": "Usual stage-2",
+    "n": 10,
+    "zero_shot": 41.355555555555554,
+    "zero_shot_sd": 25.552672945314466,
+    "br_prox": 0.22514438287096067,
+    "runs": {
+     "s2_usual-hand-5m_s2": {
+      "zero_shot": 39.111111111111114,
+      "br_prox": 0.20930859573650976
+     },
+     "s2_usual-hand-5m_s10": {
+      "zero_shot": 35.166666666666664,
+      "br_prox": 0.18819804112423422
+     },
+     "s2_usual-hand-5m_s5": {
+      "zero_shot": 52.0,
+      "br_prox": 0.2702530224535485
+     },
+     "s2_usual-hand-5m_s1": {
+      "zero_shot": 39.888888888888886,
+      "br_prox": 0.21359917900848582
+     },
+     "s2_usual-hand-5m_s4": {
+      "zero_shot": 0.2222222222222222,
+      "br_prox": 0.002372695017420454
+     },
+     "s2_usual-hand-5m_s7": {
+      "zero_shot": 29.833333333333332,
+      "br_prox": 0.1528901292267527
+     },
+     "s2_usual-hand-5m_s9": {
+      "zero_shot": 40.44444444444444,
+      "br_prox": 0.2156156034968105
+     },
+     "s2_usual-hand-5m_s8": {
+      "zero_shot": 103.22222222222223,
+      "br_prox": 0.6192350009819224
+     },
+     "s2_usual-hand-5m_s6": {
+      "zero_shot": 40.27777777777778,
+      "br_prox": 0.20865009131139484
+     },
+     "s2_usual-hand-5m_s3": {
+      "zero_shot": 33.388888888888886,
+      "br_prox": 0.17132147035252762
+     }
+    }
+   },
+   "partial-dishann": {
+    "label": "Specialists, MORL ego",
+    "n": 10,
+    "zero_shot": 33.111111111111114,
+    "zero_shot_sd": 12.641273008077398,
+    "br_prox": 0.17570694152017957,
+    "runs": {
+     "s2_partial-dishann-5m_s2": {
+      "zero_shot": 0.3333333333333333,
+      "br_prox": 0.00366210660573913
+     },
+     "s2_partial-dishann-5m_s8": {
+      "zero_shot": 35.111111111111114,
+      "br_prox": 0.19660992696587376
+     },
+     "s2_partial-dishann-5m_s5": {
+      "zero_shot": 36.611111111111114,
+      "br_prox": 0.19627231489204786
+     },
+     "s2_partial-dishann-5m_s9": {
+      "zero_shot": 28.166666666666668,
+      "br_prox": 0.144044362451537
+     },
+     "s2_partial-dishann-5m_s1": {
+      "zero_shot": 48.5,
+      "br_prox": 0.27446989476769557
+     },
+     "s2_partial-dishann-5m_s7": {
+      "zero_shot": 36.27777777777778,
+      "br_prox": 0.1848862181540737
+     },
+     "s2_partial-dishann-5m_s10": {
+      "zero_shot": 36.0,
+      "br_prox": 0.17983436321560434
+     },
+     "s2_partial-dishann-5m_s6": {
+      "zero_shot": 32.388888888888886,
+      "br_prox": 0.17031682245270674
+     },
+     "s2_partial-dishann-5m_s4": {
+      "zero_shot": 38.05555555555556,
+      "br_prox": 0.19738234316537728
+     },
+     "s2_partial-dishann-5m_s3": {
+      "zero_shot": 39.666666666666664,
+      "br_prox": 0.20959106253114065
+     }
+    }
+   },
+   "usual-dishann": {
+    "label": "Usual stage-2, MORL ego",
+    "n": 10,
+    "zero_shot": 26.98888888888889,
+    "zero_shot_sd": 17.241442878649192,
+    "br_prox": 0.1451900655342476,
+    "runs": {
+     "s2_usual-dishann-5m_s3": {
+      "zero_shot": 34.72222222222222,
+      "br_prox": 0.18550655326754006
+     },
+     "s2_usual-dishann-5m_s6": {
+      "zero_shot": 38.94444444444444,
+      "br_prox": 0.20894903852013733
+     },
+     "s2_usual-dishann-5m_s4": {
+      "zero_shot": 26.444444444444443,
+      "br_prox": 0.14182533972388464
+     },
+     "s2_usual-dishann-5m_s7": {
+      "zero_shot": 27.0,
+      "br_prox": 0.14147928191616374
+     },
+     "s2_usual-dishann-5m_s2": {
+      "zero_shot": 34.77777777777778,
+      "br_prox": 0.17963730388028482
+     },
+     "s2_usual-dishann-5m_s10": {
+      "zero_shot": 39.166666666666664,
+      "br_prox": 0.20170515321043955
+     },
+     "s2_usual-dishann-5m_s8": {
+      "zero_shot": 2.2222222222222223,
+      "br_prox": 0.017685772529885433
+     },
+     "s2_usual-dishann-5m_s1": {
+      "zero_shot": 6.5,
+      "br_prox": 0.043812078202864334
+     },
+     "s2_usual-dishann-5m_s9": {
+      "zero_shot": 54.666666666666664,
+      "br_prox": 0.29104377196343617
+     },
+     "s2_usual-dishann-5m_s5": {
+      "zero_shot": 5.444444444444445,
+      "br_prox": 0.0402563621278397
+     }
+    }
+   },
+   "partial-hand": {
+    "label": "Specialists",
+    "n": 10,
+    "zero_shot": 39.955555555555556,
+    "zero_shot_sd": 16.110468271551554,
+    "br_prox": 0.22002129882687216,
+    "runs": {
+     "s2_partial-hand-5m_s5": {
+      "zero_shot": 37.888888888888886,
+      "br_prox": 0.19957115435044503
+     },
+     "s2_partial-hand-5m_s3": {
+      "zero_shot": 35.388888888888886,
+      "br_prox": 0.18781588912854924
+     },
+     "s2_partial-hand-5m_s9": {
+      "zero_shot": 34.0,
+      "br_prox": 0.17533636910903494
+     },
+     "s2_partial-hand-5m_s6": {
+      "zero_shot": 40.5,
+      "br_prox": 0.21450948505196935
+     },
+     "s2_partial-hand-5m_s4": {
+      "zero_shot": 34.05555555555556,
+      "br_prox": 0.17218986795469654
+     },
+     "s2_partial-hand-5m_s2": {
+      "zero_shot": 28.5,
+      "br_prox": 0.15161307311340166
+     },
+     "s2_partial-hand-5m_s7": {
+      "zero_shot": 84.94444444444444,
+      "br_prox": 0.5475649118573694
+     },
+     "s2_partial-hand-5m_s8": {
+      "zero_shot": 35.05555555555556,
+      "br_prox": 0.19252867022705622
+     },
+     "s2_partial-hand-5m_s1": {
+      "zero_shot": 36.0,
+      "br_prox": 0.18802357864478075
+     },
+     "s2_partial-hand-5m_s10": {
+      "zero_shot": 33.22222222222222,
+      "br_prox": 0.17105998883141854
+     }
+    }
+   },
+   "bench_morl_ann-cx-lr": {
+    "label": "Stage-1 MORL",
+    "n": 6,
+    "zero_shot": 67.8425925925926,
+    "zero_shot_sd": 53.01026474867184,
+    "br_prox": 0.4076200089616882,
+    "runs": {
+     "bench_morl_ann-cx-lr_s5": {
+      "zero_shot": 43.5,
+      "br_prox": 0.30835859922731296
+     },
+     "bench_morl_ann-cx-lr_s3": {
+      "zero_shot": 25.27777777777778,
+      "br_prox": 0.13121215749261106
+     },
+     "bench_morl_ann-cx-lr_s4": {
+      "zero_shot": 38.111111111111114,
+      "br_prox": 0.21036591701470933
+     },
+     "bench_morl_ann-cx-lr_s6": {
+      "zero_shot": 31.0,
+      "br_prox": 0.23589412636934856
+     },
+     "bench_morl_ann-cx-lr_s1": {
+      "zero_shot": 150.33333333333334,
+      "br_prox": 0.8394045929283241
+     },
+     "bench_morl_ann-cx-lr_s2": {
+      "zero_shot": 118.83333333333333,
+      "br_prox": 0.720484660737823
+     }
+    }
+   },
+   "bench_sp-cx-lr": {
+    "label": "Stage-1 self-play",
+    "n": 6,
+    "zero_shot": 60.98148148148149,
+    "zero_shot_sd": 60.928116587881675,
+    "br_prox": 0.3562475248923158,
+    "runs": {
+     "bench_sp-cx-lr_s4": {
+      "zero_shot": 15.11111111111111,
+      "br_prox": 0.08068437510690323
+     },
+     "bench_sp-cx-lr_s6": {
+      "zero_shot": 52.55555555555556,
+      "br_prox": 0.3602371460732865
+     },
+     "bench_sp-cx-lr_s5": {
+      "zero_shot": 128.0,
+      "br_prox": 0.7190260914708204
+     },
+     "bench_sp-cx-lr_s2": {
+      "zero_shot": 15.777777777777779,
+      "br_prox": 0.11473109280833975
+     },
+     "bench_sp-cx-lr_s1": {
+      "zero_shot": 8.944444444444445,
+      "br_prox": 0.05065016710812084
+     },
+     "bench_sp-cx-lr_s3": {
+      "zero_shot": 145.5,
+      "br_prox": 0.8121562767864242
+     }
+    }
+   }
+  },
+  "tests": {
+   "partial-dishann vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.0494374413507811,
+    "p": 0.42225421637186344
+   },
+   "usual-dishann vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.07995431733671307,
+    "p": 0.17428392041395138
+   },
+   "partial-hand vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.005123084044088511,
+    "p": 0.9341618134187794
+   },
+   "bench_morl_ann-cx-lr vs usual-hand": {
+    "metric": "br_prox",
+    "diff": 0.18247562609072754,
+    "p": 0.117007992007992
+   },
+   "bench_sp-cx-lr vs usual-hand": {
+    "metric": "br_prox",
+    "diff": 0.13110314202135515,
+    "p": 0.3254245754245754
+   },
+   "MORL: partial-dishann vs partial-hand": {
+    "metric": "br_prox",
+    "diff": -0.04431435730669259,
+    "p": 0.40891770767931757
+   },
+   "MORL: usual-dishann vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.07995431733671307,
+    "p": 0.17428392041395138
+   },
+   "MORL: bench_morl_ann-cx-lr vs bench_sp-cx-lr": {
+    "metric": "br_prox",
+    "diff": 0.05137248406937239,
+    "p": 0.7186147186147186
+   }
+  }
+ },
+ "unident_s_cx | mixed dishes (MORL held-out)": {
+  "partners": 14,
+  "with_br": 0,
+  "arms": {
+   "usual-hand": {
+    "label": "Usual stage-2",
+    "n": 10,
+    "zero_shot": 24.77857142857143,
+    "zero_shot_sd": 14.776507754063399,
+    "br_prox": null,
+    "runs": {
+     "s2_usual-hand-5m_s2": {
+      "zero_shot": 25.0,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s10": {
+      "zero_shot": 22.642857142857142,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s5": {
+      "zero_shot": 28.714285714285715,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s1": {
+      "zero_shot": 24.571428571428573,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s4": {
+      "zero_shot": 0.5714285714285714,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s7": {
+      "zero_shot": 23.142857142857142,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s9": {
+      "zero_shot": 20.214285714285715,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s8": {
+      "zero_shot": 60.92857142857143,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s6": {
+      "zero_shot": 20.785714285714285,
+      "br_prox": null
+     },
+     "s2_usual-hand-5m_s3": {
+      "zero_shot": 21.214285714285715,
+      "br_prox": null
+     }
+    }
+   },
+   "partial-dishann": {
+    "label": "Specialists, MORL ego",
+    "n": 10,
+    "zero_shot": 22.57857142857143,
+    "zero_shot_sd": 9.641737148361559,
+    "br_prox": null,
+    "runs": {
+     "s2_partial-dishann-5m_s2": {
+      "zero_shot": 0.14285714285714285,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s8": {
+      "zero_shot": 25.357142857142858,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s5": {
+      "zero_shot": 23.571428571428573,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s9": {
+      "zero_shot": 19.071428571428573,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s1": {
+      "zero_shot": 39.642857142857146,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s10": {
+      "zero_shot": 22.214285714285715,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s7": {
+      "zero_shot": 25.785714285714285,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s6": {
+      "zero_shot": 20.928571428571427,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s4": {
+      "zero_shot": 24.142857142857142,
+      "br_prox": null
+     },
+     "s2_partial-dishann-5m_s3": {
+      "zero_shot": 24.928571428571427,
+      "br_prox": null
+     }
+    }
+   },
+   "usual-dishann": {
+    "label": "Usual stage-2, MORL ego",
+    "n": 10,
+    "zero_shot": 21.10238095238095,
+    "zero_shot_sd": 9.607181703664505,
+    "br_prox": null,
+    "runs": {
+     "s2_usual-dishann-5m_s3": {
+      "zero_shot": 19.714285714285715,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s6": {
+      "zero_shot": 30.428571428571427,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s4": {
+      "zero_shot": 20.285714285714285,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s7": {
+      "zero_shot": 23.142857142857142,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s2": {
+      "zero_shot": 23.785714285714285,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s10": {
+      "zero_shot": 22.309523809523814,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s8": {
+      "zero_shot": 25.571428571428573,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s1": {
+      "zero_shot": 5.571428571428571,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s9": {
+      "zero_shot": 35.357142857142854,
+      "br_prox": null
+     },
+     "s2_usual-dishann-5m_s5": {
+      "zero_shot": 4.857142857142857,
+      "br_prox": null
+     }
+    }
+   },
+   "partial-hand": {
+    "label": "Specialists",
+    "n": 10,
+    "zero_shot": 25.507142857142856,
+    "zero_shot_sd": 13.772752768450527,
+    "br_prox": null,
+    "runs": {
+     "s2_partial-hand-5m_s5": {
+      "zero_shot": 19.857142857142858,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s3": {
+      "zero_shot": 21.714285714285715,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s9": {
+      "zero_shot": 20.5,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s6": {
+      "zero_shot": 23.214285714285715,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s4": {
+      "zero_shot": 21.714285714285715,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s2": {
+      "zero_shot": 15.571428571428571,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s7": {
+      "zero_shot": 64.14285714285714,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s8": {
+      "zero_shot": 22.0,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s1": {
+      "zero_shot": 24.071428571428573,
+      "br_prox": null
+     },
+     "s2_partial-hand-5m_s10": {
+      "zero_shot": 22.285714285714285,
+      "br_prox": null
+     }
+    }
+   },
+   "bench_sp-cx-lr": {
+    "label": "Stage-1 self-play",
+    "n": 6,
+    "zero_shot": 40.6904761904762,
+    "zero_shot_sd": 31.05737503746392,
+    "br_prox": null,
+    "runs": {
+     "bench_sp-cx-lr_s4": {
+      "zero_shot": 9.0,
+      "br_prox": null
+     },
+     "bench_sp-cx-lr_s6": {
+      "zero_shot": 25.428571428571427,
+      "br_prox": null
+     },
+     "bench_sp-cx-lr_s5": {
+      "zero_shot": 60.92857142857143,
+      "br_prox": null
+     },
+     "bench_sp-cx-lr_s2": {
+      "zero_shot": 78.0,
+      "br_prox": null
+     },
+     "bench_sp-cx-lr_s1": {
+      "zero_shot": 6.0,
+      "br_prox": null
+     },
+     "bench_sp-cx-lr_s3": {
+      "zero_shot": 64.78571428571429,
+      "br_prox": null
+     }
+    }
+   }
+  },
+  "tests": {
+   "partial-dishann vs usual-hand": {
+    "metric": "zero_shot",
+    "diff": -2.1999999999999993,
+    "p": 0.7251943103336292
+   },
+   "usual-dishann vs usual-hand": {
+    "metric": "zero_shot",
+    "diff": -3.6761904761904773,
+    "p": 0.5582173244711944
+   },
+   "partial-hand vs usual-hand": {
+    "metric": "zero_shot",
+    "diff": 0.7285714285714278,
+    "p": 0.9376041914741605
+   },
+   "bench_sp-cx-lr vs usual-hand": {
+    "metric": "zero_shot",
+    "diff": 15.911904761904768,
+    "p": 0.18768731268731267
+   },
+   "MORL: partial-dishann vs partial-hand": {
+    "metric": "zero_shot",
+    "diff": -2.928571428571427,
+    "p": 0.6767303903526813
+   },
+   "MORL: usual-dishann vs usual-hand": {
+    "metric": "zero_shot",
+    "diff": -3.6761904761904773,
+    "p": 0.5582173244711944
+   }
+  }
+ },
+ "pantry_cx | mixed dishes (self-play held-out)": {
+  "partners": 10,
+  "with_br": 10,
+  "arms": {
+   "usual-hand": {
+    "label": "Usual stage-2",
+    "n": 10,
+    "zero_shot": 15.139999999999997,
+    "zero_shot_sd": 25.340051740717147,
+    "br_prox": 0.10637909413166047,
+    "runs": {
+     "s2_usual-hand-5m_s2": {
+      "zero_shot": 12.1,
+      "br_prox": 0.07031250958131433
+     },
+     "s2_usual-hand-5m_s10": {
+      "zero_shot": 3.6,
+      "br_prox": 0.055397203598939314
+     },
+     "s2_usual-hand-5m_s5": {
+      "zero_shot": 51.5,
+      "br_prox": 0.3799188493153108
+     },
+     "s2_usual-hand-5m_s1": {
+      "zero_shot": 3.9,
+      "br_prox": 0.03182846789587156
+     },
+     "s2_usual-hand-5m_s4": {
+      "zero_shot": 2.5,
+      "br_prox": 0.032630858502114356
+     },
+     "s2_usual-hand-5m_s7": {
+      "zero_shot": 0.4,
+      "br_prox": 0.0011904761904761904
+     },
+     "s2_usual-hand-5m_s9": {
+      "zero_shot": 2.8,
+      "br_prox": 0.03493848960565955
+     },
+     "s2_usual-hand-5m_s8": {
+      "zero_shot": 0.8,
+      "br_prox": 0.010949248120300752
+     },
+     "s2_usual-hand-5m_s6": {
+      "zero_shot": 72.3,
+      "br_prox": 0.4355525410492221
+     },
+     "s2_usual-hand-5m_s3": {
+      "zero_shot": 1.5,
+      "br_prox": 0.01107229745739583
+     }
+    }
+   },
+   "usual-dishann": {
+    "label": "Usual stage-2, MORL ego",
+    "n": 10,
+    "zero_shot": 13.35,
+    "zero_shot_sd": 23.964661483108834,
+    "br_prox": 0.09604857101694117,
+    "runs": {
+     "s2_usual-dishann-5m_s3": {
+      "zero_shot": 79.2,
+      "br_prox": 0.5675480956608734
+     },
+     "s2_usual-dishann-5m_s6": {
+      "zero_shot": 1.9,
+      "br_prox": 0.030081472193989878
+     },
+     "s2_usual-dishann-5m_s4": {
+      "zero_shot": 1.9,
+      "br_prox": 0.007857759655038696
+     },
+     "s2_usual-dishann-5m_s7": {
+      "zero_shot": 5.1,
+      "br_prox": 0.032377042660653874
+     },
+     "s2_usual-dishann-5m_s2": {
+      "zero_shot": 10.8,
+      "br_prox": 0.07140698828897271
+     },
+     "s2_usual-dishann-5m_s10": {
+      "zero_shot": 0.4,
+      "br_prox": 0.004850557244174265
+     },
+     "s2_usual-dishann-5m_s8": {
+      "zero_shot": 21.4,
+      "br_prox": 0.14797674441842107
+     },
+     "s2_usual-dishann-5m_s1": {
+      "zero_shot": 4.9,
+      "br_prox": 0.03543866043871594
+     },
+     "s2_usual-dishann-5m_s9": {
+      "zero_shot": 1.2,
+      "br_prox": 0.013464070979700626
+     },
+     "s2_usual-dishann-5m_s5": {
+      "zero_shot": 6.7,
+      "br_prox": 0.049484318628871135
+     }
+    }
+   },
+   "scripted-hand": {
+    "label": "Specialists",
+    "n": 10,
+    "zero_shot": 3.3899999999999997,
+    "zero_shot_sd": 5.26021757048973,
+    "br_prox": 0.031181614874343955,
+    "runs": {
+     "s2_scripted-hand-5m_s7": {
+      "zero_shot": 4.3,
+      "br_prox": 0.03554156365112332
+     },
+     "s2_scripted-hand-5m_s8": {
+      "zero_shot": 0.7,
+      "br_prox": 0.0021767050276575812
+     },
+     "s2_scripted-hand-5m_s5": {
+      "zero_shot": 17.7,
+      "br_prox": 0.1598437825224189
+     },
+     "s2_scripted-hand-5m_s4": {
+      "zero_shot": 0.1,
+      "br_prox": 0.0002976190476190476
+     },
+     "s2_scripted-hand-5m_s9": {
+      "zero_shot": 4.8,
+      "br_prox": 0.052449319918647895
+     },
+     "s2_scripted-hand-5m_s1": {
+      "zero_shot": 0.7,
+      "br_prox": 0.002279481293308098
+     },
+     "s2_scripted-hand-5m_s3": {
+      "zero_shot": 1.1,
+      "br_prox": 0.0157313030920639
+     },
+     "s2_scripted-hand-5m_s10": {
+      "zero_shot": 1.2,
+      "br_prox": 0.015854727942383233
+     },
+     "s2_scripted-hand-5m_s6": {
+      "zero_shot": 1.5,
+      "br_prox": 0.015943280860931025
+     },
+     "s2_scripted-hand-5m_s2": {
+      "zero_shot": 1.8,
+      "br_prox": 0.011698365387286538
+     }
+    }
+   },
+   "bench_morl_ann-cx-lr": {
+    "label": "Stage-1 MORL",
+    "n": 6,
+    "zero_shot": 21.46666666666667,
+    "zero_shot_sd": 22.386662696048884,
+    "br_prox": 0.14826606532995223,
+    "runs": {
+     "bench_morl_ann-cx-lr_s5": {
+      "zero_shot": 26.8,
+      "br_prox": 0.19897156341004713
+     },
+     "bench_morl_ann-cx-lr_s3": {
+      "zero_shot": 1.1,
+      "br_prox": 0.012612079959817318
+     },
+     "bench_morl_ann-cx-lr_s4": {
+      "zero_shot": 42.6,
+      "br_prox": 0.33141708382548296
+     },
+     "bench_morl_ann-cx-lr_s6": {
+      "zero_shot": 1.9,
+      "br_prox": 0.018058540425383338
+     },
+     "bench_morl_ann-cx-lr_s1": {
+      "zero_shot": 4.3,
+      "br_prox": 0.04606231939779491
+     },
+     "bench_morl_ann-cx-lr_s2": {
+      "zero_shot": 52.1,
+      "br_prox": 0.28247480496118765
+     }
+    }
+   },
+   "scripted-dishann": {
+    "label": "Specialists, MORL ego",
+    "n": 10,
+    "zero_shot": 11.930000000000001,
+    "zero_shot_sd": 17.69758615053351,
+    "br_prox": 0.08718099038366608,
+    "runs": {
+     "s2_scripted-dishann-5m_s5": {
+      "zero_shot": 3.7,
+      "br_prox": 0.03922413945468961
+     },
+     "s2_scripted-dishann-5m_s1": {
+      "zero_shot": 0.8,
+      "br_prox": 0.008581293659681117
+     },
+     "s2_scripted-dishann-5m_s7": {
+      "zero_shot": 3.3,
+      "br_prox": 0.018384521127182214
+     },
+     "s2_scripted-dishann-5m_s9": {
+      "zero_shot": 15.4,
+      "br_prox": 0.05538835728697309
+     },
+     "s2_scripted-dishann-5m_s4": {
+      "zero_shot": 2.1,
+      "br_prox": 0.017517438769056017
+     },
+     "s2_scripted-dishann-5m_s3": {
+      "zero_shot": 1.0,
+      "br_prox": 0.007056000780394099
+     },
+     "s2_scripted-dishann-5m_s8": {
+      "zero_shot": 57.8,
+      "br_prox": 0.47272138646097
+     },
+     "s2_scripted-dishann-5m_s6": {
+      "zero_shot": 0.7,
+      "br_prox": 0.008982712274082982
+     },
+     "s2_scripted-dishann-5m_s2": {
+      "zero_shot": 21.6,
+      "br_prox": 0.1958178184725607
+     },
+     "s2_scripted-dishann-5m_s10": {
+      "zero_shot": 12.9,
+      "br_prox": 0.0481362355510709
+     }
+    }
+   },
+   "bench_sp-cx-lr": {
+    "label": "Stage-1 self-play",
+    "n": 6,
+    "zero_shot": 48.666666666666664,
+    "zero_shot_sd": 36.01297914178535,
+    "br_prox": 0.28332911169157704,
+    "runs": {
+     "bench_sp-cx-lr_s4": {
+      "zero_shot": 1.4,
+      "br_prox": 0.013365313446056215
+     },
+     "bench_sp-cx-lr_s6": {
+      "zero_shot": 30.8,
+      "br_prox": 0.23519021536452947
+     },
+     "bench_sp-cx-lr_s5": {
+      "zero_shot": 31.5,
+      "br_prox": 0.22619880358903405
+     },
+     "bench_sp-cx-lr_s2": {
+      "zero_shot": 97.5,
+      "br_prox": 0.42948592124762347
+     },
+     "bench_sp-cx-lr_s1": {
+      "zero_shot": 46.8,
+      "br_prox": 0.38049785530083036
+     },
+     "bench_sp-cx-lr_s3": {
+      "zero_shot": 84.0,
+      "br_prox": 0.41523656120138863
+     }
+    }
+   }
+  },
+  "tests": {
+   "usual-dishann vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.010330523114719298,
+    "p": 0.9292688735413194
+   },
+   "scripted-hand vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.07519747925731651,
+    "p": 0.22681807356729958
+   },
+   "bench_morl_ann-cx-lr vs usual-hand": {
+    "metric": "br_prox",
+    "diff": 0.04188697119829177,
+    "p": 0.6125124875124875
+   },
+   "scripted-dishann vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.019198103747994383,
+    "p": 0.8444976076555024
+   },
+   "bench_sp-cx-lr vs usual-hand": {
+    "metric": "br_prox",
+    "diff": 0.17695001755991657,
+    "p": 0.054820179820179823
+   },
+   "MORL: scripted-dishann vs scripted-hand": {
+    "metric": "br_prox",
+    "diff": 0.05599937550932213,
+    "p": 0.26160990712074306
+   },
+   "MORL: usual-dishann vs usual-hand": {
+    "metric": "br_prox",
+    "diff": -0.010330523114719298,
+    "p": 0.9292688735413194
+   },
+   "MORL: bench_morl_ann-cx-lr vs bench_sp-cx-lr": {
+    "metric": "br_prox",
+    "diff": -0.1350630463616248,
+    "p": 0.14285714285714285
+   }
+  }
+ }
+}
