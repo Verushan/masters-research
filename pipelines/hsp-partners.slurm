@@ -64,6 +64,8 @@
 #   # top up one layout with named seeds, skipping selection entirely
 #   LAYOUTS=random3 SEEDS="41 42 50 51" sbatch --array=0 --export=ALL hsp-partners.slurm
 #
+# BIAS_FLAGS is appended to every bias agent's command line (e.g. the half
+# learning rate the complex-dish kitchens need); NO_EXTRACT skips extraction.
 # Knobs (environment, so they survive --export): LAYOUTS SEEDS K STEPS EXP
 # EXCLUDE CONCURRENCY HSP_ROLLOUT_THREADS DUMMY_BATCH_SIZE TRAINING_THREADS.
 
@@ -233,6 +235,12 @@ case "$LAYOUT" in
     *_m|*_mx|*_cx) WB_PROJECT=Overcooked-new ;;
     *) WB_PROJECT=overcooked ;;
 esac
+# NO_EXTRACT=1: one job per seed (the complex-dish kitchens' submission) runs
+# the extraction once, separately, after every seed has finished.
+if [ -n "$NO_EXTRACT" ]; then
+    echo "NO_EXTRACT set: skipping extraction for $LAYOUT"
+    exit 0
+fi
 python extract_models/extract_bias_agents_models.py $LAYOUT "$WB_PROJECT" $EXP || exit 1
 
 echo "=========================================================="

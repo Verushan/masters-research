@@ -131,8 +131,10 @@ if [ "${MODE}" = "extract" ]; then
     # The final checkpoint, as fillin-crossplay.slurm takes it, so the fill-in
     # suite and the zero-shot matrix score the same file. The task-weights
     # config is what both load the neglect arms through.
+    # S2_CHECKPOINT=best keeps each run's peak on its training-partner curve
+    # (early stopping); the default is the final checkpoint.
     python extract_models/extract_S2_models.py --layout $LAYOUT --env $WB_PROJECT -a fcp $EXP_FLAGS \
-        --checkpoint final || exit 1
+        --checkpoint ${S2_CHECKPOINT:-final} || exit 1
     if [ -n "$NEW_ENV" ]; then
         python prep/store_policy_config.py $LAYOUT || exit 1
     else
