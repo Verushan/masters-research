@@ -34,6 +34,18 @@ SOURCES = {
     ("unident_s_cx", "mixed dishes (MORL held-out)"): "metrics_unident_s_cx_morlho_phase4{budget}.json",
     ("pantry_cx", "mixed dishes (self-play held-out)"): "metrics_pantry_cx_sp_phase4{budget}.json",
 }
+# v2: the stable stage-2 rerun (schedules at the 2e6 pace, best checkpoint),
+# scored against ZSC-Eval's HSP partners and, for continuity, the self-play set.
+SOURCES_V2 = {
+    ("unident_s_cx", "HSP partners"): "metrics_unident_s_cx_hsp_v2.json",
+    ("unident_s_cx", "self-play held-out"): "metrics_unident_s_cx_sp_v2.json",
+    ("pantry_cx", "HSP partners"): "metrics_pantry_cx_hsp_v2.json",
+    ("pantry_cx", "self-play held-out"): "metrics_pantry_cx_sp_v2.json",
+}
+# A held-out partner counts only if a best response trained for it scored at
+# least this much with it: a partner nobody can cook with tests nothing, and the
+# rule does not look at any of the agents being compared.
+COMPETENT = 50.0
 LABELS = {
     "usual-hand": "Usual stage-2",
     "usual-dishann": "Usual stage-2, MORL ego",
@@ -48,7 +60,13 @@ BASE = "usual-hand"
 
 
 def arm_of(agent):
-    return re.sub(r"-5m$", "", re.sub(r"_s\d+$", "", re.sub(r"^s2_", "", agent)))
+    return re.sub(r"-(5m|v2)$", "", re.sub(r"_s\d+$", "", re.sub(r"^s2_", "", agent)))
+
+
+def partner_key(p):
+    """heldout_hsp12_final -> 12 (as br_values keys HSP partners), heldout_sp7_mid -> sp7_mid."""
+    m = re.search(r"hsp(\d+)_", p)
+    return str(int(m.group(1))) if m else re.search(r"(sp\d+_\w+)$", p).group(1)
 
 
 def scores(path):
@@ -74,20 +92,36 @@ def scores(path):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--br", default=osp.join(RESULTS, "br_values_cx_best.json"))
-    ap.add_argument("--budget", choices=["2m", "5m"], default="2m",
-                    help="Stage-2 budget: 2m (the first runs) or 5m (the -5m reruns, which collapse late)")
+    ap.add_argument("--budget", choices=["2m", "5m", "v2"], default="2m",
+                    help="Stage-2 runs: 2m (the first), 5m (the -5m reruns, which collapse late) or v2 "
+                    "(the stable rerun, scored against HSP partners too)")
+    ap.add_argument("--br_hsp", default=osp.join(RESULTS, "br_values_cx_hsp.json"))
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
     brs = json.load(open(args.br))
+    if osp.exists(args.br_hsp):
+        for layout, vals in json.load(open(args.br_hsp)).items():
+            brs.setdefault(layout, {}).update(vals)
     args.out = args.out or osp.join(RESULTS, f"phase4_summary_{args.budget}.json")
-    budget = "_5m" if args.budget == "5m" else ""
+    budget = {"5m": "_5m", "v2": "_v2"}.get(args.budget, "")
     summary = {}
-    for (layout, group), fn in SOURCES.items():
-        per_agent, partners = scores(osp.join(RESULTS, fn.format(budget=budget)))
-        key = lambda p: re.search(r"(sp\d+_\w+)$", p).group(1)  # noqa: E731
-        br = {p: brs.get(layout, {}).get(key(p), {}).get("last2") for p in partners} if "MORL" not in group else {}
+    sources = SOURCES_V2 if args.budget == "v2" else SOURCES
+    for (layout, group), fn in sources.items():
+        path = osp.join(RESULTS, fn.format(budget=budget))
+        if not osp.exists(path):
+            print(f"== {layout} | {group}: {osp.basename(path)} not here yet")
+            continue
+        per_agent, partners = scores(path)
+        br = {p: brs.get(layout, {}).get(partner_key(p), {}).get("last2") for p in partners} if "MORL" not in group else {}
         pool_best = {p: max(v[p] for v in per_agent.values() if p in v) for p in partners}
         denom = {p: max(br[p], pool_best[p]) for p in partners if br.get(p) is not None}
+        if args.budget == "v2":
+            dropped = sorted(p for p in denom if br[p] < COMPETENT)
+            denom = {p: d for p, d in denom.items() if br[p] >= COMPETENT}
+            partners = sorted(denom)
+            per_agent = {a: {p: v for p, v in per.items() if p in denom} for a, per in per_agent.items()}
+            if dropped:
+                print(f"   ({len(dropped)} partners below the competence bar dropped: {dropped})")
         arms = defaultdict(dict)
         for a, per in per_agent.items():
             zs = float(np.mean(list(per.values())))
