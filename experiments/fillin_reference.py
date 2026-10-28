@@ -40,7 +40,7 @@ from loguru import logger
 sys.path.insert(0, osp.dirname(osp.abspath(__file__)))
 sys.path.insert(0, osp.join(osp.dirname(osp.abspath(__file__)), "..", "zsc-eval"))
 
-from fillin_eval import PARTNERS, _new_script, idle_interacts, kitchen, move_target, step_events  # noqa: E402
+from fillin_eval import DELIVERED, PARTNERS, _new_script, idle_interacts, kitchen, move_target, step_events  # noqa: E402
 from zsceval.envs.morl.tasks import TASKS, task_completions, task_demand  # noqa: E402
 from zsceval.envs.overcooked.overcooked_ai_py.mdp.actions import Action  # noqa: E402
 
@@ -108,7 +108,8 @@ def run_episode(env, schedule, mode, seat, partners=None):
     install(segments[0][1])
     # sparse: the team's delivery reward this step. On the multi-recipe menus a
     # soup's worth varies (10-60), so soups/100 alone undercounts big dishes.
-    keys = ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact", "sparse")
+    keys = ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact", "sparse",
+            "dishes")
     rec = {k: [] for k in keys}
     totals = None
     for t in range(400):
@@ -123,6 +124,7 @@ def run_episode(env, schedule, mode, seat, partners=None):
         a = Action.ACTION_TO_INDEX[agent_action]
         before = [pl.position for pl in state.players]
         joint = [[a], [4]] if seat == 0 else [[4], [a]]
+        DELIVERED.clear()
         obs, _share, _rew, dones, info, available = env.step(np.array(joint))
         after = [pl.position for pl in base.state.players]
 
@@ -143,6 +145,7 @@ def run_episode(env, schedule, mode, seat, partners=None):
         rec["stay"].append(agent_action == Action.STAY)
         rec["idle_interact"].append(idle_interacts(shaped[seat]))
         rec["sparse"].append(float(sum(info["sparse_r_by_agent"])))
+        rec["dishes"].append(list(DELIVERED))
         if np.all(dones):
             break
     return rec

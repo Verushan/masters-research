@@ -134,6 +134,27 @@ NEW_SCHEDULES = {
 }
 
 
+# The recipe of every soup delivered this step, multi-recipe env only (the old
+# env has one recipe): the dish mix before and after a swap (dish_swaps.py).
+DELIVERED = []
+_PATCHED = []
+
+
+def track_dishes():
+    if _PATCHED:
+        return
+    from zsceval.envs.overcooked_new.src.overcooked_ai_py.mdp import overcooked_mdp as new_mdp
+
+    orig = new_mdp.OvercookedGridworld.deliver_soup
+
+    def deliver_soup(self, state, player, soup):
+        DELIVERED.append("".join("O" if i == "onion" else "T" for i in sorted(soup.ingredients)))
+        return orig(self, state, player, soup)
+
+    new_mdp.OvercookedGridworld.deliver_soup = deliver_soup
+    _PATCHED.append(True)
+
+
 def kitchen(layout):
     """(env class, partners, schedules) for the env version a layout runs in."""
     from zsceval.overcooked_config import OLD_LAYOUTS
@@ -144,6 +165,7 @@ def kitchen(layout):
         return Overcooked, PARTNERS, SCHEDULES
     from zsceval.envs.overcooked_new.Overcooked_Env import Overcooked
 
+    track_dishes()
     return Overcooked, NEW_PARTNERS, NEW_SCHEDULES
 
 
@@ -231,7 +253,8 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0, part
     masks = np.ones((1, 1), dtype=np.float32)
     # sparse: the team's delivery reward this step. On the multi-recipe menus a
     # soup's worth varies (10-60), so soups/100 alone undercounts big dishes.
-    keys = ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact", "sparse")
+    keys = ("partner", "demand", "done", "action", "entropy", "blocked", "stay", "idle_interact", "sparse",
+            "dishes")
     rec = {k: [] for k in keys}
     totals = None
 
@@ -258,6 +281,7 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0, part
         before = [pl.position for pl in state.players]
         # The partner's index is ignored: the env replaces it with the script's move.
         joint = [[a], [4]] if seat == 0 else [[4], [a]]
+        DELIVERED.clear()
         obs, _share, _rew, dones, info, available = env.step(np.array(joint))
         after = [pl.position for pl in base.state.players]
 
@@ -282,6 +306,7 @@ def run_episode(env, actor, all_args, schedule, deterministic, rng, seat=0, part
         rec["stay"].append(agent_action == Action.STAY)
         rec["idle_interact"].append(idle_interacts(shaped[seat]))
         rec["sparse"].append(float(sum(info["sparse_r_by_agent"])))
+        rec["dishes"].append(list(DELIVERED))
         if np.all(dones):
             break
     return rec
