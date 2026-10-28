@@ -100,8 +100,10 @@ def main():
     args = ap.parse_args()
     brs = json.load(open(args.br))
     if osp.exists(args.br_hsp):
+        # HSP partners only (numeric keys): that log folder also holds the 2e6
+        # self-play BRs, which br_values_cx_best.json has already merged with 5e6.
         for layout, vals in json.load(open(args.br_hsp)).items():
-            brs.setdefault(layout, {}).update(vals)
+            brs.setdefault(layout, {}).update({k: v for k, v in vals.items() if k.isdigit()})
     args.out = args.out or osp.join(RESULTS, f"phase4_summary_{args.budget}.json")
     budget = {"5m": "_5m", "v2": "_v2"}.get(args.budget, "")
     summary = {}
