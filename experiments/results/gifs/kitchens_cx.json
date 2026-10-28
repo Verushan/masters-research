@@ -1,0 +1,53 @@
+{
+ "scene": "kitchens_cx",
+ "seed": 0,
+ "steps": 200,
+ "panels": [
+  "Open kitchen (unident_s_cx)",
+  "Split pantry (pantry_cx)",
+  "Doorway (doorway_cx)",
+  "Big kitchen (bigkitchen_cx)"
+ ],
+ "soups_by_seed": [
+  [
+   6,
+   6,
+   6,
+   6,
+   6
+  ],
+  [
+   3,
+   3,
+   3,
+   3,
+   3
+  ],
+  [
+   2,
+   2,
+   2,
+   2,
+   2
+  ],
+  [
+   2,
+   2,
+   2,
+   2,
+   2
+  ]
+ ],
+ "medians": [
+  6.0,
+  3.0,
+  2.0,
+  2.0
+ ],
+ "shown": [
+  6,
+  3,
+  2,
+  2
+ ]
+}
