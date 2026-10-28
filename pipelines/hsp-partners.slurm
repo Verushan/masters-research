@@ -134,7 +134,17 @@ fi
 # Per-seed training output. The batch loop only reports pass/fail, so this is
 # where a failed seed's traceback actually is. experiments/logs/ is gitignored.
 LOGDIR="$SUBMIT_DIR/../experiments/logs/hsp/$LAYOUT"
-mkdir -p "$LOGDIR"
+# Jobs that start in the same second race to create this on the shared
+# filesystem: mkdir -p can fail with "Already exists" before the directory is
+# visible, and every seed's log redirect then fails (10 of 16 unident_s_cx seeds,
+# 23 Oct). Retry until it is there; stagger with STAGGER (seconds, max random).
+sleep $(( RANDOM % ${STAGGER:-1} ))
+for _ in 1 2 3 4 5; do
+    mkdir -p "$LOGDIR" 2>/dev/null
+    [ -d "$LOGDIR" ] && break
+    sleep 3
+done
+[ -d "$LOGDIR" ] || { echo "cannot create $LOGDIR"; exit 1; }
 
 cd $PYTHONPATH/zsceval/scripts || exit 1
 
