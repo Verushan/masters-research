@@ -1,0 +1,757 @@
+{
+ "pantry_cx | bench_morl_ann-cx-lr": {
+  "runs": 12,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.059027777777777776,
+    "medium mixed": 0.13541666666666666,
+    "onion soup": 0.003472222222222222,
+    "small": 0.12152777777777778,
+    "off-menu": 0.5,
+    "points": 10.243055555555555,
+    "off_share": 0.564456569664903
+   },
+   "2": {
+    "big mixed": 1.0208333333333333,
+    "medium mixed": 0.5625,
+    "onion soup": 0.0,
+    "small": 0.020833333333333332,
+    "off-menu": 0.20833333333333334,
+    "points": 83.95833333333333,
+    "off_share": 0.14649470899470898
+   },
+   "3": {
+    "big mixed": 2.0,
+    "medium mixed": 0.4375,
+    "onion soup": 0.0,
+    "small": 0.0,
+    "off-menu": 0.125,
+    "points": 137.5,
+    "off_share": 0.06905363155363155
+   },
+   "5": {
+    "big mixed": 3.5,
+    "medium mixed": 0.20833333333333334,
+    "onion soup": 0.0,
+    "small": 0.020833333333333332,
+    "off-menu": 0.10416666666666667,
+    "points": 218.54166666666666,
+    "off_share": 0.07503607503607504
+   },
+   "6": {
+    "big mixed": 3.625,
+    "medium mixed": 0.3125,
+    "onion soup": 0.0,
+    "small": 0.0,
+    "off-menu": 0.08333333333333333,
+    "points": 230.0,
+    "off_share": 0.1722222222222222
+   },
+   "8": {
+    "big mixed": 3.5416666666666665,
+    "medium mixed": 0.16666666666666666,
+    "onion soup": 0.0,
+    "small": 0.020833333333333332,
+    "off-menu": 0.08333333333333333,
+    "points": 219.375,
+    "off_share": 0.14327485380116958
+   },
+   "9": {
+    "big mixed": 3.1666666666666665,
+    "medium mixed": 0.10416666666666667,
+    "onion soup": 0.020833333333333332,
+    "small": 0.020833333333333332,
+    "off-menu": 0.22916666666666666,
+    "points": 194.79166666666666,
+    "off_share": 0.24090909090909088
+   }
+  },
+  "settles_on": {
+   "off-menu": 3,
+   "big mixed": 8,
+   "nothing": 1
+  },
+  "runs_clean_by_end": 8,
+  "median_clean_step": 1804800.0
+ },
+ "pantry_cx | bench_sp-cx-lr": {
+  "runs": 20,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.0125,
+    "medium mixed": 0.016666666666666666,
+    "onion soup": 0.008333333333333333,
+    "small": 0.23125,
+    "off-menu": 0.9166666666666666,
+    "points": 3.8958333333333335,
+    "off_share": 0.7238549182299182
+   },
+   "2": {
+    "big mixed": 0.1375,
+    "medium mixed": 0.375,
+    "onion soup": 0.0,
+    "small": 0.275,
+    "off-menu": 0.5875,
+    "points": 26.0,
+    "off_share": 0.4054166666666667
+   },
+   "3": {
+    "big mixed": 0.925,
+    "medium mixed": 0.4875,
+    "onion soup": 0.0125,
+    "small": 0.3625,
+    "off-menu": 0.3125,
+    "points": 78.875,
+    "off_share": 0.2912692577030812
+   },
+   "5": {
+    "big mixed": 1.9875,
+    "medium mixed": 0.225,
+    "onion soup": 0.0,
+    "small": 0.4625,
+    "off-menu": 0.3375,
+    "points": 132.875,
+    "off_share": 0.3276488095238095
+   },
+   "6": {
+    "big mixed": 2.375,
+    "medium mixed": 0.15,
+    "onion soup": 0.025,
+    "small": 0.3875,
+    "off-menu": 0.3625,
+    "points": 152.875,
+    "off_share": 0.3778550543024227
+   },
+   "8": {
+    "big mixed": 2.225,
+    "medium mixed": 0.075,
+    "onion soup": 0.225,
+    "small": 0.0375,
+    "off-menu": 0.3,
+    "points": 141.375,
+    "off_share": 0.3987745098039216
+   },
+   "9": {
+    "big mixed": 2.025,
+    "medium mixed": 0.05,
+    "onion soup": 0.275,
+    "small": 0.0125,
+    "off-menu": 0.2125,
+    "points": 129.125,
+    "off_share": 0.3770833333333333
+   }
+  },
+  "settles_on": {
+   "onion soup": 1,
+   "big mixed": 8,
+   "nothing": 3,
+   "off-menu": 7,
+   "small": 1
+  },
+  "runs_clean_by_end": 9,
+  "median_clean_step": 1804800.0
+ },
+ "pantry_cx | fcp-S2-scripted-dishann-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.31160714285714286,
+    "medium mixed": 0.010714285714285714,
+    "onion soup": 0.21607142857142855,
+    "small": 0.017857142857142856,
+    "off-menu": 0.7919642857142856,
+    "points": 23.625,
+    "off_share": 0.5845337515571611
+   },
+   "2": {
+    "big mixed": 1.7142857142857142,
+    "medium mixed": 0.03571428571428571,
+    "onion soup": 0.6285714285714284,
+    "small": 0.02857142857142857,
+    "off-menu": 0.7642857142857142,
+    "points": 117.14285714285715,
+    "off_share": 0.24261792920434963
+   },
+   "5": {
+    "big mixed": 0.9857142857142858,
+    "medium mixed": 0.02857142857142857,
+    "onion soup": 0.6,
+    "small": 0.03571428571428571,
+    "off-menu": 0.6071428571428571,
+    "points": 72.64285714285714,
+    "off_share": 0.36475665584186456
+   },
+   "7": {
+    "big mixed": 0.2785714285714286,
+    "medium mixed": 0.007142857142857143,
+    "onion soup": 0.5071428571428571,
+    "small": 0.007142857142857143,
+    "off-menu": 0.8357142857142857,
+    "points": 27.21428571428571,
+    "off_share": 0.5496523406304988
+   },
+   "9": {
+    "big mixed": 0.16428571428571428,
+    "medium mixed": 0.03571428571428571,
+    "onion soup": 0.40714285714285714,
+    "small": 0.02142857142857143,
+    "off-menu": 0.8928571428571427,
+    "points": 19.642857142857146,
+    "off_share": 0.5642301498823238
+   }
+  },
+  "settles_on": {
+   "off-menu": 8,
+   "nothing": 1,
+   "onion soup": 1
+  },
+  "runs_clean_by_end": 1,
+  "median_clean_step": 4996800.0
+ },
+ "pantry_cx | fcp-S2-scripted-hand-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.06517857142857142,
+    "medium mixed": 0.0008928571428571428,
+    "onion soup": 0.5267857142857143,
+    "small": 0.009821428571428571,
+    "off-menu": 0.7410714285714285,
+    "points": 14.580357142857142,
+    "off_share": 0.5585428742386073
+   },
+   "2": {
+    "big mixed": 0.8428571428571429,
+    "medium mixed": 0.007142857142857143,
+    "onion soup": 2.257142857142857,
+    "small": 0.007142857142857143,
+    "off-menu": 0.48571428571428565,
+    "points": 96.07142857142857,
+    "off_share": 0.1423192661076635
+   },
+   "5": {
+    "big mixed": 0.5,
+    "medium mixed": 0.0,
+    "onion soup": 1.2571428571428571,
+    "small": 0.0,
+    "off-menu": 0.41428571428571426,
+    "points": 55.142857142857146,
+    "off_share": 0.2773742928899742
+   },
+   "7": {
+    "big mixed": 0.3142857142857143,
+    "medium mixed": 0.0,
+    "onion soup": 1.05,
+    "small": 0.0,
+    "off-menu": 0.4428571428571428,
+    "points": 39.85714285714285,
+    "off_share": 0.34176427346238664
+   },
+   "9": {
+    "big mixed": 0.2857142857142857,
+    "medium mixed": 0.02142857142857143,
+    "onion soup": 0.7142857142857142,
+    "small": 0.0,
+    "off-menu": 0.5785714285714285,
+    "points": 32.28571428571429,
+    "off_share": 0.4494006289219056
+   }
+  },
+  "settles_on": {
+   "onion soup": 7,
+   "off-menu": 3
+  },
+  "runs_clean_by_end": 0,
+  "median_clean_step": null
+ },
+ "pantry_cx | fcp-S2-usual-dishann-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.0010416666666666667,
+    "medium mixed": 0.0,
+    "onion soup": 0.012499999999999999,
+    "small": 0.017708333333333333,
+    "off-menu": 0.2802083333333333,
+    "points": 0.48958333333333337,
+    "off_share": 0.8740327380952382
+   },
+   "2": {
+    "big mixed": 0.008333333333333333,
+    "medium mixed": 0.0,
+    "onion soup": 0.08333333333333334,
+    "small": 0.016666666666666666,
+    "off-menu": 0.4,
+    "points": 2.3333333333333335,
+    "off_share": 0.8196825396825398
+   },
+   "5": {
+    "big mixed": 0.008333333333333333,
+    "medium mixed": 0.0,
+    "onion soup": 0.2916666666666667,
+    "small": 0.025,
+    "off-menu": 0.19166666666666668,
+    "points": 6.583333333333333,
+    "off_share": 0.5411506707946337
+   },
+   "7": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.125,
+    "small": 0.0,
+    "off-menu": 0.175,
+    "points": 2.5,
+    "off_share": 0.6900000000000001
+   },
+   "9": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.29166666666666663,
+    "small": 0.0,
+    "off-menu": 0.21666666666666665,
+    "points": 5.833333333333333,
+    "off_share": 0.6318518518518518
+   }
+  },
+  "settles_on": {
+   "onion soup": 2,
+   "off-menu": 6,
+   "nothing": 2
+  },
+  "runs_clean_by_end": 0,
+  "median_clean_step": null
+ },
+ "pantry_cx | fcp-S2-usual-hand-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.0020833333333333333,
+    "small": 0.03020833333333333,
+    "off-menu": 0.30729166666666663,
+    "points": 0.34375,
+    "off_share": 0.8944047619047619
+   },
+   "2": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.125,
+    "small": 0.03333333333333333,
+    "off-menu": 0.4583333333333333,
+    "points": 2.833333333333333,
+    "off_share": 0.8085457516339869
+   },
+   "5": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.4333333333333334,
+    "small": 0.008333333333333333,
+    "off-menu": 0.275,
+    "points": 8.750000000000002,
+    "off_share": 0.7546182266009852
+   },
+   "7": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.14166666666666666,
+    "small": 0.016666666666666666,
+    "off-menu": 0.13333333333333333,
+    "points": 3.0,
+    "off_share": 0.5892857142857142
+   },
+   "9": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.175,
+    "small": 0.016666666666666666,
+    "off-menu": 0.14999999999999997,
+    "points": 3.6666666666666665,
+    "off_share": 0.7
+   }
+  },
+  "settles_on": {
+   "off-menu": 7,
+   "nothing": 2,
+   "onion soup": 1
+  },
+  "runs_clean_by_end": 1,
+  "median_clean_step": 4996800.0
+ },
+ "unident_s_cx | bench_morl_ann-cx-lr": {
+  "runs": 12,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.0625,
+    "medium mixed": 0.09027777777777778,
+    "onion soup": 0.22916666666666666,
+    "small": 0.2465277777777778,
+    "off-menu": 1.8993055555555556,
+    "points": 14.409722222222221,
+    "off_share": 0.7555038199388044
+   },
+   "2": {
+    "big mixed": 0.8541666666666666,
+    "medium mixed": 0.375,
+    "onion soup": 0.3541666666666667,
+    "small": 0.2916666666666667,
+    "off-menu": 1.3125,
+    "points": 76.25,
+    "off_share": 0.3932655307655308
+   },
+   "3": {
+    "big mixed": 1.8958333333333333,
+    "medium mixed": 0.5833333333333334,
+    "onion soup": 0.5208333333333334,
+    "small": 0.08333333333333333,
+    "off-menu": 0.6041666666666666,
+    "points": 148.33333333333334,
+    "off_share": 0.1861850599950445
+   },
+   "5": {
+    "big mixed": 3.2083333333333335,
+    "medium mixed": 0.5,
+    "onion soup": 0.9791666666666666,
+    "small": 0.020833333333333332,
+    "off-menu": 0.5,
+    "points": 232.29166666666666,
+    "off_share": 0.15817226754726757
+   },
+   "6": {
+    "big mixed": 3.6666666666666665,
+    "medium mixed": 0.10416666666666667,
+    "onion soup": 1.0208333333333333,
+    "small": 0.020833333333333332,
+    "off-menu": 0.4375,
+    "points": 244.79166666666666,
+    "off_share": 0.23607456140350877
+   },
+   "8": {
+    "big mixed": 3.1458333333333335,
+    "medium mixed": 0.0625,
+    "onion soup": 1.0625,
+    "small": 0.2916666666666667,
+    "off-menu": 0.6875,
+    "points": 215.41666666666666,
+    "off_share": 0.27985312899106
+   },
+   "9": {
+    "big mixed": 3.1041666666666665,
+    "medium mixed": 0.041666666666666664,
+    "onion soup": 1.0833333333333333,
+    "small": 0.041666666666666664,
+    "off-menu": 0.7083333333333334,
+    "points": 210.0,
+    "off_share": 0.484375
+   }
+  },
+  "settles_on": {
+   "onion soup": 1,
+   "big mixed": 5,
+   "off-menu": 6
+  },
+  "runs_clean_by_end": 6,
+  "median_clean_step": 2644800.0
+ },
+ "unident_s_cx | bench_sp-cx-lr": {
+  "runs": 20,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.020833333333333332,
+    "medium mixed": 0.027083333333333334,
+    "onion soup": 0.44583333333333336,
+    "small": 0.2708333333333333,
+    "off-menu": 2.214583333333333,
+    "points": 13.958333333333334,
+    "off_share": 0.7631285693437396
+   },
+   "2": {
+    "big mixed": 0.05,
+    "medium mixed": 0.1125,
+    "onion soup": 2.65,
+    "small": 0.375,
+    "off-menu": 1.3375,
+    "points": 64.25,
+    "off_share": 0.35965450057052223
+   },
+   "3": {
+    "big mixed": 0.1,
+    "medium mixed": 0.0375,
+    "onion soup": 4.4625,
+    "small": 0.5,
+    "off-menu": 1.1125,
+    "points": 101.75,
+    "off_share": 0.3065249496873633
+   },
+   "5": {
+    "big mixed": 0.0125,
+    "medium mixed": 0.0125,
+    "onion soup": 6.075,
+    "small": 0.45,
+    "off-menu": 0.725,
+    "points": 127.25,
+    "off_share": 0.26998874832064484
+   },
+   "6": {
+    "big mixed": 0.0125,
+    "medium mixed": 0.05,
+    "onion soup": 6.3,
+    "small": 0.675,
+    "off-menu": 0.575,
+    "points": 135.5,
+    "off_share": 0.3085404179154179
+   },
+   "8": {
+    "big mixed": 0.0375,
+    "medium mixed": 0.2,
+    "onion soup": 6.475,
+    "small": 0.0625,
+    "off-menu": 0.5625,
+    "points": 140.375,
+    "off_share": 0.3464091357269142
+   },
+   "9": {
+    "big mixed": 0.1375,
+    "medium mixed": 0.0125,
+    "onion soup": 6.3,
+    "small": 0.075,
+    "off-menu": 0.55,
+    "points": 135.5,
+    "off_share": 0.29308390022675734
+   }
+  },
+  "settles_on": {
+   "off-menu": 6,
+   "big mixed": 1,
+   "onion soup": 12,
+   "small": 1
+  },
+  "runs_clean_by_end": 13,
+  "median_clean_step": 1804800.0
+ },
+ "unident_s_cx | fcp-S2-partial-dishann-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.43624999999999997,
+    "medium mixed": 0.026250000000000002,
+    "onion soup": 0.33875,
+    "small": 0.0225,
+    "off-menu": 0.9075,
+    "points": 34.225,
+    "off_share": 0.5558712901760955
+   },
+   "2": {
+    "big mixed": 1.92,
+    "medium mixed": 0.45999999999999996,
+    "onion soup": 1.1300000000000001,
+    "small": 0.030000000000000006,
+    "off-menu": 0.74,
+    "points": 156.5,
+    "off_share": 0.1905267942265481
+   },
+   "5": {
+    "big mixed": 2.7,
+    "medium mixed": 0.25,
+    "onion soup": 2.01,
+    "small": 0.02,
+    "off-menu": 0.55,
+    "points": 212.4,
+    "off_share": 0.14130553015426608
+   },
+   "7": {
+    "big mixed": 2.0599999999999996,
+    "medium mixed": 0.15,
+    "onion soup": 1.0799999999999998,
+    "small": 0.02,
+    "off-menu": 0.4,
+    "points": 151.4,
+    "off_share": 0.27562113898578877
+   },
+   "9": {
+    "big mixed": 1.04,
+    "medium mixed": 0.07,
+    "onion soup": 0.6900000000000001,
+    "small": 0.01,
+    "off-menu": 0.53,
+    "points": 79.1,
+    "off_share": 0.2600393758288495
+   }
+  },
+  "settles_on": {
+   "big mixed": 7,
+   "off-menu": 1,
+   "onion soup": 2
+  },
+  "runs_clean_by_end": 1,
+  "median_clean_step": 2644800.0
+ },
+ "unident_s_cx | fcp-S2-partial-hand-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.48250000000000004,
+    "medium mixed": 0.0125,
+    "onion soup": 0.32375,
+    "small": 0.03125000000000001,
+    "off-menu": 0.7025,
+    "points": 36.2375,
+    "off_share": 0.4835724575062432
+   },
+   "2": {
+    "big mixed": 1.5,
+    "medium mixed": 0.05,
+    "onion soup": 2.5,
+    "small": 0.0,
+    "off-menu": 0.9099999999999998,
+    "points": 142.0,
+    "off_share": 0.19361187472158783
+   },
+   "5": {
+    "big mixed": 1.75,
+    "medium mixed": 0.02,
+    "onion soup": 3.12,
+    "small": 0.01,
+    "off-menu": 0.5,
+    "points": 168.3,
+    "off_share": 0.13044275321892457
+   },
+   "7": {
+    "big mixed": 1.34,
+    "medium mixed": 0.07,
+    "onion soup": 2.23,
+    "small": 0.0,
+    "off-menu": 0.61,
+    "points": 127.8,
+    "off_share": 0.19570027919112215
+   },
+   "9": {
+    "big mixed": 0.99,
+    "medium mixed": 0.01,
+    "onion soup": 0.95,
+    "small": 0.01,
+    "off-menu": 0.36,
+    "points": 78.9,
+    "off_share": 0.28611365758424584
+   }
+  },
+  "settles_on": {
+   "big mixed": 5,
+   "onion soup": 4,
+   "off-menu": 1
+  },
+  "runs_clean_by_end": 3,
+  "median_clean_step": 2644800.0
+ },
+ "unident_s_cx | fcp-S2-usual-dishann-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.0,
+    "medium mixed": 0.003125,
+    "onion soup": 0.04583333333333332,
+    "small": 0.06041666666666665,
+    "off-menu": 0.7489583333333334,
+    "points": 1.6458333333333335,
+    "off_share": 0.8791832116004912
+   },
+   "2": {
+    "big mixed": 0.008333333333333333,
+    "medium mixed": 0.016666666666666666,
+    "onion soup": 0.14166666666666666,
+    "small": 0.11666666666666665,
+    "off-menu": 1.1916666666666667,
+    "points": 5.166666666666666,
+    "off_share": 0.8106650522381106
+   },
+   "5": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.2416666666666667,
+    "small": 0.05,
+    "off-menu": 0.6166666666666667,
+    "points": 5.333333333333334,
+    "off_share": 0.779044477028348
+   },
+   "7": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.03333333333333333,
+    "small": 0.06666666666666667,
+    "off-menu": 0.7583333333333333,
+    "points": 1.3333333333333335,
+    "off_share": 0.8821636696636697
+   },
+   "9": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.016666666666666666,
+    "small": 0.03333333333333333,
+    "off-menu": 0.8583333333333334,
+    "points": 0.6666666666666667,
+    "off_share": 0.9573529411764706
+   }
+  },
+  "settles_on": {
+   "off-menu": 10
+  },
+  "runs_clean_by_end": 0,
+  "median_clean_step": null
+ },
+ "unident_s_cx | fcp-S2-usual-hand-v2": {
+  "runs": 10,
+  "by_bin": {
+   "0": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0020833333333333333,
+    "onion soup": 0.03020833333333333,
+    "small": 0.04791666666666666,
+    "off-menu": 0.74375,
+    "points": 1.1666666666666667,
+    "off_share": 0.9043148763001705
+   },
+   "2": {
+    "big mixed": 0.008333333333333333,
+    "medium mixed": 0.008333333333333333,
+    "onion soup": 1.4416666666666667,
+    "small": 0.08333333333333333,
+    "off-menu": 1.0083333333333333,
+    "points": 30.499999999999993,
+    "off_share": 0.430245860547131
+   },
+   "5": {
+    "big mixed": 0.0,
+    "medium mixed": 0.008333333333333333,
+    "onion soup": 1.7333333333333336,
+    "small": 0.06666666666666667,
+    "off-menu": 0.6583333333333333,
+    "points": 35.66666666666667,
+    "off_share": 0.41676724989362146
+   },
+   "7": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.19166666666666668,
+    "small": 0.041666666666666664,
+    "off-menu": 0.8333333333333333,
+    "points": 4.25,
+    "off_share": 0.8751544860368389
+   },
+   "9": {
+    "big mixed": 0.0,
+    "medium mixed": 0.0,
+    "onion soup": 0.19166666666666665,
+    "small": 0.049999999999999996,
+    "off-menu": 0.7416666666666666,
+    "points": 4.333333333333334,
+    "off_share": 0.8570369720369719
+   }
+  },
+  "settles_on": {
+   "off-menu": 9,
+   "onion soup": 1
+  },
+  "runs_clean_by_end": 0,
+  "median_clean_step": null
+ }
+}
