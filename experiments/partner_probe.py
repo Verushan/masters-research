@@ -23,6 +23,13 @@ the current screen.
 
     python experiments/partner_probe.py --layout unident_s \\
         --out experiments/results/partner_probe_unident_s.json
+
+Multi-recipe layouts (`*_cx`) use the new env's partner set (fillin_eval.NEW_PARTNERS,
+ten personalities including the onion- and tomato-only potters) and take their
+agents straight from the pool by experiment name (--exps):
+
+    python experiments/partner_probe.py --layout pantry_cx --exps scripted-hand-v2 scripted-dishann-v2 \\
+        usual-hand-v2 usual-dishann-v2 --out experiments/results/partner_probe_pantry_cx.json
 """
 
 import argparse
@@ -68,22 +75,31 @@ def manifest_rows(layout):
     return rows
 
 
+def partner_names(layout):
+    from fillin_eval import NEW_PARTNERS
+    from zsceval.overcooked_config import OLD_LAYOUTS
+
+    return PARTNERS if layout in OLD_LAYOUTS else list(NEW_PARTNERS)
+
+
 def record(args):
     """Play every partner from both seats; return memory, screen and labels per game."""
     name, row, layout, games, seed0 = args
     torch.set_num_threads(1)
-    from fillin_eval import PARTNERS as SCRIPTS
-    from fillin_eval import load_actor, parse_flags
+    from fillin_eval import kitchen, load_actor, parse_flags
 
-    from zsceval.envs.overcooked.Overcooked_Env import Overcooked
-
+    Overcooked, SCRIPTS, _ = kitchen(layout)
+    names = partner_names(layout)
     all_args, actor = load_actor(row["config"], row["actor"], parse_flags(row["flags"]))
     all_args.layout_name = layout
     all_args.episode_length = 400
+    from zsceval.overcooked_config import OLD_LAYOUTS
+
+    all_args.old_dynamics = layout in OLD_LAYOUTS
     env = Overcooked(all_args, run_dir=HERE, evaluation=True)
     out = []
     for seat in (0, 1):
-        for p_i, partner in enumerate(PARTNERS):
+        for p_i, partner in enumerate(names):
             for g in range(games):
                 seed = seed0 + 1000 * seat + 37 * p_i + g
                 random.seed(seed)
@@ -136,13 +152,13 @@ def fit_probe(X, y, n_classes, epochs=300, wd=1e-3):
     return lambda Z: ((torch.tensor(Z) - mu) / sd @ W + b).argmax(1).numpy()
 
 
-def probe_agent(games, key, n_test):
+def probe_agent(games, key, n_test, n_classes=len(PARTNERS)):
     """Train on all but the last `n_test` games per (seat, partner); score per window."""
     train = [g for g in games if g["game"] < max(x["game"] for x in games) + 1 - n_test]
     test = [g for g in games if g not in train]
     Xtr = np.concatenate([g[key] for g in train])
     ytr = np.concatenate([np.full(len(g[key]), g["partner"]) for g in train])
-    predict = fit_probe(Xtr, ytr, len(PARTNERS))
+    predict = fit_probe(Xtr, ytr, n_classes)
     acc = defaultdict(list)
     for g in test:
         pred = predict(g[key])
@@ -159,45 +175,59 @@ def main():
     ap.add_argument("--games", type=int, default=3, help="Games per (seat, partner); the last is held out")
     ap.add_argument("--per_group", type=int, default=5, help="Agents per group (runs 1..n)")
     ap.add_argument("--jobs", type=int, default=12)
+    ap.add_argument("--exps", nargs="*", default=None,
+                    help="Multi-recipe layouts: stage-2 experiments (fcp-S2-<exp>) to probe, runs 1..per_group")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     assert os.environ.get("POLICY_POOL"), "POLICY_POOL is unset"
 
-    rows = manifest_rows(args.layout)
+    names = partner_names(args.layout)
+    groups = GROUPS
     tasks, group_of = [], {}
-    for g, _label, _f, prefix in GROUPS:
-        for s in range(1, args.per_group + 1):
-            name = f"{prefix}{s}"
-            if name in rows:
-                tasks.append((name, rows[name], args.layout, args.games, 7000))
-                group_of[name] = g
-    print(f"{len(tasks)} agents, {len(PARTNERS)} partners x 2 seats x {args.games} games each")
+    if args.exps:
+        groups = [(e, e, None, f"s2_{e}_s") for e in args.exps]
+        for e in args.exps:
+            for s in range(1, args.per_group + 1):
+                actor = f"{args.layout}/fcp/s2/fcp-S2-{e}/{s}.pt"
+                if osp.exists(osp.join(os.environ["POLICY_POOL"], actor)):
+                    row = dict(actor=actor, config=f"{args.layout}/policy_config/rnn_policy_config.pkl", flags="")
+                    tasks.append((f"s2_{e}_s{s}", row, args.layout, args.games, 7000))
+                    group_of[f"s2_{e}_s{s}"] = e
+    else:
+        rows = manifest_rows(args.layout)
+        for g, _label, _f, prefix in GROUPS:
+            for s in range(1, args.per_group + 1):
+                name = f"{prefix}{s}"
+                if name in rows:
+                    tasks.append((name, rows[name], args.layout, args.games, 7000))
+                    group_of[name] = g
+    print(f"{len(tasks)} agents, {len(names)} partners x 2 seats x {args.games} games each")
 
     results = {}
     with ProcessPoolExecutor(args.jobs) as ex:
         for name, games in ex.map(record, tasks):
-            results[name] = {k: probe_agent(games, k, 1) for k in ("memory", "screen", "both")}
+            results[name] = {k: probe_agent(games, k, 1, len(names)) for k in ("memory", "screen", "both")}
             r = results[name]
             print(f"  {name:28s} memory {r['memory']['overall']:.2f}  screen {r['screen']['overall']:.2f}  both {r['both']['overall']:.2f}", flush=True)
 
     summary = {}
-    for g, label, *_ in GROUPS:
-        names = [n for n in results if group_of[n] == g]
-        if not names:
+    for g, label, *_ in groups:
+        members = [n for n in results if group_of[n] == g]
+        if not members:
             continue
-        summary[g] = {"label": label, "n": len(names)}
+        summary[g] = {"label": label, "n": len(members)}
         for k in ("memory", "screen", "both"):
-            ws = sorted(results[names[0]][k]["by_window"])
+            ws = sorted(results[members[0]][k]["by_window"])
             summary[g][k] = {
-                "overall": float(np.mean([results[n][k]["overall"] for n in names])),
-                "by_window": {int(w): float(np.mean([results[n][k]["by_window"][w] for n in names])) for w in ws},
+                "overall": float(np.mean([results[n][k]["overall"] for n in members])),
+                "by_window": {int(w): float(np.mean([results[n][k]["by_window"][w] for n in members])) for w in ws},
             }
-    out = {"layout": args.layout, "chance": 1 / len(PARTNERS), "partners": PARTNERS, "window": WINDOW,
+    out = {"layout": args.layout, "chance": 1 / len(names), "partners": names, "window": WINDOW,
            "games_per_cell": args.games, "groups": summary, "agents": results}
     with open(args.out, "w") as f:
         json.dump(out, f, indent=1)
 
-    print(f"\nchance = {1 / len(PARTNERS):.3f}")
+    print(f"\nchance = {1 / len(names):.3f}")
     for g, v in summary.items():
         mw = " ".join(f"{v['memory']['by_window'][w]:.2f}" for w in sorted(v["memory"]["by_window"]))
         gain = v['both']['overall'] - v['screen']['overall']

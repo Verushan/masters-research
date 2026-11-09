@@ -1,0 +1,2878 @@
+{
+ "layout": "unident_s_cx",
+ "exp": "bench_sp-cx-lr",
+ "partner": "self",
+ "scripts": [],
+ "menu": {
+  "OOO": 20,
+  "OT": 10,
+  "OOTT": 40,
+  "OOOTT": 60,
+  "OOTTT": 60
+ },
+ "runs": {
+  "1": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.5,
+     "OOT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.25,
+     "OOO": 0.25,
+     "OOT": 0.25,
+     "OT": 1.0,
+     "TT": 0.5
+    },
+    "off_menu_share": 0.6666666666666666,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 1.25,
+     "OOT": 0.25,
+     "OOTT": 0.25,
+     "OT": 0.5
+    },
+    "off_menu_share": 0.7692307692307693,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 2.25,
+     "OOO": 0.5,
+     "OOOO": 0.25,
+     "OOOTT": 0.5,
+     "OOT": 0.25,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.6875,
+    "points_per_game": 42.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOO": 0.5,
+     "OOOTT": 0.25,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "TT": 0.5
+    },
+    "off_menu_share": 0.6,
+    "points_per_game": 27.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOTTT": 0.25,
+     "OT": 0.25,
+     "OTT": 0.5,
+     "T": 0.75
+    },
+    "off_menu_share": 0.7777777777777778,
+    "points_per_game": 17.5
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OTTTT": 0.25,
+     "TT": 0.25,
+     "TTT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OT": 0.5,
+     "OTT": 0.25,
+     "T": 1.25
+    },
+    "off_menu_share": 0.8,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OOO": 0.25,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "T": 0.75
+    },
+    "off_menu_share": 0.7777777777777778,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OT": 0.25,
+     "T": 1.25
+    },
+    "off_menu_share": 0.8571428571428571,
+    "points_per_game": 2.5
+   }
+  ],
+  "2": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.5,
+     "OT": 0.25,
+     "T": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.9166666666666666,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.5,
+     "OOOO": 0.25,
+     "T": 1.0
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOO": 0.25,
+     "OOOO": 0.25,
+     "OOOOT": 0.25,
+     "OOT": 0.25,
+     "OT": 0.75,
+     "T": 0.5,
+     "TT": 0.5
+    },
+    "off_menu_share": 0.6666666666666666,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOO": 0.5,
+     "OOOO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "OT": 1.0,
+     "T": 0.5
+    },
+    "off_menu_share": 0.6666666666666666,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 1.0,
+     "OOO": 0.25,
+     "OOT": 0.5,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.8571428571428571,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 2.0,
+     "OOOT": 0.25,
+     "OT": 1.25,
+     "OTT": 0.25,
+     "T": 0.5,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.7222222222222222,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OT": 7.25,
+     "OTT": 0.25
+    },
+    "off_menu_share": 0.06451612903225806,
+    "points_per_game": 72.5
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OT": 7.5,
+     "T": 0.5
+    },
+    "off_menu_share": 0.0625,
+    "points_per_game": 75.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OT": 12.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 127.5
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOOTT": 0.75,
+     "OOTT": 4.0,
+     "OT": 1.0,
+     "T": 0.25
+    },
+    "off_menu_share": 0.08,
+    "points_per_game": 215.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOOTT": 2.75,
+     "OOTT": 0.25
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 175.0
+   }
+  ],
+  "3": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.5,
+     "OOOO": 0.5,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "T": 1.0
+    },
+    "off_menu_share": 0.9411764705882353,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.5,
+     "OOO": 0.25,
+     "OOT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.9090909090909091,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.25,
+     "OOO": 0.25,
+     "OOOO": 0.25,
+     "OOT": 0.5,
+     "OOTT": 0.25
+    },
+    "off_menu_share": 0.8333333333333334,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.5,
+     "OOO": 0.5,
+     "OOOT": 0.25,
+     "OOT": 0.25
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOO": 3.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.23529411764705882,
+    "points_per_game": 65.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 6.0
+    },
+    "off_menu_share": 0.04,
+    "points_per_game": 120.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOO": 9.25
+    },
+    "off_menu_share": 0.02631578947368421,
+    "points_per_game": 185.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 11.75
+    },
+    "off_menu_share": 0.020833333333333332,
+    "points_per_game": 235.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.02040816326530612,
+    "points_per_game": 240.0
+   }
+  ],
+  "4": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.25,
+     "OOO": 0.5,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.7777777777777778,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.5,
+     "OOOO": 0.25,
+     "OOT": 0.5,
+     "OT": 0.5,
+     "T": 0.75
+    },
+    "off_menu_share": 0.8823529411764706,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 1.0,
+     "OOO": 0.5,
+     "OOOTT": 0.25,
+     "OOT": 1.25,
+     "OOTT": 0.25,
+     "OT": 0.75,
+     "T": 0.5
+    },
+    "off_menu_share": 0.631578947368421,
+    "points_per_game": 42.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OOO": 0.25,
+     "OOOTT": 0.5,
+     "OOT": 0.25,
+     "OOTTT": 0.25,
+     "OT": 1.0,
+     "T": 1.0
+    },
+    "off_menu_share": 0.5555555555555556,
+    "points_per_game": 60.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOO": 0.25,
+     "OOT": 0.5,
+     "OOTT": 0.5,
+     "OT": 1.0
+    },
+    "off_menu_share": 0.3,
+    "points_per_game": 35.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOTT": 0.75,
+     "OOTTT": 0.5,
+     "OTTT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.375,
+    "points_per_game": 60.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OOOTT": 1.5,
+     "OOTT": 0.5,
+     "OOTTT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.09090909090909091,
+    "points_per_game": 140.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {},
+    "off_menu_share": 0.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOOOT": 0.25,
+     "OT": 0.25,
+     "T": 1.0
+    },
+    "off_menu_share": 0.875,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "T": 1.75,
+     "TT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   }
+  ],
+  "5": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.5,
+     "OOO": 0.25,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.8,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 1.25,
+     "OOOO": 0.25,
+     "T": 0.75,
+     "TT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.5,
+     "OOO": 0.5,
+     "OOT": 0.25,
+     "OT": 0.5,
+     "T": 1.0
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.25,
+     "OOO": 0.25,
+     "OOOT": 0.25,
+     "OT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7272727272727273,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 4.25,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.05263157894736842,
+    "points_per_game": 87.5
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 8.5
+    },
+    "off_menu_share": 0.02857142857142857,
+    "points_per_game": 170.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 10.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 215.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 7.5
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 150.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 180.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.5
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 190.0
+   }
+  ],
+  "6": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOOT": 0.5,
+     "OOT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 2.25,
+     "OO": 1.5,
+     "OOO": 0.25,
+     "OOT": 0.25,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.8888888888888888,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 1.75,
+     "OOO": 1.0,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.7368421052631579,
+    "points_per_game": 22.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 2.0,
+     "OOO": 0.25,
+     "OOOO": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.9444444444444444,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.75,
+     "OOO": 3.25
+    },
+    "off_menu_share": 0.3157894736842105,
+    "points_per_game": 65.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.5,
+     "OOO": 4.0,
+     "OOOT": 0.25
+    },
+    "off_menu_share": 0.15789473684210525,
+    "points_per_game": 80.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 6.75,
+     "OOOO": 0.25
+    },
+    "off_menu_share": 0.06896551724137931,
+    "points_per_game": 135.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 10.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 215.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.5
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 190.0
+   }
+  ],
+  "7": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 2.0,
+     "OO": 0.25,
+     "OOO": 0.25,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.8181818181818182,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OOO": 0.5,
+     "OOOO": 0.25,
+     "OT": 0.25,
+     "T": 1.0
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOO": 0.25,
+     "OOOOT": 0.25,
+     "OOOT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.9090909090909091,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 1.75,
+     "OOO": 0.75,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "OTT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7894736842105263,
+    "points_per_game": 17.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.75,
+     "OOO": 2.25,
+     "OOOO": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.4375,
+    "points_per_game": 45.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 3.75,
+     "OOT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.16666666666666666,
+    "points_per_game": 75.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OOO": 4.75,
+     "OOOO": 0.25
+    },
+    "off_menu_share": 0.13636363636363635,
+    "points_per_game": 95.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 6.5,
+     "OOOO": 0.25,
+     "OOOT": 0.25
+    },
+    "off_menu_share": 0.07142857142857142,
+    "points_per_game": 130.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.25
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 245.0
+   }
+  ],
+  "8": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.25,
+     "OOO": 1.0,
+     "OOOO": 0.25,
+     "OOOT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.6363636363636364,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.75,
+     "OOO": 0.75
+    },
+    "off_menu_share": 0.6666666666666666,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.5,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.8,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOO": 0.5,
+     "OOT": 0.25,
+     "OT": 0.5,
+     "T": 0.75
+    },
+    "off_menu_share": 0.6363636363636364,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 1.0,
+     "OOOT": 0.25,
+     "OT": 0.75,
+     "T": 0.5
+    },
+    "off_menu_share": 0.7857142857142857,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.75,
+     "OOT": 0.25,
+     "OT": 1.0,
+     "OTT": 0.25,
+     "T": 1.0
+    },
+    "off_menu_share": 0.7142857142857143,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.75,
+     "OOOOT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "T": 1.25
+    },
+    "off_menu_share": 0.9,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.8571428571428571,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "T": 1.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OT": 0.5,
+     "T": 1.0
+    },
+    "off_menu_share": 0.7777777777777778,
+    "points_per_game": 5.0
+   }
+  ],
+  "9": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 2.25,
+     "OOO": 0.25,
+     "OOOO": 0.25,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.8461538461538461,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 1.0,
+     "OOO": 0.25,
+     "OOT": 0.5
+    },
+    "off_menu_share": 0.9230769230769231,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOO": 0.75,
+     "OOOO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.75,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7647058823529411,
+    "points_per_game": 17.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.5,
+     "OOO": 1.0,
+     "OOOOT": 0.25,
+     "OOT": 0.75,
+     "OTT": 0.25
+    },
+    "off_menu_share": 0.7142857142857143,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OOO": 3.25,
+     "OOOO": 0.25,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.3,
+    "points_per_game": 67.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOO": 5.0
+    },
+    "off_menu_share": 0.09090909090909091,
+    "points_per_game": 100.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOO": 7.0,
+     "OOT": 0.25
+    },
+    "off_menu_share": 0.0967741935483871,
+    "points_per_game": 140.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 7.0,
+     "OOOT": 0.25
+    },
+    "off_menu_share": 0.034482758620689655,
+    "points_per_game": 140.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 8.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 160.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 180.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 8.25
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 165.0
+   }
+  ],
+  "10": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "OT": 0.25
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 1.25,
+     "OOO": 0.25,
+     "OOOO": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.9333333333333333,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.75,
+     "OOO": 0.75,
+     "OOOT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7692307692307693,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.5,
+     "OOO": 0.5,
+     "OOOO": 0.5,
+     "OOOT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.8461538461538461,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 1.5,
+     "OOO": 1.75,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.5789473684210527,
+    "points_per_game": 37.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOO": 2.25,
+     "OOOOT": 0.25,
+     "T": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.4,
+    "points_per_game": 45.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOO": 6.5
+    },
+    "off_menu_share": 0.037037037037037035,
+    "points_per_game": 130.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.5,
+     "OOO": 8.0,
+     "OOOT": 0.25
+    },
+    "off_menu_share": 0.08571428571428572,
+    "points_per_game": 160.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 11.75,
+     "OOOT": 0.25
+    },
+    "off_menu_share": 0.020833333333333332,
+    "points_per_game": 235.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 255.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   }
+  ],
+  "11": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "T": 0.75
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.75,
+     "OOO": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.9230769230769231,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 2.0,
+     "OO": 0.5,
+     "OOT": 0.75,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.9333333333333333,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 2.5,
+     "OO": 0.25,
+     "OOO": 0.25,
+     "OOT": 0.75,
+     "OOTT": 0.25,
+     "OT": 0.75
+    },
+    "off_menu_share": 0.7368421052631579,
+    "points_per_game": 22.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.5,
+     "OOTT": 0.25,
+     "OT": 1.0,
+     "T": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.5833333333333334,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.25,
+     "OOO": 0.25,
+     "OOTT": 0.25,
+     "OT": 0.75,
+     "T": 1.0,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.6428571428571429,
+    "points_per_game": 22.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.5,
+     "OOTT": 0.25,
+     "OT": 1.0,
+     "OTT": 0.25,
+     "T": 1.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.6875,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OT": 1.0,
+     "OTT": 0.5,
+     "T": 0.75,
+     "TT": 0.5
+    },
+    "off_menu_share": 0.6923076923076923,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OTT": 0.25,
+     "T": 2.0
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "T": 1.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "T": 0.5,
+     "TT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "T": 1.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   }
+  ],
+  "12": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {},
+    "off_menu_share": 0.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.75,
+     "OTT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 2.0,
+     "OOOO": 0.25,
+     "OOT": 0.25,
+     "OT": 0.5,
+     "T": 0.5
+    },
+    "off_menu_share": 0.8888888888888888,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 1.25,
+     "OOO": 1.0,
+     "OOOO": 0.5,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "OT": 0.75
+    },
+    "off_menu_share": 0.631578947368421,
+    "points_per_game": 27.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.5,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOO": 0.25,
+     "OOOO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.9230769230769231,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.75,
+     "OOO": 4.75,
+     "T": 0.25
+    },
+    "off_menu_share": 0.20833333333333334,
+    "points_per_game": 95.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.25
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 185.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 8.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 160.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 8.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 175.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.5
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 190.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 8.5
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 170.0
+   }
+  ],
+  "13": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {},
+    "off_menu_share": 0.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.5,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.8571428571428571,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 1.25,
+     "OOO": 0.75,
+     "OOT": 0.75,
+     "OT": 0.5
+    },
+    "off_menu_share": 0.7222222222222222,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOO": 0.5,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7692307692307693,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.25,
+     "OOO": 1.25,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.6,
+    "points_per_game": 27.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.5,
+     "OOO": 0.5,
+     "OOT": 0.25,
+     "OOTT": 0.25,
+     "OT": 0.25,
+     "OTT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7142857142857143,
+    "points_per_game": 22.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOOO": 0.25,
+     "OOOTT": 0.25,
+     "OOTT": 0.25,
+     "OT": 0.25,
+     "OTT": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.6666666666666666,
+    "points_per_game": 27.5
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOT": 0.25,
+     "OOTT": 0.25,
+     "OTT": 0.25,
+     "T": 2.75
+    },
+    "off_menu_share": 0.9333333333333333,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OTT": 0.25,
+     "T": 1.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "T": 1.0,
+     "TT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OT": 0.5
+    },
+    "off_menu_share": 0.3333333333333333,
+    "points_per_game": 5.0
+   }
+  ],
+  "14": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 2.0,
+     "OO": 1.25,
+     "OT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.875,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OOOT": 0.5,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.8571428571428571,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.25,
+     "OOOO": 0.25,
+     "OOTTT": 0.25,
+     "T": 1.0
+    },
+    "off_menu_share": 0.9285714285714286,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.25,
+     "OT": 1.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.5454545454545454,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOOOT": 0.25,
+     "OOT": 0.75,
+     "OOTTT": 0.25,
+     "OT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.8,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "OOTT": 0.75,
+     "OT": 1.5,
+     "OTT": 0.5
+    },
+    "off_menu_share": 0.4,
+    "points_per_game": 45.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OOT": 0.25,
+     "OT": 0.5,
+     "OTT": 0.25,
+     "T": 1.0
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OOT": 0.25,
+     "OOTT": 0.25,
+     "OOTTT": 0.25,
+     "OT": 0.5,
+     "T": 0.75
+    },
+    "off_menu_share": 0.6363636363636364,
+    "points_per_game": 30.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOTT": 1.0,
+     "OOTTT": 0.25,
+     "OTT": 0.5,
+     "T": 0.5
+    },
+    "off_menu_share": 0.5454545454545454,
+    "points_per_game": 55.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OOT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.8,
+    "points_per_game": 2.5
+   }
+  ],
+  "15": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OOOO": 0.25,
+     "OT": 0.25,
+     "T": 0.75
+    },
+    "off_menu_share": 0.8571428571428571,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOT": 0.25,
+     "OTT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.75,
+     "OOO": 0.25,
+     "OOTT": 0.25,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.7272727272727273,
+    "points_per_game": 17.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 1.0,
+     "OOO": 0.75,
+     "OOOO": 0.25,
+     "OOOOO": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.8,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.5,
+     "OOO": 2.0,
+     "OOOO": 0.25
+    },
+    "off_menu_share": 0.4666666666666667,
+    "points_per_game": 40.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 6.75
+    },
+    "off_menu_share": 0.03571428571428571,
+    "points_per_game": 135.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OOO": 8.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.08333333333333333,
+    "points_per_game": 165.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.02,
+    "points_per_game": 245.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 13.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 260.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 255.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 13.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 260.0
+   }
+  ],
+  "16": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.5,
+     "OOOOT": 0.25,
+     "OT": 0.75,
+     "T": 0.75
+    },
+    "off_menu_share": 0.7857142857142857,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.5,
+     "OOO": 0.5,
+     "OOOO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.5,
+     "OT": 1.25,
+     "T": 1.25,
+     "TTT": 0.25
+    },
+    "off_menu_share": 0.65,
+    "points_per_game": 22.5
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.25,
+     "OOO": 0.5,
+     "OOT": 0.5,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.7857142857142857,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OOT": 0.25,
+     "OT": 1.25,
+     "T": 1.5
+    },
+    "off_menu_share": 0.6875,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.5,
+     "OOO": 0.5,
+     "OOT": 0.25,
+     "OT": 1.5,
+     "OTT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.5555555555555556,
+    "points_per_game": 25.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.75,
+     "OOO": 1.25,
+     "OOOT": 0.25,
+     "OOT": 0.5,
+     "OT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.5,
+    "points_per_game": 30.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OOO": 6.75,
+     "OOOO": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.15625,
+    "points_per_game": 135.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 11.25
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 225.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 12.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 240.0
+   }
+  ],
+  "17": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.25,
+     "OOO": 0.75,
+     "OOOO": 0.25,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.6923076923076923,
+    "points_per_game": 17.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 2.5,
+     "OO": 1.25,
+     "OOO": 0.25,
+     "OOOO": 0.25,
+     "OOOOO": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.95,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 1.0,
+     "OOO": 0.5,
+     "OOT": 0.5,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.7692307692307693,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 1.5,
+     "OOO": 0.5,
+     "OOOO": 0.25,
+     "OOT": 0.25
+    },
+    "off_menu_share": 0.8571428571428571,
+    "points_per_game": 10.0
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 0.25,
+     "OOO": 3.25
+    },
+    "off_menu_share": 0.13333333333333333,
+    "points_per_game": 65.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOO": 5.5,
+     "OOOO": 0.25
+    },
+    "off_menu_share": 0.15384615384615385,
+    "points_per_game": 110.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.5,
+     "OOO": 7.0,
+     "OOOO": 0.25
+    },
+    "off_menu_share": 0.0967741935483871,
+    "points_per_game": 140.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 11.25
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 225.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.5
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 190.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 9.25
+    },
+    "off_menu_share": 0.02631578947368421,
+    "points_per_game": 185.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 195.0
+   }
+  ],
+  "18": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.75,
+     "OOOTT": 0.25,
+     "OT": 0.5,
+     "T": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.7857142857142857,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OO": 1.0,
+     "OOO": 0.25,
+     "OOT": 0.25,
+     "T": 0.75,
+     "TT": 0.75
+    },
+    "off_menu_share": 0.9230769230769231,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.25,
+     "OOO": 0.5,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "T": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.7,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OOO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "OT": 0.75,
+     "T": 0.75
+    },
+    "off_menu_share": 0.7142857142857143,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 1.25,
+     "OO": 0.25,
+     "OOO": 0.25,
+     "OOT": 0.5,
+     "OOTT": 0.25,
+     "OT": 1.25,
+     "OTT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.6111111111111112,
+    "points_per_game": 27.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.25,
+     "OOT": 0.25,
+     "OT": 1.25,
+     "T": 0.25,
+     "TTT": 0.25
+    },
+    "off_menu_share": 0.6666666666666666,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OT": 1.25,
+     "T": 2.75,
+     "TT": 0.25
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.5,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.875,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 2.5
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "T": 0.75
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "T": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   }
+  ],
+  "19": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "T": 0.25,
+     "TT": 0.25
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 2.0,
+     "OO": 1.25,
+     "OOO": 0.5,
+     "OT": 0.25
+    },
+    "off_menu_share": 0.8125,
+    "points_per_game": 12.5
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 0.25,
+     "OOO": 0.75,
+     "OOOO": 0.75,
+     "OOT": 0.5
+    },
+    "off_menu_share": 0.8125,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.75,
+     "OO": 1.0,
+     "OOO": 1.0,
+     "OOOOO": 0.25,
+     "OOT": 0.25,
+     "OT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7,
+    "points_per_game": 25.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 1.0,
+     "OOO": 0.75,
+     "OOOT": 0.25,
+     "OOT": 0.5,
+     "OOTT": 0.25,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.6875,
+    "points_per_game": 27.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 1.25,
+     "OOO": 1.0,
+     "OOOO": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7142857142857143,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.5,
+     "OOO": 3.75
+    },
+    "off_menu_share": 0.21052631578947367,
+    "points_per_game": 75.0
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.25,
+     "OOO": 6.5
+    },
+    "off_menu_share": 0.037037037037037035,
+    "points_per_game": 130.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 9.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 195.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.25,
+     "OOO": 9.0
+    },
+    "off_menu_share": 0.07692307692307693,
+    "points_per_game": 180.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 10.5,
+     "OOOO": 0.25
+    },
+    "off_menu_share": 0.023255813953488372,
+    "points_per_game": 210.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOO": 10.75
+    },
+    "off_menu_share": 0.044444444444444446,
+    "points_per_game": 215.0
+   }
+  ],
+  "20": [
+   {
+    "step": 4800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 1.0,
+    "points_per_game": 0.0
+   },
+   {
+    "step": 72000,
+    "games": 4,
+    "per_game": {
+     "O": 1.5,
+     "OO": 0.5,
+     "OOOO": 0.25,
+     "OOT": 0.25,
+     "OT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.8461538461538461,
+    "points_per_game": 5.0
+   },
+   {
+    "step": 129600,
+    "games": 4,
+    "per_game": {
+     "O": 0.75,
+     "OO": 0.5,
+     "OOO": 0.75,
+     "OOOOO": 0.25,
+     "OOT": 0.5,
+     "T": 0.25
+    },
+    "off_menu_share": 0.75,
+    "points_per_game": 15.0
+   },
+   {
+    "step": 196800,
+    "games": 4,
+    "per_game": {
+     "O": 1.0,
+     "OO": 0.75,
+     "OOO": 0.75,
+     "OOT": 0.25,
+     "OT": 0.5,
+     "T": 1.0
+    },
+    "off_menu_share": 0.7058823529411765,
+    "points_per_game": 20.0
+   },
+   {
+    "step": 292800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.5,
+     "OOO": 0.75,
+     "OOTT": 0.25,
+     "OT": 0.25,
+     "T": 0.75
+    },
+    "off_menu_share": 0.5833333333333334,
+    "points_per_game": 27.5
+   },
+   {
+    "step": 436800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OOO": 0.25,
+     "OOT": 0.25,
+     "OT": 0.25,
+     "OTT": 0.25,
+     "T": 0.25
+    },
+    "off_menu_share": 0.7142857142857143,
+    "points_per_game": 7.5
+   },
+   {
+    "step": 1084800,
+    "games": 4,
+    "per_game": {
+     "O": 0.5,
+     "OO": 0.5,
+     "OOO": 1.5,
+     "OOOO": 0.25,
+     "OOOT": 0.25,
+     "OOT": 0.25,
+     "OOTT": 0.25,
+     "OT": 0.25,
+     "T": 0.5
+    },
+    "off_menu_share": 0.5294117647058824,
+    "points_per_game": 42.5
+   },
+   {
+    "step": 1804800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOO": 7.25
+    },
+    "off_menu_share": 0.03333333333333333,
+    "points_per_game": 145.0
+   },
+   {
+    "step": 2644800,
+    "games": 4,
+    "per_game": {
+     "OOO": 10.0
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 200.0
+   },
+   {
+    "step": 3484800,
+    "games": 4,
+    "per_game": {
+     "OO": 0.5,
+     "OOO": 10.5
+    },
+    "off_menu_share": 0.045454545454545456,
+    "points_per_game": 210.0
+   },
+   {
+    "step": 4204800,
+    "games": 4,
+    "per_game": {
+     "OOO": 8.75
+    },
+    "off_menu_share": 0.0,
+    "points_per_game": 175.0
+   },
+   {
+    "step": 4996800,
+    "games": 4,
+    "per_game": {
+     "O": 0.25,
+     "OOO": 8.5
+    },
+    "off_menu_share": 0.02857142857142857,
+    "points_per_game": 170.0
+   }
+  ]
+ }
+}
