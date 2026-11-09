@@ -100,8 +100,10 @@ def main():
     ap.add_argument("--exp", required=True)
     ap.add_argument("--partner", choices=["self", "scripts", "yml"], required=True)
     ap.add_argument("--scripts", nargs="*", default=[])
+    ap.add_argument("--yml_tags", nargs="*", default=["final"],
+                    help="Checkpoint tags of the frozen yml entries to play beside (the yml lists init, mid, final per seed)")
     ap.add_argument("--yml", default=None, help="Pool-relative population yml (partner=yml)")
-    ap.add_argument("--yml_every", type=int, default=3, help="Use every k-th frozen entry of the yml")
+    ap.add_argument("--yml_every", type=int, default=1, help="Use every k-th frozen entry of the yml")
     ap.add_argument("--seeds", nargs="*", type=int, default=None, help="Training seeds (default: every finished run)")
     ap.add_argument("--n_ckpt", type=int, default=12, help="Checkpoints per run, evenly spaced")
     ap.add_argument("--episodes", type=int, default=4, help="Games per checkpoint (per partner, for scripts)")
@@ -124,7 +126,8 @@ def main():
 
         pop = yaml.safe_load(open(osp.join(pool, args.yml)))
         frozen = [(v["policy_config_path"], v["model_path"]["actor"]) for v in pop.values()
-                  if not v.get("train") and "model_path" in v][:: args.yml_every]
+                  if not v.get("train") and "model_path" in v
+                    and any(f"_{t}_actor" in v["model_path"]["actor"] for t in args.yml_tags)][:: args.yml_every]
         print(f"population: {len(frozen)} partners from {args.yml}")
     prefix, config = ("fcp_adaptive/", rg.RNN) if stage2 else ("", rg.MLP)
     mdp = new_mdp.OvercookedGridworld.from_layout_name(args.layout, old_dynamics=False)

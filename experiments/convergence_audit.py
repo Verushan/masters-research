@@ -14,7 +14,7 @@ finished run of an experiment:
 - apply the same rules to the W&B training curve, so the cheap measure can be validated.
 
 Partners as in dish_trajectory.py: stage 1 plays itself; stage 2 plays each training partner
-(scripted specialists, or every --yml_every-th frozen entry of the population yml) once per seat.
+(scripted specialists, or the frozen population entries with --yml_tags, default final) once per seat.
 
     python experiments/convergence_audit.py --layout pantry_cx --exp bench_sp-cx-lr --partner self \\
         --out experiments/results/convergence/pantry_cx_bench_sp-cx-lr.json
@@ -244,8 +244,10 @@ def main():
     ap.add_argument("--exp", required=True)
     ap.add_argument("--partner", choices=["self", "scripts", "yml"], required=True)
     ap.add_argument("--scripts", nargs="*", default=[])
+    ap.add_argument("--yml_tags", nargs="*", default=["final"],
+                    help="Checkpoint tags of the frozen yml entries to play beside (the yml lists init, mid, final per seed)")
     ap.add_argument("--yml", default=None)
-    ap.add_argument("--yml_every", type=int, default=3)
+    ap.add_argument("--yml_every", type=int, default=1)
     ap.add_argument("--seeds", nargs="*", type=int, default=None)
     ap.add_argument("--n_ckpt", type=int, default=25)
     ap.add_argument("--n_self", type=int, default=8, help="Self-play games per set (stage 1)")
@@ -275,7 +277,8 @@ def main():
 
         pop = yaml.safe_load(open(osp.join(pool, args.yml)))
         partners = [("actor", v["policy_config_path"], v["model_path"]["actor"]) for v in pop.values()
-                    if not v.get("train") and "model_path" in v][:: args.yml_every]
+                    if not v.get("train") and "model_path" in v
+                    and any(f"_{t}_actor" in v["model_path"]["actor"] for t in args.yml_tags)][:: args.yml_every]
     else:
         partners = None
 
