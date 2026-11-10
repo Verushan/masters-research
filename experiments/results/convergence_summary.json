@@ -1,0 +1,1957 @@
+{
+ "pantry_cx": {
+  "noise_floor": 30.0,
+  "arms": {
+   "bench_morl_ann-cx-lr": {
+    "n": 12,
+    "counts": {
+     "not converged": 0,
+     "stable": 6,
+     "declined": 3,
+     "collapsed": 3
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.26464846939705117
+     ],
+     "stable": [
+      0.21094463823929666,
+      0.7890553617607033
+     ],
+     "declined": [
+      0.05486064452799272,
+      0.5718584618781891
+     ],
+     "collapsed": [
+      0.05486064452799272,
+      0.5718584618781891
+     ]
+    },
+    "converged": 12,
+    "peak": [
+     317.5,
+     307.5,
+     67.5,
+     310.0,
+     325.0,
+     262.5,
+     137.5,
+     162.5,
+     255.0,
+     292.5,
+     325.0,
+     355.0
+    ],
+    "final": [
+     295.0,
+     152.5,
+     0.0,
+     310.8333333333333,
+     313.3333333333333,
+     272.5,
+     0.4166666666666667,
+     0.0,
+     190.0,
+     194.16666666666666,
+     337.5,
+     358.3333333333333
+    ],
+    "collapse_times": [
+     4996800,
+     4324800,
+     1804800,
+     4996800,
+     4996800,
+     4996800,
+     2884800,
+     4324800,
+     4996800,
+     4684800,
+     4996800,
+     4996800
+    ],
+    "collapse_events": [
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     1,
+     0,
+     0
+    ],
+    "km": [
+     [
+      1804800.0,
+      0.9166666666666666
+     ],
+     [
+      2884800.0,
+      0.8333333333333333
+     ],
+     [
+      4324800.0,
+      0.6666666666666666
+     ],
+     [
+      4684800.0,
+      0.5833333333333333
+     ]
+    ],
+    "km_median": null,
+    "sudden": 6,
+    "kappa_curve": 0.8620689655172413,
+    "curve_counts": {
+     "stable": 7,
+     "declined": 2,
+     "collapsed": 3
+    },
+    "per_run": {
+     "2": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "7": {
+      "offline": "declined",
+      "curve": "declined"
+     },
+     "6": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "8": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "4": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "5": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "3": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "1": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "9": {
+      "offline": "declined",
+      "curve": "stable"
+     },
+     "12": {
+      "offline": "declined",
+      "curve": "declined"
+     },
+     "10": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "11": {
+      "offline": "stable",
+      "curve": "stable"
+     }
+    }
+   },
+   "bench_sp-cx-lr": {
+    "n": 20,
+    "counts": {
+     "not converged": 7,
+     "stable": 6,
+     "declined": 4,
+     "collapsed": 3
+    },
+    "rate_ci": {
+     "not converged": [
+      0.15390920478454118,
+      0.5921885345328282
+     ],
+     "stable": [
+      0.11893159040572769,
+      0.5427891822762891
+     ],
+     "declined": [
+      0.05733399705003277,
+      0.4366140029966683
+     ],
+     "collapsed": [
+      0.0320709371854637,
+      0.37892682654531396
+     ]
+    },
+    "converged": 13,
+    "peak": [
+     210.0,
+     395.0,
+     12.5,
+     335.0,
+     36.25,
+     412.5,
+     332.5,
+     255.0,
+     7.5,
+     255.0,
+     72.5,
+     10.0,
+     282.5,
+     36.25,
+     412.5,
+     60.0,
+     270.0,
+     7.5,
+     5.0,
+     93.75
+    ],
+    "final": [
+     276.6666666666667,
+     366.6666666666667,
+     3.75,
+     244.16666666666666,
+     0.4166666666666667,
+     385.0,
+     255.83333333333334,
+     95.0,
+     2.0833333333333335,
+     235.0,
+     0.4166666666666667,
+     1.6666666666666667,
+     143.75,
+     0.4166666666666667,
+     378.3333333333333,
+     0.0,
+     100.83333333333333,
+     0.0,
+     0.8333333333333334,
+     0.0
+    ],
+    "collapse_times": [
+     4996800,
+     4996800,
+     4996800,
+     4684800,
+     4996800,
+     4996800,
+     4996800,
+     3964800,
+     4996800,
+     4996800,
+     2164800,
+     4996800,
+     3244800,
+     4996800,
+     4996800,
+     2164800,
+     4324800,
+     4996800,
+     4996800,
+     3964800
+    ],
+    "collapse_events": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     0,
+     1,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     1
+    ],
+    "km": [
+     [
+      2164800.0,
+      0.9
+     ],
+     [
+      3244800.0,
+      0.85
+     ],
+     [
+      3964800.0,
+      0.75
+     ],
+     [
+      4324800.0,
+      0.7
+     ],
+     [
+      4684800.0,
+      0.65
+     ]
+    ],
+    "km_median": null,
+    "sudden": 7,
+    "kappa_curve": 0.6655518394648829,
+    "curve_counts": {
+     "stable": 6,
+     "not converged": 5,
+     "collapsed": 6,
+     "declined": 3
+    },
+    "per_run": {
+     "5": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "2": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "7": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "6": {
+      "offline": "declined",
+      "curve": "stable"
+     },
+     "4": {
+      "offline": "not converged",
+      "curve": "collapsed"
+     },
+     "3": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "8": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "1": {
+      "offline": "declined",
+      "curve": "declined"
+     },
+     "10": {
+      "offline": "not converged",
+      "curve": "collapsed"
+     },
+     "9": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "12": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "11": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "13": {
+      "offline": "declined",
+      "curve": "declined"
+     },
+     "14": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "15": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "16": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "17": {
+      "offline": "declined",
+      "curve": "collapsed"
+     },
+     "18": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "20": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "19": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     }
+    }
+   },
+   "fcp-S2-scripted-dishann-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 0,
+     "stable": 1,
+     "declined": 1,
+     "collapsed": 8
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.3084971078187608
+     ],
+     "stable": [
+      0.0025285785444617848,
+      0.4450161170281954
+     ],
+     "declined": [
+      0.0025285785444617848,
+      0.4450161170281954
+     ],
+     "collapsed": [
+      0.4439045376923585,
+      0.9747892736731666
+     ]
+    },
+    "converged": 10,
+    "peak": [
+     151.42857142857142,
+     191.42857142857142,
+     97.85714285714286,
+     64.28571428571429,
+     115.71428571428571,
+     160.71428571428572,
+     105.71428571428571,
+     136.42857142857142,
+     164.28571428571428,
+     120.0
+    ],
+    "final": [
+     33.095238095238095,
+     12.38095238095238,
+     8.095238095238095,
+     10.0,
+     86.19047619047619,
+     2.857142857142857,
+     8.571428571428571,
+     11.19047619047619,
+     52.38095238095238,
+     8.333333333333334
+    ],
+    "collapse_times": [
+     2404800,
+     2884800,
+     2404800,
+     2404800,
+     4996800,
+     2404800,
+     2884800,
+     2404800,
+     4084800,
+     2404800
+    ],
+    "collapse_events": [
+     1,
+     1,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "km": [
+     [
+      2404800.0,
+      0.4
+     ],
+     [
+      2884800.0,
+      0.2
+     ],
+     [
+      4084800.0,
+      0.1
+     ]
+    ],
+    "km_median": 2404800.0,
+    "sudden": 9,
+    "kappa_curve": 0.2592592592592592,
+    "curve_counts": {
+     "collapsed": 9,
+     "declined": 1
+    },
+    "per_run": {
+     "1": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "5": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "2": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "7": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "6": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "3": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "4": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "8": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "9": {
+      "offline": "declined",
+      "curve": "collapsed"
+     },
+     "10": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     }
+    }
+   },
+   "fcp-S2-scripted-hand-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 0,
+     "stable": 2,
+     "declined": 0,
+     "collapsed": 8
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.3084971078187608
+     ],
+     "stable": [
+      0.02521072632683336,
+      0.5560954623076415
+     ],
+     "declined": [
+      0.0,
+      0.3084971078187608
+     ],
+     "collapsed": [
+      0.4439045376923585,
+      0.9747892736731666
+     ]
+    },
+    "converged": 10,
+    "peak": [
+     84.28571428571429,
+     80.0,
+     138.57142857142858,
+     100.0,
+     147.14285714285714,
+     88.57142857142857,
+     84.28571428571429,
+     85.71428571428571,
+     97.14285714285714,
+     86.42857142857143
+    ],
+    "final": [
+     99.52380952380952,
+     12.380952380952381,
+     14.285714285714286,
+     6.190476190476191,
+     96.66666666666667,
+     10.238095238095239,
+     30.0,
+     9.523809523809524,
+     29.523809523809522,
+     8.571428571428571
+    ],
+    "collapse_times": [
+     4996800,
+     2404800,
+     2404800,
+     2404800,
+     4996800,
+     2884800,
+     2404800,
+     2404800,
+     2404800,
+     2404800
+    ],
+    "collapse_events": [
+     0,
+     1,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "km": [
+     [
+      2404800.0,
+      0.30000000000000004
+     ],
+     [
+      2884800.0,
+      0.20000000000000004
+     ]
+    ],
+    "km_median": 2404800.0,
+    "sudden": 8,
+    "kappa_curve": 0.44444444444444436,
+    "curve_counts": {
+     "declined": 2,
+     "collapsed": 8
+    },
+    "per_run": {
+     "4": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "6": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "2": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "3": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "5": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "1": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "8": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "7": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "9": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "10": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     }
+    }
+   },
+   "fcp-S2-usual-dishann-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 1,
+     "stable": 6,
+     "declined": 0,
+     "collapsed": 3
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0025285785444617848,
+      0.4450161170281954
+     ],
+     "stable": [
+      0.26237807660694507,
+      0.8784477418801728
+     ],
+     "declined": [
+      0.0,
+      0.3084971078187608
+     ],
+     "collapsed": [
+      0.06673951117773447,
+      0.6524528500599973
+     ]
+    },
+    "converged": 9,
+    "peak": [
+     80.0,
+     116.66666666666667,
+     78.33333333333333,
+     110.0,
+     123.33333333333333,
+     70.0,
+     91.66666666666667,
+     43.333333333333336,
+     95.83333333333333,
+     101.66666666666667
+    ],
+    "final": [
+     65.55555555555556,
+     76.66666666666667,
+     20.0,
+     27.222222222222225,
+     8.333333333333334,
+     60.55555555555555,
+     58.888888888888886,
+     6.111111111111112,
+     15.555555555555555,
+     65.0
+    ],
+    "collapse_times": [
+     4996800,
+     4996800,
+     4996800,
+     2404800,
+     2884800,
+     4996800,
+     4996800,
+     4996800,
+     1684800,
+     4996800
+    ],
+    "collapse_events": [
+     0,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     0,
+     1,
+     0
+    ],
+    "km": [
+     [
+      1684800.0,
+      0.9
+     ],
+     [
+      2404800.0,
+      0.7999999999999999
+     ],
+     [
+      2884800.0,
+      0.7
+     ]
+    ],
+    "km_median": null,
+    "sudden": 3,
+    "kappa_curve": 0.0,
+    "curve_counts": {
+     "not converged": 5,
+     "collapsed": 5
+    },
+    "per_run": {
+     "3": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "1": {
+      "offline": "stable",
+      "curve": "collapsed"
+     },
+     "6": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "4": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "5": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "2": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "7": {
+      "offline": "stable",
+      "curve": "collapsed"
+     },
+     "8": {
+      "offline": "not converged",
+      "curve": "collapsed"
+     },
+     "9": {
+      "offline": "collapsed",
+      "curve": "not converged"
+     },
+     "10": {
+      "offline": "stable",
+      "curve": "not converged"
+     }
+    }
+   },
+   "fcp-S2-usual-hand-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 0,
+     "stable": 2,
+     "declined": 2,
+     "collapsed": 6
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.3084971078187608
+     ],
+     "stable": [
+      0.02521072632683336,
+      0.5560954623076415
+     ],
+     "declined": [
+      0.02521072632683336,
+      0.5560954623076415
+     ],
+     "collapsed": [
+      0.26237807660694507,
+      0.8784477418801728
+     ]
+    },
+    "converged": 10,
+    "peak": [
+     116.66666666666667,
+     120.83333333333333,
+     90.83333333333333,
+     63.333333333333336,
+     60.0,
+     143.33333333333334,
+     101.66666666666667,
+     50.0,
+     118.33333333333333,
+     121.66666666666667
+    ],
+    "final": [
+     57.77777777777778,
+     10.0,
+     25.0,
+     68.33333333333333,
+     9.444444444444445,
+     75.0,
+     14.166666666666664,
+     16.11111111111111,
+     7.777777777777779,
+     15.0
+    ],
+    "collapse_times": [
+     4084800,
+     2404800,
+     2884800,
+     4996800,
+     2884800,
+     4564800,
+     2404800,
+     4996800,
+     2884800,
+     2884800
+    ],
+    "collapse_events": [
+     1,
+     1,
+     1,
+     0,
+     1,
+     1,
+     1,
+     0,
+     1,
+     1
+    ],
+    "km": [
+     [
+      2404800.0,
+      0.8
+     ],
+     [
+      2884800.0,
+      0.4
+     ],
+     [
+      4084800.0,
+      0.30000000000000004
+     ],
+     [
+      4564800.0,
+      0.20000000000000004
+     ]
+    ],
+    "km_median": 2884800.0,
+    "sudden": 8,
+    "kappa_curve": 0.06250000000000006,
+    "curve_counts": {
+     "collapsed": 6,
+     "not converged": 4
+    },
+    "per_run": {
+     "8": {
+      "offline": "declined",
+      "curve": "collapsed"
+     },
+     "3": {
+      "offline": "collapsed",
+      "curve": "not converged"
+     },
+     "7": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "4": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "1": {
+      "offline": "collapsed",
+      "curve": "not converged"
+     },
+     "5": {
+      "offline": "declined",
+      "curve": "collapsed"
+     },
+     "6": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "2": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "9": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "10": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     }
+    }
+   }
+  },
+  "tests": {
+   "bench_morl_ann-cx-lr vs bench_sp-cx-lr": {
+    "fisher_decline_p": 0.47345325033335867,
+    "logrank_p": 0.755493750431305,
+    "peak_diff": 84.72916666666669,
+    "peak_p": 0.09416,
+    "final_diff": 77.50694444444441,
+    "final_p": 0.14801
+   },
+   "fcp-S2-scripted-dishann-v2 vs fcp-S2-usual-hand-v2": {
+    "fisher_decline_p": 1.0,
+    "logrank_p": 0.1905753480641768,
+    "peak_diff": 32.11904761904762,
+    "peak_p": 0.05338933512308126,
+    "final_diff": -6.551587301587297,
+    "final_p": 0.5866981315897725
+   },
+   "fcp-S2-scripted-hand-v2 vs fcp-S2-usual-hand-v2": {
+    "fisher_decline_p": 1.0,
+    "logrank_p": 0.36107677469055766,
+    "peak_diff": 0.5476190476190652,
+    "peak_p": 0.9658576717400247,
+    "final_diff": 1.8293650793650862,
+    "final_p": 0.9121868843231072
+   },
+   "fcp-S2-usual-dishann-v2 vs fcp-S2-usual-hand-v2": {
+    "fisher_decline_p": 0.06977851869492736,
+    "logrank_p": 0.0674000693935298,
+    "peak_diff": -7.583333333333329,
+    "peak_p": 0.5522527008595121,
+    "final_diff": 10.527777777777786,
+    "final_p": 0.39586265128060794
+   }
+  }
+ },
+ "unident_s_cx": {
+  "noise_floor": 28.76249999999999,
+  "arms": {
+   "bench_morl_ann-cx-lr": {
+    "n": 12,
+    "counts": {
+     "not converged": 0,
+     "stable": 6,
+     "declined": 1,
+     "collapsed": 5
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.26464846939705117
+     ],
+     "stable": [
+      0.21094463823929666,
+      0.7890553617607033
+     ],
+     "declined": [
+      0.0021075932318602264,
+      0.38479616515094406
+     ],
+     "collapsed": [
+      0.15165222980843013,
+      0.7233303143178942
+     ]
+    },
+    "converged": 12,
+    "peak": [
+     158.75,
+     260.0,
+     427.5,
+     180.0,
+     320.0,
+     345.0,
+     540.0,
+     86.25,
+     387.5,
+     470.0,
+     135.0,
+     155.0
+    ],
+    "final": [
+     34.583333333333336,
+     250.0,
+     456.6666666666667,
+     89.16666666666667,
+     0.4166666666666667,
+     311.6666666666667,
+     500.0,
+     0.0,
+     325.8333333333333,
+     413.3333333333333,
+     2.0833333333333335,
+     2.0833333333333335
+    ],
+    "collapse_times": [
+     4324800,
+     4996800,
+     4996800,
+     4684800,
+     3244800,
+     4996800,
+     4996800,
+     3604800,
+     4996800,
+     4996800,
+     3244800,
+     3244800
+    ],
+    "collapse_events": [
+     1,
+     0,
+     0,
+     1,
+     1,
+     0,
+     0,
+     1,
+     0,
+     0,
+     1,
+     1
+    ],
+    "km": [
+     [
+      3244800.0,
+      0.75
+     ],
+     [
+      3604800.0,
+      0.6666666666666666
+     ],
+     [
+      4324800.0,
+      0.5833333333333333
+     ],
+     [
+      4684800.0,
+      0.5
+     ]
+    ],
+    "km_median": 4684800.0,
+    "sudden": 6,
+    "kappa_curve": 0.846153846153846,
+    "curve_counts": {
+     "collapsed": 6,
+     "stable": 6
+    },
+    "per_run": {
+     "4": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "1": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "6": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "3": {
+      "offline": "declined",
+      "curve": "collapsed"
+     },
+     "7": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "2": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "5": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "8": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "10": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "9": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "11": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "12": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     }
+    }
+   },
+   "bench_sp-cx-lr": {
+    "n": 20,
+    "counts": {
+     "not converged": 5,
+     "stable": 13,
+     "declined": 0,
+     "collapsed": 2
+    },
+    "rate_ci": {
+     "not converged": [
+      0.08657146910143461,
+      0.49104587170795744
+     ],
+     "stable": [
+      0.40781146546717184,
+      0.8460907952154588
+     ],
+     "declined": [
+      0.0,
+      0.1684334709830853
+     ],
+     "collapsed": [
+      0.012348527170294808,
+      0.31698271401908235
+     ]
+    },
+    "converged": 15,
+    "peak": [
+     127.5,
+     13.75,
+     22.5,
+     217.5,
+     260.0,
+     225.0,
+     342.5,
+     242.5,
+     260.0,
+     137.5,
+     172.5,
+     55.0,
+     42.5,
+     235.0,
+     20.0,
+     260.0,
+     237.5,
+     32.5,
+     240.0,
+     197.5
+    ],
+    "final": [
+     3.3333333333333335,
+     2.9166666666666665,
+     0.4166666666666667,
+     185.83333333333334,
+     253.33333333333334,
+     217.5,
+     282.9166666666667,
+     246.66666666666666,
+     248.33333333333334,
+     175.83333333333334,
+     177.5,
+     2.9166666666666665,
+     1.6666666666666667,
+     240.0,
+     1.6666666666666667,
+     253.33333333333334,
+     204.16666666666666,
+     0.8333333333333334,
+     225.0,
+     180.0
+    ],
+    "collapse_times": [
+     2884800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     3604800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800
+    ],
+    "collapse_events": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "km": [
+     [
+      2884800.0,
+      0.95
+     ],
+     [
+      3604800.0,
+      0.9
+     ]
+    ],
+    "km_median": null,
+    "sudden": 2,
+    "kappa_curve": 0.7402597402597403,
+    "curve_counts": {
+     "collapsed": 3,
+     "not converged": 4,
+     "stable": 11,
+     "declined": 2
+    },
+    "per_run": {
+     "4": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "1": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "8": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "5": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "3": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "6": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "2": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "7": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "10": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "9": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "12": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "14": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "13": {
+      "offline": "not converged",
+      "curve": "collapsed"
+     },
+     "16": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "11": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "15": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "17": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "18": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "19": {
+      "offline": "stable",
+      "curve": "stable"
+     },
+     "20": {
+      "offline": "stable",
+      "curve": "stable"
+     }
+    }
+   },
+   "fcp-S2-partial-dishann-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 0,
+     "stable": 5,
+     "declined": 2,
+     "collapsed": 3
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.3084971078187608
+     ],
+     "stable": [
+      0.18708602844739855,
+      0.8129139715526015
+     ],
+     "declined": [
+      0.02521072632683336,
+      0.5560954623076415
+     ],
+     "collapsed": [
+      0.06673951117773447,
+      0.6524528500599973
+     ]
+    },
+    "converged": 10,
+    "peak": [
+     112.0,
+     176.0,
+     244.0,
+     268.0,
+     298.0,
+     340.0,
+     246.0,
+     119.0,
+     160.0,
+     302.0
+    ],
+    "final": [
+     63.333333333333336,
+     44.0,
+     49.333333333333336,
+     206.66666666666666,
+     208.66666666666666,
+     259.3333333333333,
+     38.666666666666664,
+     52.0,
+     89.33333333333333,
+     262.6666666666667
+    ],
+    "collapse_times": [
+     4996800,
+     2404800,
+     3364800,
+     4996800,
+     4564800,
+     4996800,
+     2884800,
+     4996800,
+     4564800,
+     4996800
+    ],
+    "collapse_events": [
+     0,
+     1,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0,
+     1,
+     0
+    ],
+    "km": [
+     [
+      2404800.0,
+      0.9
+     ],
+     [
+      2884800.0,
+      0.7999999999999999
+     ],
+     [
+      3364800.0,
+      0.7
+     ],
+     [
+      4564800.0,
+      0.5
+     ]
+    ],
+    "km_median": 4564800.0,
+    "sudden": 5,
+    "kappa_curve": 0.23076923076923075,
+    "curve_counts": {
+     "declined": 8,
+     "collapsed": 2
+    },
+    "per_run": {
+     "8": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "2": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "5": {
+      "offline": "collapsed",
+      "curve": "declined"
+     },
+     "6": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "3": {
+      "offline": "declined",
+      "curve": "declined"
+     },
+     "4": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "1": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "7": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "9": {
+      "offline": "declined",
+      "curve": "declined"
+     },
+     "10": {
+      "offline": "stable",
+      "curve": "declined"
+     }
+    }
+   },
+   "fcp-S2-partial-hand-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 0,
+     "stable": 4,
+     "declined": 3,
+     "collapsed": 3
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.3084971078187608
+     ],
+     "stable": [
+      0.12155225811982719,
+      0.7376219233930549
+     ],
+     "declined": [
+      0.06673951117773447,
+      0.6524528500599973
+     ],
+     "collapsed": [
+      0.06673951117773447,
+      0.6524528500599973
+     ]
+    },
+    "converged": 10,
+    "peak": [
+     216.0,
+     238.0,
+     116.0,
+     166.0,
+     214.0,
+     222.0,
+     224.0,
+     186.0,
+     174.0,
+     176.0
+    ],
+    "final": [
+     26.0,
+     134.0,
+     50.666666666666664,
+     46.0,
+     126.0,
+     203.0,
+     218.66666666666666,
+     48.666666666666664,
+     61.333333333333336,
+     63.333333333333336
+    ],
+    "collapse_times": [
+     3364800,
+     4564800,
+     4996800,
+     2404800,
+     4996800,
+     4996800,
+     4996800,
+     3364800,
+     4084800,
+     4084800
+    ],
+    "collapse_events": [
+     1,
+     1,
+     0,
+     1,
+     0,
+     0,
+     0,
+     1,
+     1,
+     1
+    ],
+    "km": [
+     [
+      2404800.0,
+      0.9
+     ],
+     [
+      3364800.0,
+      0.7000000000000001
+     ],
+     [
+      4084800.0,
+      0.5000000000000001
+     ],
+     [
+      4564800.0,
+      0.40000000000000013
+     ]
+    ],
+    "km_median": 4564800.0,
+    "sudden": 6,
+    "kappa_curve": 0.0,
+    "curve_counts": {
+     "collapsed": 2,
+     "declined": 8
+    },
+    "per_run": {
+     "4": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "1": {
+      "offline": "declined",
+      "curve": "collapsed"
+     },
+     "5": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "7": {
+      "offline": "collapsed",
+      "curve": "declined"
+     },
+     "2": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "6": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "3": {
+      "offline": "stable",
+      "curve": "declined"
+     },
+     "8": {
+      "offline": "collapsed",
+      "curve": "declined"
+     },
+     "10": {
+      "offline": "declined",
+      "curve": "declined"
+     },
+     "9": {
+      "offline": "declined",
+      "curve": "declined"
+     }
+    }
+   },
+   "fcp-S2-usual-dishann-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 6,
+     "stable": 3,
+     "declined": 0,
+     "collapsed": 1
+    },
+    "rate_ci": {
+     "not converged": [
+      0.26237807660694507,
+      0.8784477418801728
+     ],
+     "stable": [
+      0.06673951117773447,
+      0.6524528500599973
+     ],
+     "declined": [
+      0.0,
+      0.3084971078187608
+     ],
+     "collapsed": [
+      0.0025285785444617848,
+      0.4450161170281954
+     ]
+    },
+    "converged": 4,
+    "peak": [
+     31.666666666666668,
+     40.833333333333336,
+     45.833333333333336,
+     80.83333333333333,
+     56.666666666666664,
+     47.5,
+     66.66666666666667,
+     47.5,
+     40.833333333333336,
+     66.66666666666667
+    ],
+    "final": [
+     30.0,
+     40.833333333333336,
+     43.333333333333336,
+     34.44444444444445,
+     30.555555555555557,
+     31.111111111111114,
+     36.94444444444444,
+     36.111111111111114,
+     30.0,
+     39.44444444444445
+    ],
+    "collapse_times": [
+     4996800,
+     4996800,
+     4996800,
+     2884800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800,
+     4996800
+    ],
+    "collapse_events": [
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     0,
+     0
+    ],
+    "km": [
+     [
+      2884800.0,
+      0.9
+     ]
+    ],
+    "km_median": null,
+    "sudden": 1,
+    "kappa_curve": 0.19999999999999996,
+    "curve_counts": {
+     "not converged": 8,
+     "collapsed": 2
+    },
+    "per_run": {
+     "3": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "4": {
+      "offline": "not converged",
+      "curve": "collapsed"
+     },
+     "1": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "8": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "5": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "6": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "2": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "7": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "9": {
+      "offline": "not converged",
+      "curve": "not converged"
+     },
+     "10": {
+      "offline": "stable",
+      "curve": "not converged"
+     }
+    }
+   },
+   "fcp-S2-usual-hand-v2": {
+    "n": 10,
+    "counts": {
+     "not converged": 0,
+     "stable": 3,
+     "declined": 0,
+     "collapsed": 7
+    },
+    "rate_ci": {
+     "not converged": [
+      0.0,
+      0.3084971078187608
+     ],
+     "stable": [
+      0.06673951117773447,
+      0.6524528500599973
+     ],
+     "declined": [
+      0.0,
+      0.3084971078187608
+     ],
+     "collapsed": [
+      0.3475471499400027,
+      0.9332604888222655
+     ]
+    },
+    "converged": 10,
+    "peak": [
+     50.0,
+     88.33333333333333,
+     58.333333333333336,
+     83.33333333333333,
+     115.0,
+     94.16666666666667,
+     113.33333333333333,
+     82.5,
+     93.33333333333333,
+     105.0
+    ],
+    "final": [
+     32.77777777777778,
+     32.22222222222222,
+     34.44444444444444,
+     71.66666666666667,
+     28.611111111111114,
+     32.22222222222222,
+     18.333333333333332,
+     5.555555555555556,
+     31.666666666666668,
+     28.333333333333332
+    ],
+    "collapse_times": [
+     4996800,
+     2404800,
+     4996800,
+     4996800,
+     2884800,
+     2884800,
+     3364800,
+     2884800,
+     2404800,
+     3364800
+    ],
+    "collapse_events": [
+     0,
+     1,
+     0,
+     0,
+     1,
+     1,
+     1,
+     1,
+     1,
+     1
+    ],
+    "km": [
+     [
+      2404800.0,
+      0.8
+     ],
+     [
+      2884800.0,
+      0.5
+     ],
+     [
+      3364800.0,
+      0.3
+     ]
+    ],
+    "km_median": 2884800.0,
+    "sudden": 7,
+    "kappa_curve": 0.18918918918918906,
+    "curve_counts": {
+     "not converged": 1,
+     "collapsed": 9
+    },
+    "per_run": {
+     "2": {
+      "offline": "stable",
+      "curve": "not converged"
+     },
+     "3": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "6": {
+      "offline": "stable",
+      "curve": "collapsed"
+     },
+     "7": {
+      "offline": "stable",
+      "curve": "collapsed"
+     },
+     "5": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "1": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "8": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "4": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "9": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     },
+     "10": {
+      "offline": "collapsed",
+      "curve": "collapsed"
+     }
+    }
+   }
+  },
+  "tests": {
+   "bench_morl_ann-cx-lr vs bench_sp-cx-lr": {
+    "fisher_decline_p": 0.030220187672912922,
+    "logrank_p": 0.014059625956168494,
+    "peak_diff": 121.6875,
+    "peak_p": 0.010055,
+    "final_diff": 53.611111111111114,
+    "final_p": 0.330755
+   },
+   "fcp-S2-partial-dishann-v2 vs fcp-S2-usual-hand-v2": {
+    "fisher_decline_p": 0.6499166468206717,
+    "logrank_p": 0.23335419676437322,
+    "peak_diff": 138.16666666666666,
+    "peak_p": 3.247526467340709e-05,
+    "final_diff": 95.81666666666668,
+    "final_p": 0.0008876572344064604
+   },
+   "fcp-S2-partial-hand-v2 vs fcp-S2-usual-hand-v2": {
+    "fisher_decline_p": 1.0,
+    "logrank_p": 0.29973554957991033,
+    "peak_diff": 104.86666666666665,
+    "peak_p": 1.082508822446903e-05,
+    "final_diff": 66.18333333333334,
+    "final_p": 0.0019918162333023015
+   },
+   "fcp-S2-usual-dishann-v2 vs fcp-S2-usual-hand-v2": {
+    "fisher_decline_p": 0.019766611097880447,
+    "logrank_p": 0.007321106999479505,
+    "peak_diff": -35.83333333333334,
+    "peak_p": 0.0008010565286107081,
+    "final_diff": 3.6944444444444535,
+    "final_p": 0.5457143475719327
+   }
+  }
+ }
+}

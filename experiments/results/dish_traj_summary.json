@@ -268,114 +268,113 @@
   "runs": 10,
   "by_bin": {
    "0": {
-    "big mixed": 0.0010416666666666667,
-    "medium mixed": 0.0,
-    "onion soup": 0.012499999999999999,
-    "small": 0.017708333333333333,
-    "off-menu": 0.2802083333333333,
-    "points": 0.48958333333333337,
-    "off_share": 0.8740327380952382
+    "big mixed": 0.190625,
+    "medium mixed": 0.042708333333333334,
+    "onion soup": 0.15833333333333333,
+    "small": 0.015625,
+    "off-menu": 0.35104166666666664,
+    "points": 16.46875,
+    "off_share": 0.4782929411489783
    },
    "2": {
-    "big mixed": 0.008333333333333333,
-    "medium mixed": 0.0,
-    "onion soup": 0.08333333333333334,
-    "small": 0.016666666666666666,
-    "off-menu": 0.4,
-    "points": 2.3333333333333335,
-    "off_share": 0.8196825396825398
+    "big mixed": 0.9416666666666667,
+    "medium mixed": 0.2416666666666667,
+    "onion soup": 0.10833333333333332,
+    "small": 0.0,
+    "off-menu": 0.31666666666666665,
+    "points": 68.33333333333334,
+    "off_share": 0.21296152518978606
    },
    "5": {
-    "big mixed": 0.008333333333333333,
-    "medium mixed": 0.0,
-    "onion soup": 0.2916666666666667,
-    "small": 0.025,
-    "off-menu": 0.19166666666666668,
-    "points": 6.583333333333333,
-    "off_share": 0.5411506707946337
+    "big mixed": 0.9166666666666666,
+    "medium mixed": 0.1833333333333333,
+    "onion soup": 0.3416666666666667,
+    "small": 0.0,
+    "off-menu": 0.3416666666666667,
+    "points": 69.16666666666666,
+    "off_share": 0.23746314004654262
    },
    "7": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0,
-    "onion soup": 0.125,
+    "big mixed": 0.4749999999999999,
+    "medium mixed": 0.14166666666666666,
+    "onion soup": 0.20833333333333334,
     "small": 0.0,
-    "off-menu": 0.175,
-    "points": 2.5,
-    "off_share": 0.6900000000000001
+    "off-menu": 0.25,
+    "points": 38.33333333333333,
+    "off_share": 0.3195947474623945
    },
    "9": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0,
-    "onion soup": 0.29166666666666663,
+    "big mixed": 0.38333333333333336,
+    "medium mixed": 0.15833333333333333,
+    "onion soup": 0.4750000000000001,
     "small": 0.0,
-    "off-menu": 0.21666666666666665,
-    "points": 5.833333333333333,
-    "off_share": 0.6318518518518518
+    "off-menu": 0.2333333333333333,
+    "points": 38.83333333333333,
+    "off_share": 0.1899433899433899
    }
   },
   "settles_on": {
-   "onion soup": 2,
-   "off-menu": 6,
-   "nothing": 2
+   "big mixed": 4,
+   "onion soup": 6
   },
-  "runs_clean_by_end": 0,
-  "median_clean_step": null
+  "runs_clean_by_end": 2,
+  "median_clean_step": 4996800.0
  },
  "pantry_cx | fcp-S2-usual-hand-v2": {
   "runs": 10,
   "by_bin": {
    "0": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0,
-    "onion soup": 0.0020833333333333333,
-    "small": 0.03020833333333333,
-    "off-menu": 0.30729166666666663,
-    "points": 0.34375,
-    "off_share": 0.8944047619047619
+    "big mixed": 0.08958333333333333,
+    "medium mixed": 0.017708333333333333,
+    "onion soup": 0.1875,
+    "small": 0.022916666666666665,
+    "off-menu": 0.4510416666666666,
+    "points": 10.0625,
+    "off_share": 0.6075812807333705
    },
    "2": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0,
-    "onion soup": 0.125,
-    "small": 0.03333333333333333,
-    "off-menu": 0.4583333333333333,
-    "points": 2.833333333333333,
-    "off_share": 0.8085457516339869
-   },
-   "5": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0,
-    "onion soup": 0.4333333333333334,
-    "small": 0.008333333333333333,
-    "off-menu": 0.275,
-    "points": 8.750000000000002,
-    "off_share": 0.7546182266009852
-   },
-   "7": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0,
+    "big mixed": 0.9666666666666668,
+    "medium mixed": 0.2916666666666667,
     "onion soup": 0.14166666666666666,
     "small": 0.016666666666666666,
-    "off-menu": 0.13333333333333333,
-    "points": 3.0,
-    "off_share": 0.5892857142857142
+    "off-menu": 0.4833333333333333,
+    "points": 72.66666666666666,
+    "off_share": 0.2655970373435169
+   },
+   "5": {
+    "big mixed": 0.9833333333333332,
+    "medium mixed": 0.3166666666666667,
+    "onion soup": 0.31666666666666665,
+    "small": 0.0,
+    "off-menu": 0.375,
+    "points": 78.0,
+    "off_share": 0.22873056823056825
+   },
+   "7": {
+    "big mixed": 0.4666666666666667,
+    "medium mixed": 0.13333333333333336,
+    "onion soup": 0.375,
+    "small": 0.0,
+    "off-menu": 0.2583333333333333,
+    "points": 40.83333333333333,
+    "off_share": 0.2556022408963585
    },
    "9": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0,
-    "onion soup": 0.175,
+    "big mixed": 0.15,
+    "medium mixed": 0.11666666666666665,
+    "onion soup": 0.4,
     "small": 0.016666666666666666,
-    "off-menu": 0.14999999999999997,
-    "points": 3.6666666666666665,
-    "off_share": 0.7
+    "off-menu": 0.25,
+    "points": 21.833333333333336,
+    "off_share": 0.24067588325652842
    }
   },
   "settles_on": {
-   "off-menu": 7,
-   "nothing": 2,
-   "onion soup": 1
+   "onion soup": 7,
+   "medium mixed": 1,
+   "off-menu": 2
   },
-  "runs_clean_by_end": 1,
+  "runs_clean_by_end": 3,
   "median_clean_step": 4996800.0
  },
  "unident_s_cx | bench_morl_ann-cx-lr": {
@@ -647,53 +646,53 @@
   "runs": 10,
   "by_bin": {
    "0": {
-    "big mixed": 0.0,
-    "medium mixed": 0.003125,
-    "onion soup": 0.04583333333333332,
-    "small": 0.06041666666666665,
-    "off-menu": 0.7489583333333334,
-    "points": 1.6458333333333335,
-    "off_share": 0.8791832116004912
+    "big mixed": 0.02291666666666666,
+    "medium mixed": 0.011458333333333333,
+    "onion soup": 1.2572916666666667,
+    "small": 0.06458333333333333,
+    "off-menu": 1.375,
+    "points": 27.625000000000007,
+    "off_share": 0.5417410821064852
    },
    "2": {
-    "big mixed": 0.008333333333333333,
-    "medium mixed": 0.016666666666666666,
-    "onion soup": 0.14166666666666666,
-    "small": 0.11666666666666665,
-    "off-menu": 1.1916666666666667,
-    "points": 5.166666666666666,
-    "off_share": 0.8106650522381106
+    "big mixed": 0.058333333333333334,
+    "medium mixed": 0.03333333333333333,
+    "onion soup": 2.2333333333333334,
+    "small": 0.15833333333333333,
+    "off-menu": 1.6833333333333336,
+    "points": 51.083333333333336,
+    "off_share": 0.4013716107641881
    },
    "5": {
-    "big mixed": 0.0,
+    "big mixed": 0.016666666666666666,
     "medium mixed": 0.0,
-    "onion soup": 0.2416666666666667,
-    "small": 0.05,
-    "off-menu": 0.6166666666666667,
-    "points": 5.333333333333334,
-    "off_share": 0.779044477028348
+    "onion soup": 2.3083333333333336,
+    "small": 0.025,
+    "off-menu": 1.0583333333333331,
+    "points": 47.41666666666667,
+    "off_share": 0.3037894686645004
    },
    "7": {
-    "big mixed": 0.0,
+    "big mixed": 0.016666666666666666,
     "medium mixed": 0.0,
-    "onion soup": 0.03333333333333333,
-    "small": 0.06666666666666667,
-    "off-menu": 0.7583333333333333,
-    "points": 1.3333333333333335,
-    "off_share": 0.8821636696636697
+    "onion soup": 1.7416666666666667,
+    "small": 0.025,
+    "off-menu": 1.1083333333333332,
+    "points": 36.083333333333336,
+    "off_share": 0.42289486324498127
    },
    "9": {
     "big mixed": 0.0,
     "medium mixed": 0.0,
-    "onion soup": 0.016666666666666666,
+    "onion soup": 1.5583333333333331,
     "small": 0.03333333333333333,
-    "off-menu": 0.8583333333333334,
-    "points": 0.6666666666666667,
-    "off_share": 0.9573529411764706
+    "off-menu": 1.1,
+    "points": 31.5,
+    "off_share": 0.40257119401616553
    }
   },
   "settles_on": {
-   "off-menu": 10
+   "onion soup": 10
   },
   "runs_clean_by_end": 0,
   "median_clean_step": null
@@ -702,54 +701,54 @@
   "runs": 10,
   "by_bin": {
    "0": {
-    "big mixed": 0.0,
-    "medium mixed": 0.0020833333333333333,
-    "onion soup": 0.03020833333333333,
-    "small": 0.04791666666666666,
-    "off-menu": 0.74375,
-    "points": 1.1666666666666667,
-    "off_share": 0.9043148763001705
+    "big mixed": 0.013541666666666665,
+    "medium mixed": 0.014583333333333332,
+    "onion soup": 1.5062499999999999,
+    "small": 0.06666666666666668,
+    "off-menu": 1.3208333333333333,
+    "points": 32.1875,
+    "off_share": 0.47935275150723927
    },
    "2": {
-    "big mixed": 0.008333333333333333,
+    "big mixed": 0.025,
     "medium mixed": 0.008333333333333333,
-    "onion soup": 1.4416666666666667,
-    "small": 0.08333333333333333,
-    "off-menu": 1.0083333333333333,
-    "points": 30.499999999999993,
-    "off_share": 0.430245860547131
+    "onion soup": 3.5833333333333335,
+    "small": 0.05,
+    "off-menu": 1.2583333333333333,
+    "points": 74.0,
+    "off_share": 0.26107925916851993
    },
    "5": {
-    "big mixed": 0.0,
+    "big mixed": 0.008333333333333333,
     "medium mixed": 0.008333333333333333,
-    "onion soup": 1.7333333333333336,
-    "small": 0.06666666666666667,
-    "off-menu": 0.6583333333333333,
-    "points": 35.66666666666667,
-    "off_share": 0.41676724989362146
+    "onion soup": 3.35,
+    "small": 0.03333333333333333,
+    "off-menu": 1.0416666666666667,
+    "points": 68.16666666666667,
+    "off_share": 0.26840177683957817
    },
    "7": {
     "big mixed": 0.0,
     "medium mixed": 0.0,
-    "onion soup": 0.19166666666666668,
-    "small": 0.041666666666666664,
-    "off-menu": 0.8333333333333333,
-    "points": 4.25,
-    "off_share": 0.8751544860368389
+    "onion soup": 1.425,
+    "small": 0.025,
+    "off-menu": 1.2916666666666665,
+    "points": 28.75,
+    "off_share": 0.5167235149007686
    },
    "9": {
     "big mixed": 0.0,
     "medium mixed": 0.0,
-    "onion soup": 0.19166666666666665,
-    "small": 0.049999999999999996,
-    "off-menu": 0.7416666666666666,
-    "points": 4.333333333333334,
-    "off_share": 0.8570369720369719
+    "onion soup": 1.625,
+    "small": 0.025,
+    "off-menu": 1.0166666666666666,
+    "points": 32.75,
+    "off_share": 0.40265609142207603
    }
   },
   "settles_on": {
-   "off-menu": 9,
-   "onion soup": 1
+   "onion soup": 9,
+   "off-menu": 1
   },
   "runs_clean_by_end": 0,
   "median_clean_step": null
